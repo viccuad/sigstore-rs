@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["OciErrorCode","OCI error codes"]],"struct":[["OciError","The OCI specification defines a specific error format."]]});
