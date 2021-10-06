@@ -252,6 +252,49 @@
 <span id="252">252</span>
 <span id="253">253</span>
 <span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
 
@@ -260,6 +303,7 @@
 <span class="kw">use</span> <span class="ident">ecdsa</span>::{<span class="ident">Signature</span>, <span class="ident">VerifyingKey</span>};
 <span class="kw">use</span> <span class="ident">oci_distribution::client::ImageLayer</span>;
 <span class="kw">use</span> <span class="ident">p256::pkcs8::FromPublicKey</span>;
+<span class="kw">use</span> <span class="ident">tracing</span>::{<span class="ident">debug</span>, <span class="ident">error</span>, <span class="ident">info</span>};
 
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::distribution::SIGSTORE_OCI_MEDIA_TYPE</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::simple_signing::SimpleSigning</span>;
@@ -273,14 +317,19 @@
         .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="macro">anyhow!</span>(<span class="string">&quot;Cannot load key: {:?}&quot;</span>, <span class="ident">e</span>))
 }
 
-<span class="doccomment">/// Verify all the layers part of the image containing all the signatures</span>
+<span class="doccomment">/// Find all the layers that have been signed with the given key.</span>
+<span class="doccomment">/// Return a list of `SimpleSigning` objects that have been signed by</span>
+<span class="doccomment">/// the given key</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">verify_layers</span>(
     <span class="ident">image_manifest_digest</span>: <span class="ident">String</span>,
     <span class="ident">layers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ImageLayer</span><span class="op">&gt;</span>,
     <span class="ident">signatures</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">annotations</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">verification_key</span>: <span class="kw-2">&amp;</span><span class="ident">CosignVerificationKey</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">verified_layers</span> <span class="op">=</span> <span class="number">0</span>;
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">SimpleSigning</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">verified_layers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">SimpleSigning</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+    <span class="kw">let</span> <span class="ident">annotations</span> <span class="op">=</span> <span class="ident">annotations</span>.<span class="ident">unwrap_or_default</span>();
+
     <span class="kw">for</span> <span class="ident">layer</span> <span class="kw">in</span> <span class="ident">layers</span> {
         <span class="kw">if</span> <span class="ident">layer</span>.<span class="ident">media_type</span> <span class="op">!</span><span class="op">=</span> <span class="ident">SIGSTORE_OCI_MEDIA_TYPE</span> {
             <span class="kw">continue</span>;
@@ -292,21 +341,34 @@
                 <span class="ident">layer_digest</span>
             )
         })<span class="question-mark">?</span>;
-        <span class="ident">verify_signature</span>(<span class="ident">verification_key</span>, <span class="ident">layer_signature</span>, <span class="kw-2">&amp;</span><span class="ident">layer</span>.<span class="ident">data</span>)<span class="question-mark">?</span>;
+        <span class="kw">if</span> <span class="ident">verify_signature</span>(<span class="ident">verification_key</span>, <span class="ident">layer_signature</span>, <span class="kw-2">&amp;</span><span class="ident">layer</span>.<span class="ident">data</span>).<span class="ident">is_err</span>() {
+            <span class="comment">// the given key wasn&#39;t used to sign this layer, move on</span>
+            <span class="macro">info!</span>(<span class="string">&quot;skipping layer, it wasn&#39;t signed with the given key&quot;</span>);
+            <span class="kw">continue</span>;
+        }
 
         <span class="kw">let</span> <span class="ident">ss</span>: <span class="ident">SimpleSigning</span> <span class="op">=</span> <span class="ident">serde_json::from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">layer</span>.<span class="ident">data</span>)
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="macro">anyhow!</span>(<span class="string">&quot;Cannot decode Simple Signing data: {:?}&quot;</span>, <span class="ident">e</span>))<span class="question-mark">?</span>;
+        <span class="macro">debug!</span>(<span class="ident">simple_signing</span> <span class="op">=</span> <span class="question-mark">?</span><span class="ident">ss</span>);
         <span class="kw">if</span> <span class="ident">ss</span>.<span class="ident">critical</span>.<span class="ident">image</span>.<span class="ident">docker_manifest_digest</span> <span class="op">!</span><span class="op">=</span> <span class="ident">image_manifest_digest</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">&quot;The image manifest digest does not match with the one reported inside of the Simple Signing metadata&quot;</span>));
+            <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;The image manifest digest does not match with the one reported inside of the Simple Signing metadata&quot;</span>;
+            <span class="macro">error!</span>(
+                <span class="ident">simple_signing</span> <span class="op">=</span> <span class="question-mark">?</span><span class="ident">ss</span>,
+                <span class="ident">expected_manifest_digest</span> <span class="op">=</span> <span class="ident">image_manifest_digest</span>.<span class="ident">as_str</span>(),
+                <span class="ident">msg</span>,
+            );
+            <span class="kw">continue</span>;
         }
-        <span class="ident">verified_layers</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+        <span class="kw">if</span> <span class="ident">ss</span>.<span class="ident">satisfies_annotations</span>(<span class="kw-2">&amp;</span><span class="ident">annotations</span>) {
+            <span class="ident">verified_layers</span>.<span class="ident">push</span>(<span class="ident">ss</span>);
+        }
     }
-    <span class="kw">if</span> <span class="ident">verified_layers</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">verified_layers</span>.<span class="ident">is_empty</span>() {
         <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(
-            <span class="string">&quot;The signature object didn&#39;t have any layer verified&quot;</span>
+            <span class="string">&quot;The signature object didn&#39;t have any layer signed with the given key&quot;</span>
         ))
     } <span class="kw">else</span> {
-        <span class="prelude-val">Ok</span>(())
+        <span class="prelude-val">Ok</span>(<span class="ident">verified_layers</span>)
     }
 }
 
@@ -424,7 +486,13 @@ OSWS1X9vPavpiQOoTTGC0xX57OojUadxF1cdQmrsiReWg2Wn4FneJfa8xw==
         };
         <span class="kw">let</span> <span class="ident">layers</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="ident">layer</span>];
 
-        <span class="kw">let</span> <span class="ident">outcome</span> <span class="op">=</span> <span class="ident">verify_layers</span>(<span class="ident">image_manifest_digest</span>, <span class="ident">layers</span>, <span class="ident">signatures</span>, <span class="kw-2">&amp;</span><span class="ident">verification_key</span>);
+        <span class="kw">let</span> <span class="ident">outcome</span> <span class="op">=</span> <span class="ident">verify_layers</span>(
+            <span class="ident">image_manifest_digest</span>,
+            <span class="ident">layers</span>,
+            <span class="ident">signatures</span>,
+            <span class="prelude-val">None</span>,
+            <span class="kw-2">&amp;</span><span class="ident">verification_key</span>,
+        );
         <span class="macro">assert!</span>(<span class="ident">outcome</span>.<span class="ident">is_ok</span>());
     }
 
@@ -451,7 +519,13 @@ OSWS1X9vPavpiQOoTTGC0xX57OojUadxF1cdQmrsiReWg2Wn4FneJfa8xw==
         };
         <span class="kw">let</span> <span class="ident">layers</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="ident">layer</span>];
 
-        <span class="kw">let</span> <span class="ident">outcome</span> <span class="op">=</span> <span class="ident">verify_layers</span>(<span class="ident">image_manifest_digest</span>, <span class="ident">layers</span>, <span class="ident">signatures</span>, <span class="kw-2">&amp;</span><span class="ident">verification_key</span>);
+        <span class="kw">let</span> <span class="ident">outcome</span> <span class="op">=</span> <span class="ident">verify_layers</span>(
+            <span class="ident">image_manifest_digest</span>,
+            <span class="ident">layers</span>,
+            <span class="ident">signatures</span>,
+            <span class="prelude-val">None</span>,
+            <span class="kw-2">&amp;</span><span class="ident">verification_key</span>,
+        );
         <span class="macro">assert!</span>(<span class="ident">outcome</span>.<span class="ident">is_err</span>());
     }
 
@@ -479,7 +553,13 @@ OSWS1X9vPavpiQOoTTGC0xX57OojUadxF1cdQmrsiReWg2Wn4FneJfa8xw==
         };
         <span class="kw">let</span> <span class="ident">layers</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="ident">layer</span>];
 
-        <span class="kw">let</span> <span class="ident">outcome</span> <span class="op">=</span> <span class="ident">verify_layers</span>(<span class="ident">image_manifest_digest</span>, <span class="ident">layers</span>, <span class="ident">signatures</span>, <span class="kw-2">&amp;</span><span class="ident">verification_key</span>);
+        <span class="kw">let</span> <span class="ident">outcome</span> <span class="op">=</span> <span class="ident">verify_layers</span>(
+            <span class="ident">image_manifest_digest</span>,
+            <span class="ident">layers</span>,
+            <span class="ident">signatures</span>,
+            <span class="prelude-val">None</span>,
+            <span class="kw-2">&amp;</span><span class="ident">verification_key</span>,
+        );
         <span class="macro">assert!</span>(<span class="ident">outcome</span>.<span class="ident">is_err</span>());
     }
 
@@ -503,7 +583,13 @@ OSWS1X9vPavpiQOoTTGC0xX57OojUadxF1cdQmrsiReWg2Wn4FneJfa8xw==
 
         <span class="kw">let</span> <span class="ident">layers</span> <span class="op">=</span> <span class="macro">vec!</span>[];
 
-        <span class="kw">let</span> <span class="ident">outcome</span> <span class="op">=</span> <span class="ident">verify_layers</span>(<span class="ident">image_manifest_digest</span>, <span class="ident">layers</span>, <span class="ident">signatures</span>, <span class="kw-2">&amp;</span><span class="ident">verification_key</span>);
+        <span class="kw">let</span> <span class="ident">outcome</span> <span class="op">=</span> <span class="ident">verify_layers</span>(
+            <span class="ident">image_manifest_digest</span>,
+            <span class="ident">layers</span>,
+            <span class="ident">signatures</span>,
+            <span class="prelude-val">None</span>,
+            <span class="kw-2">&amp;</span><span class="ident">verification_key</span>,
+        );
         <span class="macro">assert!</span>(<span class="ident">outcome</span>.<span class="ident">is_err</span>());
     }
 }
