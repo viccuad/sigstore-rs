@@ -152,7 +152,7 @@
     <span class="ident">auth</span>: <span class="kw-2">&amp;</span><span class="ident">RegistryAuth</span>,
     <span class="ident">source_image_digest</span>: <span class="ident">String</span>,
     <span class="ident">cosign_image</span>: <span class="ident">Reference</span>,
-    <span class="ident">public_key</span>: <span class="ident">String</span>,
+    <span class="ident">public_key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     <span class="ident">annotations</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">SimpleSigning</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">verification_key</span> <span class="op">=</span> <span class="ident">new_verification_key</span>(<span class="ident">public_key</span>)<span class="question-mark">?</span>;
