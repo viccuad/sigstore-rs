@@ -261,7 +261,7 @@
 <span class="kw">use</span> <span class="ident">p256::pkcs8::FromPublicKey</span>;
 <span class="kw">use</span> <span class="ident">tracing</span>::{<span class="ident">debug</span>, <span class="ident">error</span>, <span class="ident">info</span>};
 
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::distribution::SIGSTORE_OCI_MEDIA_TYPE</span>;
+<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::cosign::SIGSTORE_OCI_MEDIA_TYPE</span>;
 <span class="kw">use</span> <span class="kw">crate</span><span class="ident">::simple_signing::SimpleSigning</span>;
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">type</span> <span class="ident">CosignVerificationKey</span> <span class="op">=</span> <span class="ident">VerifyingKey</span><span class="op">&lt;</span><span class="ident">p256::NistP256</span><span class="op">&gt;</span>;

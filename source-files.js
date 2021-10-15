@@ -1,6 +1,7 @@
 var N = null;var sourcesIndex = {};
 sourcesIndex["aho_corasick"] = {"name":"","dirs":[{"name":"packed","dirs":[{"name":"teddy","files":["compile.rs","mod.rs","runtime.rs"]}],"files":["api.rs","mod.rs","pattern.rs","rabinkarp.rs","vector.rs"]}],"files":["ahocorasick.rs","automaton.rs","buffer.rs","byte_frequencies.rs","classes.rs","dfa.rs","error.rs","lib.rs","nfa.rs","prefilter.rs","state_id.rs"]};
 sourcesIndex["anyhow"] = {"name":"","files":["backtrace.rs","chain.rs","context.rs","error.rs","fmt.rs","kind.rs","lib.rs","macros.rs","ptr.rs","wrapper.rs"]};
+sourcesIndex["async_trait"] = {"name":"","files":["args.rs","expand.rs","lib.rs","lifetime.rs","parse.rs","receiver.rs"]};
 sourcesIndex["base64"] = {"name":"","dirs":[{"name":"read","files":["decoder.rs","mod.rs"]},{"name":"write","files":["encoder.rs","encoder_string_writer.rs","mod.rs"]}],"files":["chunked_encoder.rs","decode.rs","display.rs","encode.rs","lib.rs","tables.rs"]};
 sourcesIndex["base64ct"] = {"name":"","dirs":[{"name":"variant","files":["bcrypt.rs","crypt.rs","standard.rs","url.rs"]}],"files":["encoding.rs","errors.rs","lib.rs","variant.rs"]};
 sourcesIndex["bitflags"] = {"name":"","files":["lib.rs"]};
@@ -77,7 +78,7 @@ sourcesIndex["quote"] = {"name":"","files":["ext.rs","format.rs","ident_fragment
 sourcesIndex["rand_core"] = {"name":"","files":["block.rs","error.rs","impls.rs","le.rs","lib.rs","os.rs"]};
 sourcesIndex["regex"] = {"name":"","dirs":[{"name":"literal","files":["imp.rs","mod.rs"]}],"files":["backtrack.rs","compile.rs","dfa.rs","error.rs","exec.rs","expand.rs","find_byte.rs","input.rs","lib.rs","pikevm.rs","pool.rs","prog.rs","re_builder.rs","re_bytes.rs","re_set.rs","re_trait.rs","re_unicode.rs","sparse.rs","utf8.rs"]};
 sourcesIndex["regex_syntax"] = {"name":"","dirs":[{"name":"ast","files":["mod.rs","parse.rs","print.rs","visitor.rs"]},{"name":"hir","dirs":[{"name":"literal","files":["mod.rs"]}],"files":["interval.rs","mod.rs","print.rs","translate.rs","visitor.rs"]},{"name":"unicode_tables","files":["age.rs","case_folding_simple.rs","general_category.rs","grapheme_cluster_break.rs","mod.rs","perl_word.rs","property_bool.rs","property_names.rs","property_values.rs","script.rs","script_extension.rs","sentence_break.rs","word_break.rs"]}],"files":["either.rs","error.rs","lib.rs","parser.rs","unicode.rs","utf8.rs"]};
-sourcesIndex["reqwest"] = {"name":"","dirs":[{"name":"async_impl","files":["body.rs","client.rs","decoder.rs","mod.rs","request.rs","response.rs"]}],"files":["connect.rs","error.rs","into_url.rs","lib.rs","proxy.rs","redirect.rs","tls.rs","util.rs"]};
+sourcesIndex["reqwest"] = {"name":"","dirs":[{"name":"async_impl","files":["body.rs","client.rs","decoder.rs","mod.rs","request.rs","response.rs"]}],"files":["connect.rs","error.rs","into_url.rs","lib.rs","proxy.rs","redirect.rs","response.rs","tls.rs","util.rs"]};
 sourcesIndex["ryu"] = {"name":"","dirs":[{"name":"buffer","files":["mod.rs"]},{"name":"pretty","files":["exponent.rs","mantissa.rs","mod.rs"]}],"files":["common.rs","d2s.rs","d2s_full_table.rs","d2s_intrinsics.rs","digit_table.rs","f2s.rs","f2s_intrinsics.rs","lib.rs"]};
 sourcesIndex["scopeguard"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["serde"] = {"name":"","dirs":[{"name":"de","files":["ignored_any.rs","impls.rs","mod.rs","seed.rs","utf8.rs","value.rs"]},{"name":"private","files":["de.rs","doc.rs","mod.rs","ser.rs","size_hint.rs"]},{"name":"ser","files":["fmt.rs","impls.rs","impossible.rs","mod.rs"]}],"files":["integer128.rs","lib.rs","macros.rs"]};
@@ -87,7 +88,7 @@ sourcesIndex["serde_urlencoded"] = {"name":"","dirs":[{"name":"ser","files":["ke
 sourcesIndex["sha2"] = {"name":"","dirs":[{"name":"sha256","files":["soft.rs","x86.rs"]},{"name":"sha512","files":["soft.rs","x86.rs"]}],"files":["consts.rs","lib.rs","sha256.rs","sha512.rs"]};
 sourcesIndex["signal_hook_registry"] = {"name":"","files":["half_lock.rs","lib.rs"]};
 sourcesIndex["signature"] = {"name":"","files":["error.rs","lib.rs","signature.rs","signer.rs","verifier.rs"]};
-sourcesIndex["sigstore"] = {"name":"","files":["crypto.rs","distribution.rs","lib.rs","mock_client.rs","simple_signing.rs"]};
+sourcesIndex["sigstore"] = {"name":"","dirs":[{"name":"cosign","files":["mod.rs"]}],"files":["crypto.rs","lib.rs","mock_client.rs","registry.rs","simple_signing.rs"]};
 sourcesIndex["slab"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["smallvec"] = {"name":"","files":["lib.rs"]};
 sourcesIndex["socket2"] = {"name":"","dirs":[{"name":"sys","files":["unix.rs"]}],"files":["lib.rs","sockaddr.rs","socket.rs","sockref.rs"]};
