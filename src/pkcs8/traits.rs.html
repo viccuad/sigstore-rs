@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;pkcs8-0.7.6&#x2F;src&#x2F;traits.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>traits.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;RustCrypto&#x2F;meta&#x2F;master&#x2F;logo.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../pkcs8/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;RustCrypto&#x2F;meta&#x2F;master&#x2F;logo.svg' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;pkcs8-0.7.6&#x2F;src&#x2F;traits.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>traits.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;RustCrypto&#x2F;meta&#x2F;master&#x2F;logo.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../pkcs8/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;RustCrypto&#x2F;meta&#x2F;master&#x2F;logo.svg' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -321,8 +321,7 @@
 <span id="321">321</span>
 <span id="322">322</span>
 <span id="323">323</span>
-</pre><pre class="rust">
-<span class="doccomment">//! Traits for parsing objects from PKCS#8 encoded documents</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Traits for parsing objects from PKCS#8 encoded documents</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">PrivateKeyInfo</span>, <span class="prelude-ty">Result</span>, <span class="ident">SubjectPublicKeyInfo</span>};
 <span class="kw">use</span> <span class="ident">core::convert::TryFrom</span>;
@@ -337,7 +336,7 @@
 };
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pem&quot;</span>)]</span>
-<span class="kw">use</span> {<span class="kw">crate</span><span class="ident">::LineEnding</span>, <span class="ident">alloc::string::String</span>};
+<span class="kw">use</span> {<span class="ident"><span class="kw">crate</span>::LineEnding</span>, <span class="ident">alloc::string::String</span>};
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pkcs1&quot;</span>)]</span>
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Error</span>, <span class="ident">ObjectIdentifier</span>};
@@ -349,7 +348,7 @@
 <span class="kw">use</span> <span class="ident">zeroize::Zeroizing</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pkcs1&quot;</span>))]</span>
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::AlgorithmIdentifier</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::AlgorithmIdentifier</span>;
 
 <span class="doccomment">/// PKCS#1 RSA Algorithm [`ObjectIdentifier`].</span>
 <span class="doccomment">///</span>
@@ -365,7 +364,7 @@
     <span class="doccomment">/// Deserialize PKCS#8 private key from ASN.1 DER-encoded data</span>
     <span class="doccomment">/// (binary format).</span>
     <span class="kw">fn</span> <span class="ident">from_pkcs8_der</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="self">Self</span><span class="ident">::from_pkcs8_private_key_info</span>(<span class="ident">PrivateKeyInfo::try_from</span>(<span class="ident">bytes</span>)<span class="question-mark">?</span>)
+        <span class="ident"><span class="self">Self</span>::from_pkcs8_private_key_info</span>(<span class="ident">PrivateKeyInfo::try_from</span>(<span class="ident">bytes</span>)<span class="question-mark">?</span>)
     }
 
     <span class="doccomment">/// Deserialize encrypted PKCS#8 private key from ASN.1 DER-encoded data</span>
@@ -375,14 +374,14 @@
     <span class="kw">fn</span> <span class="ident">from_pkcs8_encrypted_der</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">password</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">EncryptedPrivateKeyInfo::try_from</span>(<span class="ident">bytes</span>)<span class="question-mark">?</span>
             .<span class="ident">decrypt</span>(<span class="ident">password</span>)
-            .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="self">Self</span><span class="ident">::from_pkcs8_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
+            .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="ident"><span class="self">Self</span>::from_pkcs8_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
     }
 
     <span class="doccomment">/// Deserialize PKCS#8 private key from a [`PrivateKeyDocument`].</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
     <span class="kw">fn</span> <span class="ident">from_pkcs8_doc</span>(<span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="ident">PrivateKeyDocument</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="self">Self</span><span class="ident">::from_pkcs8_private_key_info</span>(<span class="ident">doc</span>.<span class="ident">private_key_info</span>())
+        <span class="ident"><span class="self">Self</span>::from_pkcs8_private_key_info</span>(<span class="ident">doc</span>.<span class="ident">private_key_info</span>())
     }
 
     <span class="doccomment">/// Deserialize PKCS#8-encoded private key from PEM.</span>
@@ -395,7 +394,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pem&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pem&quot;</span>)))]</span>
     <span class="kw">fn</span> <span class="ident">from_pkcs8_pem</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="ident">PrivateKeyDocument::from_pem</span>(<span class="ident">s</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="self">Self</span><span class="ident">::from_pkcs8_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
+        <span class="ident">PrivateKeyDocument::from_pem</span>(<span class="ident">s</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="ident"><span class="self">Self</span>::from_pkcs8_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
     }
 
     <span class="doccomment">/// Deserialize encrypted PKCS#8-encoded private key from PEM and attempt</span>
@@ -412,7 +411,7 @@
     <span class="kw">fn</span> <span class="ident">from_pkcs8_encrypted_pem</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">password</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">EncryptedPrivateKeyDocument::from_pem</span>(<span class="ident">s</span>)<span class="question-mark">?</span>
             .<span class="ident">decrypt</span>(<span class="ident">password</span>)
-            .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="self">Self</span><span class="ident">::from_pkcs8_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
+            .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="ident"><span class="self">Self</span>::from_pkcs8_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
     }
 
     <span class="doccomment">/// Load PKCS#8 private key from an ASN.1 DER-encoded file on the local</span>
@@ -420,7 +419,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)))]</span>
     <span class="kw">fn</span> <span class="ident">read_pkcs8_der_file</span>(<span class="ident">path</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="ident">PrivateKeyDocument::read_der_file</span>(<span class="ident">path</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="self">Self</span><span class="ident">::from_pkcs8_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
+        <span class="ident">PrivateKeyDocument::read_der_file</span>(<span class="ident">path</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="ident"><span class="self">Self</span>::from_pkcs8_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
     }
 
     <span class="doccomment">/// Load PKCS#8 private key from a PEM-encoded file on the local filesystem.</span>
@@ -428,7 +427,7 @@
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pem&quot;</span>)))]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)))]</span>
     <span class="kw">fn</span> <span class="ident">read_pkcs8_pem_file</span>(<span class="ident">path</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="ident">PrivateKeyDocument::read_pem_file</span>(<span class="ident">path</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="self">Self</span><span class="ident">::from_pkcs8_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
+        <span class="ident">PrivateKeyDocument::read_pem_file</span>(<span class="ident">path</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="ident"><span class="self">Self</span>::from_pkcs8_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
     }
 }
 
@@ -440,14 +439,14 @@
     <span class="doccomment">/// Deserialize object from ASN.1 DER-encoded [`SubjectPublicKeyInfo`]</span>
     <span class="doccomment">/// (binary format).</span>
     <span class="kw">fn</span> <span class="ident">from_public_key_der</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="self">Self</span><span class="ident">::from_spki</span>(<span class="ident">SubjectPublicKeyInfo::try_from</span>(<span class="ident">bytes</span>)<span class="question-mark">?</span>)
+        <span class="ident"><span class="self">Self</span>::from_spki</span>(<span class="ident">SubjectPublicKeyInfo::try_from</span>(<span class="ident">bytes</span>)<span class="question-mark">?</span>)
     }
 
     <span class="doccomment">/// Deserialize PKCS#8 private key from a [`PrivateKeyDocument`].</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
     <span class="kw">fn</span> <span class="ident">from_public_key_doc</span>(<span class="ident">doc</span>: <span class="kw-2">&amp;</span><span class="ident">PublicKeyDocument</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="self">Self</span><span class="ident">::from_spki</span>(<span class="ident">doc</span>.<span class="ident">spki</span>())
+        <span class="ident"><span class="self">Self</span>::from_spki</span>(<span class="ident">doc</span>.<span class="ident">spki</span>())
     }
 
     <span class="doccomment">/// Deserialize PEM-encoded [`SubjectPublicKeyInfo`].</span>
@@ -460,7 +459,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pem&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pem&quot;</span>)))]</span>
     <span class="kw">fn</span> <span class="ident">from_public_key_pem</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="ident">PublicKeyDocument::from_pem</span>(<span class="ident">s</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="self">Self</span><span class="ident">::from_public_key_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
+        <span class="ident">PublicKeyDocument::from_pem</span>(<span class="ident">s</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="ident"><span class="self">Self</span>::from_public_key_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
     }
 
     <span class="doccomment">/// Load public key object from an ASN.1 DER-encoded file on the local</span>
@@ -468,7 +467,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)))]</span>
     <span class="kw">fn</span> <span class="ident">read_public_key_der_file</span>(<span class="ident">path</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="ident">PublicKeyDocument::read_der_file</span>(<span class="ident">path</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="self">Self</span><span class="ident">::from_public_key_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
+        <span class="ident">PublicKeyDocument::read_der_file</span>(<span class="ident">path</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="ident"><span class="self">Self</span>::from_public_key_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
     }
 
     <span class="doccomment">/// Load public key object from a PEM-encoded file on the local filesystem.</span>
@@ -476,7 +475,7 @@
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pem&quot;</span>)))]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)))]</span>
     <span class="kw">fn</span> <span class="ident">read_public_key_pem_file</span>(<span class="ident">path</span>: <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="ident">PublicKeyDocument::read_pem_file</span>(<span class="ident">path</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="self">Self</span><span class="ident">::from_public_key_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
+        <span class="ident">PublicKeyDocument::read_pem_file</span>(<span class="ident">path</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">doc</span><span class="op">|</span> <span class="ident"><span class="self">Self</span>::from_public_key_doc</span>(<span class="kw-2">&amp;</span><span class="ident">doc</span>))
     }
 }
 
@@ -645,7 +644,7 @@
         .<span class="ident">into</span>())
     }
 }
-</pre></div>
+</code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="pkcs8" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
 </body></html>
