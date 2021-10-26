@@ -252,6 +252,40 @@
 <span id="252">252</span>
 <span id="253">253</span>
 <span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
 </pre><pre class="rust"><code><span class="doccomment">//! This module provides a series of Rust Struct that implementation</span>
 <span class="doccomment">//! the Container signature format described</span>
 <span class="doccomment">//! [here](https://github.com/containers/image/blob/a5061e5a5f00333ea3a92e7103effd11c6e2f51d/docs/containers-signature.5.md#json-data-format).</span>
@@ -261,7 +295,7 @@
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::HashMap</span>, <span class="ident">fmt</span>};
 <span class="kw">use</span> <span class="ident">tracing</span>::{<span class="ident">debug</span>, <span class="ident">error</span>, <span class="ident">info</span>};
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SimpleSigning</span> {
     <span class="kw">pub</span> <span class="ident">critical</span>: <span class="ident">Critical</span>,
     <span class="kw">pub</span> <span class="ident">optional</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Optional</span><span class="op">&gt;</span>,
@@ -297,9 +331,23 @@
             }
         }
     }
+
+    <span class="doccomment">/// Compares the digest given by the user with the Docker manifest digest</span>
+    <span class="doccomment">/// stored inside of the Critical object</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">satisfies_manifest_digest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">expected_digest</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">critical</span>.<span class="ident">image</span>.<span class="ident">docker_manifest_digest</span> <span class="op">=</span><span class="op">=</span> <span class="ident">expected_digest</span>;
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">matches</span> {
+            <span class="macro">info!</span>(
+                <span class="ident">simple_signing</span><span class="op">=</span><span class="question-mark">?</span><span class="self">self</span>,
+                <span class="ident">expected_digest</span>,
+                <span class="string">&quot;expected digest not found&quot;</span>
+            );
+        }
+        <span class="ident">matches</span>
+    }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Critical</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;type&quot;</span>)]</span>
     <span class="comment">//TODO: should we validate the contents of this attribute to ensure it&#39;s &quot;cosign container image signature&quot;?</span>
@@ -308,13 +356,13 @@
     <span class="kw">pub</span> <span class="ident">identity</span>: <span class="ident">Identity</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;kebab-case&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Image</span> {
     <span class="kw">pub</span> <span class="ident">docker_manifest_digest</span>: <span class="ident">String</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;kebab-case&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Identity</span> {
     <span class="kw">pub</span> <span class="ident">docker_reference</span>: <span class="ident">String</span>,
@@ -504,6 +552,26 @@
         <span class="kw">let</span> <span class="ident">optional</span>: <span class="ident">Optional</span> <span class="op">=</span> <span class="ident">serde_json::from_value</span>(<span class="ident">optional_json</span>).<span class="ident">unwrap</span>();
 
         <span class="macro">assert!</span>(<span class="ident">optional</span>.<span class="ident">satisfies_annotations</span>(<span class="kw-2">&amp;</span><span class="ident">annotations</span>));
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">simple_signing_satisfy_manifest_digest_works_as_expected</span>() {
+        <span class="kw">let</span> <span class="ident">expected_digest</span> <span class="op">=</span> <span class="string">&quot;sha256:something&quot;</span>;
+        <span class="kw">let</span> <span class="ident">ss_json</span> <span class="op">=</span> <span class="macro">json!</span>({
+            <span class="string">&quot;critical&quot;</span>: {
+                <span class="string">&quot;type&quot;</span>: <span class="string">&quot;type_foo&quot;</span>,
+                <span class="string">&quot;image&quot;</span>: {
+                    <span class="string">&quot;docker-manifest-digest&quot;</span>: <span class="ident">expected_digest</span>
+                },
+                <span class="string">&quot;identity&quot;</span>: {
+                    <span class="string">&quot;docker-reference&quot;</span>: <span class="string">&quot;registry.foo.bar/busybox&quot;</span>
+                }
+            }
+        });
+        <span class="kw">let</span> <span class="ident">ss</span>: <span class="ident">SimpleSigning</span> <span class="op">=</span> <span class="ident">serde_json::from_value</span>(<span class="ident">ss_json</span>).<span class="ident">unwrap</span>();
+
+        <span class="macro">assert!</span>(<span class="ident">ss</span>.<span class="ident">satisfies_manifest_digest</span>(<span class="ident">expected_digest</span>));
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">ss</span>.<span class="ident">satisfies_manifest_digest</span>(<span class="string">&quot;something different&quot;</span>));
     }
 }
 </code></pre></div>
