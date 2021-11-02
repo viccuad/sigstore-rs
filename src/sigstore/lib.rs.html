@@ -8,9 +8,31 @@
 <span id="8"> 8</span>
 <span id="9"> 9</span>
 <span id="10">10</span>
-</pre><pre class="rust"><code><span class="doccomment">//! This is an experimental crate to interact with [sigstore](https://sigstore.dev/).</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This is under high development, many features and probably checks are still missing.</span>
+<span id="11">11</span>
+<span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+</pre><pre class="rust"><code><span class="comment">//</span>
+<span class="comment">// Copyright 2021 The Sigstore Authors.</span>
+<span class="comment">//</span>
+<span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="comment">// you may not use this file except in compliance with the License.</span>
+<span class="comment">// You may obtain a copy of the License at</span>
+<span class="comment">//</span>
+<span class="comment">//     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="comment">//</span>
+<span class="comment">// Unless required by applicable law or agreed to in writing, software</span>
+<span class="comment">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="comment">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="comment">// See the License for the specific language governing permissions and</span>
+<span class="comment">// limitations under the License.</span>
 
 <span class="kw">mod</span> <span class="ident">crypto</span>;
 <span class="kw">mod</span> <span class="ident">mock_client</span>;
