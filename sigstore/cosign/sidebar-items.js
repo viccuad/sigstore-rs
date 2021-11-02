@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Client","Cosign Client"]],"trait":[["CosignCapabilities","Cosign Abilities that have to be implemented by a Cosign client"]]});
+initSidebarItems({"struct":[["Client","Cosign Client"],["ClientBuilder","A builder that generates Client objects."]],"trait":[["CosignCapabilities","Cosign Abilities that have to be implemented by a Cosign client"]]});
