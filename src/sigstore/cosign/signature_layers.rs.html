@@ -489,6 +489,75 @@
 <span id="489">489</span>
 <span id="490">490</span>
 <span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
 </pre><pre class="rust"><code><span class="comment">//</span>
 <span class="comment">// Copyright 2021 The Sigstore Authors.</span>
 <span class="comment">//</span>
@@ -505,25 +574,22 @@
 <span class="comment">// limitations under the License.</span>
 
 <span class="kw">use</span> <span class="ident">anyhow</span>::{<span class="ident">anyhow</span>, <span class="prelude-ty">Result</span>};
-<span class="kw">use</span> <span class="ident">olpc_cjson::CanonicalFormatter</span>;
-<span class="kw">use</span> <span class="ident">serde::Serialize</span>;
-<span class="kw">use</span> <span class="ident">std</span>::{
-    <span class="ident">cmp::Eq</span>,
-    <span class="ident">collections</span>::{<span class="ident">HashMap</span>, <span class="ident">HashSet</span>},
-    <span class="ident">convert</span>::{<span class="ident">TryFrom</span>, <span class="ident">TryInto</span>},
-    <span class="ident">fmt</span>,
-    <span class="ident">hash</span>::{<span class="ident">Hash</span>, <span class="ident">Hasher</span>},
-};
-<span class="kw">use</span> <span class="ident">tracing</span>::{<span class="ident">info</span>, <span class="ident">warn</span>};
+<span class="kw">use</span> <span class="ident">oci_distribution::client::ImageLayer</span>;
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::HashMap</span>, <span class="ident">fmt</span>};
+<span class="kw">use</span> <span class="ident">tracing</span>::{<span class="ident">debug</span>, <span class="ident">info</span>, <span class="ident">warn</span>};
+<span class="kw">use</span> <span class="ident">x509_parser</span>::{<span class="ident">parse_x509_certificate</span>, <span class="ident">pem::parse_x509_pem</span>, <span class="ident">x509::SubjectPublicKeyInfo</span>};
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">bundle::Bundle</span>, <span class="ident">SIGSTORE_BUNDLE_ANNOTATION</span>, <span class="ident">SIGSTORE_SIGNATURE_ANNOTATION</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::cosign::SIGSTORE_OCI_MEDIA_TYPE</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">crypto::CosignVerificationKey</span>, <span class="ident">simple_signing::SimpleSigning</span>};
+<span class="kw">use</span> <span class="kw">super</span>::{
+    <span class="ident">bundle::Bundle</span>, <span class="ident">SIGSTORE_BUNDLE_ANNOTATION</span>, <span class="ident">SIGSTORE_CERT_ANNOTATION</span>, <span class="ident">SIGSTORE_OCI_MEDIA_TYPE</span>,
+    <span class="ident">SIGSTORE_SIGNATURE_ANNOTATION</span>,
+};
+<span class="kw">use</span> <span class="kw">crate</span>::{
+    <span class="ident">crypto</span>::{<span class="ident">verify_certificate_can_be_trusted</span>, <span class="ident">CosignVerificationKey</span>},
+    <span class="ident">simple_signing::SimpleSigning</span>,
+};
 
 <span class="doccomment">/// This is an internal object that contains all the data about a</span>
 <span class="doccomment">/// SimpleSigning object.</span>
-<span class="doccomment">/// This includes also a list of cosign signatures associated with the</span>
-<span class="doccomment">/// SimpleSigning object.SimpleSigning</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The struct provides some helper methods that can be used at verification</span>
 <span class="doccomment">/// time.</span>
@@ -532,210 +598,254 @@
 <span class="doccomment">/// two places:</span>
 <span class="doccomment">///   * The manifest of the signature object created by cosign</span>
 <span class="doccomment">///   * One or more SIGSTORE_OCI_MEDIA_TYPE layers</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Because of that, the object has to be built in two steps, this</span>
-<span class="doccomment">/// is done inside of the `build_signature_layers` function declared below</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">SignatureLayer</span> {
     <span class="kw">pub</span> <span class="ident">simple_signing</span>: <span class="ident">SimpleSigning</span>,
     <span class="kw">pub</span> <span class="ident">oci_digest</span>: <span class="ident">String</span>,
-    <span class="ident">cosign_signatures</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">bundles</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Bundle</span><span class="op">&gt;</span>,
+    <span class="ident">certificate_key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CosignVerificationKey</span><span class="op">&gt;</span>,
+    <span class="ident">signature</span>: <span class="ident">String</span>,
+    <span class="ident">bundle</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Bundle</span><span class="op">&gt;</span>,
     <span class="ident">raw_data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
-}
-
-<span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">SignatureLayer</span> {
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">oci_digest</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">oci_digest</span>
-    }
-}
-<span class="kw">impl</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="ident">SignatureLayer</span> {}
-
-<span class="kw">impl</span> <span class="ident">Hash</span> <span class="kw">for</span> <span class="ident">SignatureLayer</span> {
-    <span class="kw">fn</span> <span class="ident">hash</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Hasher</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">H</span>) {
-        <span class="self">self</span>.<span class="ident">oci_digest</span>.<span class="ident">hash</span>(<span class="ident">state</span>);
-    }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">SignatureLayer</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
-        <span class="kw">let</span> <span class="ident">signatures</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="self">self</span>
-            .<span class="ident">cosign_signatures</span>
-            .<span class="ident">iter</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="macro">format!</span>(<span class="string">&quot;  - {}&quot;</span>, <span class="ident">s</span>))
-            .<span class="ident">collect</span>();
         <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format!</span>(
-            <span class="string">&quot;SignatureLayer\n- digest: {}\n- SimpleSigning: {}\n- signatures:\n{}\n---&quot;</span>,
-            <span class="self">self</span>.<span class="ident">oci_digest</span>,
-            <span class="self">self</span>.<span class="ident">simple_signing</span>,
-            <span class="ident">signatures</span>.<span class="ident">join</span>(<span class="string">&quot;\n&quot;</span>),
+            <span class="string">r#&quot;SignatureLayer
+- digest: {}
+- signature: {:?}
+- bundle: {:?},
+- certificate key: {:?}
+- Simple Signing:
+  {}
+---&quot;#</span>,
+            <span class="self">self</span>.<span class="ident">oci_digest</span>, <span class="self">self</span>.<span class="ident">signature</span>, <span class="self">self</span>.<span class="ident">bundle</span>, <span class="self">self</span>.<span class="ident">certificate_key</span>, <span class="self">self</span>.<span class="ident">simple_signing</span>,
         );
 
         <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">msg</span>)
     }
 }
 
-<span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">oci_distribution::client::ImageLayer</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SignatureLayer</span> {
-    <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">anyhow::Error</span>;
-
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">layer</span>: <span class="kw-2">&amp;</span><span class="ident">oci_distribution::client::ImageLayer</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="ident">layer</span>.<span class="ident">media_type</span> <span class="op">!</span><span class="op">=</span> <span class="ident"><span class="kw">super</span>::SIGSTORE_OCI_MEDIA_TYPE</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">&quot;Not a simple signing layer&quot;</span>));
+<span class="kw">impl</span> <span class="ident">SignatureLayer</span> {
+    <span class="doccomment">/// Create a SignatureLayer that can be considered trusted.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Params:</span>
+    <span class="doccomment">///   * `descriptor`: the metatada of the layer, taken from the OCI manifest associated</span>
+    <span class="doccomment">///     with the Sigstore object</span>
+    <span class="doccomment">///   * `layer`: the data referenced by the descriptor</span>
+    <span class="doccomment">///   * `rekor_pub_key`: the public key of Rekor, used to verify `bundle`</span>
+    <span class="doccomment">///     entries</span>
+    <span class="doccomment">///   * `fulcio_pub_key`: the public key provided by Fulcio&#39;s certificate.</span>
+    <span class="doccomment">///     Used to verify the `certificate` entries</span>
+    <span class="doccomment">///   * `cert_email`: optional, the SAN to look for inside of trusted</span>
+    <span class="doccomment">///     certificates issued by Fulcio</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **Note well:** the certificate and bundle added to the final SignatureLayer</span>
+    <span class="doccomment">/// object are to be considered **trusted** and **verified**, according to</span>
+    <span class="doccomment">/// the parameters provided to this method.</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(
+        <span class="ident">descriptor</span>: <span class="kw-2">&amp;</span><span class="ident">oci_distribution::manifest::OciDescriptor</span>,
+        <span class="ident">layer</span>: <span class="kw-2">&amp;</span><span class="ident">oci_distribution::client::ImageLayer</span>,
+        <span class="ident">rekor_pub_key</span>: <span class="kw-2">&amp;</span><span class="ident">CosignVerificationKey</span>,
+        <span class="ident">fulcio_pub_key</span>: <span class="kw-2">&amp;</span><span class="ident">SubjectPublicKeyInfo</span>,
+        <span class="ident">cert_email</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SignatureLayer</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">descriptor</span>.<span class="ident">media_type</span> <span class="op">!</span><span class="op">=</span> <span class="ident">SIGSTORE_OCI_MEDIA_TYPE</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">&quot;layer doesn&#39;t have Sigstore media type&quot;</span>));
         }
-        <span class="kw">let</span> <span class="ident">simple_signing</span>: <span class="ident">SimpleSigning</span> <span class="op">=</span>
-            <span class="ident">serde_json::from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">layer</span>.<span class="ident">data</span>.<span class="ident">clone</span>()).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> {
-                <span class="macro">anyhow!</span>(
-                    <span class="string">&quot;Cannot convert layer data into SimpleSigning object: {:?}&quot;</span>,
-                    <span class="ident">e</span>
-                )
-            })<span class="question-mark">?</span>;
+
+        <span class="kw">if</span> <span class="ident">layer</span>.<span class="ident">media_type</span> <span class="op">!</span><span class="op">=</span> <span class="ident">SIGSTORE_OCI_MEDIA_TYPE</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">&quot;layer data doesn&#39;t have Sigstore media type&quot;</span>));
+        }
+
+        <span class="kw">let</span> <span class="ident">layer_digest</span> <span class="op">=</span> <span class="ident">layer</span>.<span class="ident">clone</span>().<span class="ident">sha256_digest</span>();
+        <span class="kw">if</span> <span class="ident">descriptor</span>.<span class="ident">digest</span> <span class="op">!</span><span class="op">=</span> <span class="ident">layer_digest</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">&quot;layer digest is different from the layer data one&quot;</span>));
+        }
+
+        <span class="kw">let</span> <span class="ident">simple_signing</span>: <span class="ident">SimpleSigning</span> <span class="op">=</span> <span class="ident">serde_json::from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">layer</span>.<span class="ident">data</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> {
+            <span class="macro">anyhow!</span>(
+                <span class="string">&quot;Cannot convert layer data into SimpleSigning object: {:?}&quot;</span>,
+                <span class="ident">e</span>
+            )
+        })<span class="question-mark">?</span>;
+
+        <span class="kw">let</span> <span class="ident">annotations</span> <span class="op">=</span> <span class="ident">descriptor</span>.<span class="ident">annotations</span>.<span class="ident">clone</span>().<span class="ident">unwrap_or_default</span>();
+
+        <span class="kw">let</span> <span class="ident">signature</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::get_signature_from_annotations</span>(<span class="kw-2">&amp;</span><span class="ident">annotations</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">bundle</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::get_bundle_from_annotations</span>(<span class="kw-2">&amp;</span><span class="ident">annotations</span>, <span class="ident">rekor_pub_key</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">certificate_key</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::get_certificate_from_annotations</span>(
+            <span class="kw-2">&amp;</span><span class="ident">annotations</span>,
+            <span class="ident">fulcio_pub_key</span>,
+            <span class="ident">bundle</span>.<span class="ident">as_ref</span>(),
+            <span class="ident">cert_email</span>,
+        )<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="ident">SignatureLayer</span> {
-            <span class="ident">oci_digest</span>: <span class="ident">layer</span>.<span class="ident">clone</span>().<span class="ident">sha256_digest</span>(),
-            <span class="ident">cosign_signatures</span>: <span class="ident">Vec::new</span>(),
-            <span class="ident">bundles</span>: <span class="ident">Vec::new</span>(),
-            <span class="ident">simple_signing</span>,
+            <span class="ident">oci_digest</span>: <span class="ident">descriptor</span>.<span class="ident">digest</span>.<span class="ident">clone</span>(),
             <span class="ident">raw_data</span>: <span class="ident">layer</span>.<span class="ident">data</span>.<span class="ident">clone</span>(),
+            <span class="ident">simple_signing</span>,
+            <span class="ident">signature</span>,
+            <span class="ident">bundle</span>,
+            <span class="ident">certificate_key</span>,
         })
     }
-}
 
-<span class="kw">impl</span> <span class="ident">SignatureLayer</span> {
-    <span class="doccomment">/// Given a map containing all the oci annotations defined inside of an OCI Layer, add:</span>
-    <span class="doccomment">///  * cosign signatures</span>
-    <span class="doccomment">///  * cosign bundles</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse_annotations</span>(
-        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">oci_annotations</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="ident">oci_annotations</span>.<span class="ident">is_none</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
-        }
-        <span class="kw">for</span> (<span class="ident">annotation_type</span>, <span class="ident">value</span>) <span class="kw">in</span> <span class="ident">oci_annotations</span>.<span class="ident">unwrap</span>() {
-            <span class="kw">match</span> <span class="ident">annotation_type</span>.<span class="ident">as_str</span>() {
-                <span class="ident">SIGSTORE_SIGNATURE_ANNOTATION</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">cosign_signatures</span>.<span class="ident">push</span>(<span class="ident">value</span>),
-                <span class="ident">SIGSTORE_BUNDLE_ANNOTATION</span> <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="kw">let</span> <span class="ident">bundle</span>: <span class="ident">Bundle</span> <span class="op">=</span> <span class="ident">serde_json::from_str</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>)
-                        .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="macro">anyhow!</span>(<span class="string">&quot;Cannot parse bundle |{}|: {:?}&quot;</span>, <span class="ident">value</span>, <span class="ident">e</span>))<span class="question-mark">?</span>;
-                    <span class="self">self</span>.<span class="ident">bundles</span>.<span class="ident">push</span>(<span class="ident">bundle</span>);
-                }
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
-            }
-        }
-        <span class="prelude-val">Ok</span>(())
+    <span class="kw">fn</span> <span class="ident">get_signature_from_annotations</span>(<span class="ident">annotations</span>: <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">signature</span>: <span class="ident">String</span> <span class="op">=</span> <span class="ident">annotations</span>
+            .<span class="ident">get</span>(<span class="ident">SIGSTORE_SIGNATURE_ANNOTATION</span>)
+            .<span class="ident">cloned</span>()
+            .<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">anyhow!</span>(<span class="string">&quot;Missing signature annotation&quot;</span>))<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="ident">signature</span>)
     }
 
-    <span class="doccomment">/// Given a Cosign public key, check whether the signature embedded into</span>
-    <span class="doccomment">/// the SignatureLayer has been produced by the given key</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_signed_by_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">verification_key</span>: <span class="kw-2">&amp;</span><span class="ident">CosignVerificationKey</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">for</span> <span class="ident">signature</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">cosign_signatures</span> {
-            <span class="kw">match</span> <span class="ident"><span class="kw">crate</span>::crypto::verify_signature</span>(<span class="ident">verification_key</span>, <span class="ident">signature</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">raw_data</span>) {
-                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="bool-val">true</span>,
-                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="macro">info!</span>(<span class="ident">signature</span><span class="op">=</span><span class="ident">signature</span>.<span class="ident">as_str</span>(), <span class="ident">reason</span><span class="op">=</span><span class="question-mark">?</span><span class="ident">e</span>, <span class="string">&quot;Cannot verify signature with the given key&quot;</span>);
-                }
-            }
+    <span class="kw">fn</span> <span class="ident">get_bundle_from_annotations</span>(
+        <span class="ident">annotations</span>: <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
+        <span class="ident">rekor_pub_key</span>: <span class="kw-2">&amp;</span><span class="ident">CosignVerificationKey</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Bundle</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">bundle</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">annotations</span>.<span class="ident">get</span>(<span class="ident">SIGSTORE_BUNDLE_ANNOTATION</span>) {
+            <span class="prelude-val">Some</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">Bundle::new_verified</span>(<span class="ident">value</span>, <span class="ident">rekor_pub_key</span>)<span class="question-mark">?</span>),
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+        };
+        <span class="prelude-val">Ok</span>(<span class="ident">bundle</span>)
+    }
+
+    <span class="kw">fn</span> <span class="ident">get_certificate_from_annotations</span>(
+        <span class="ident">annotations</span>: <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
+        <span class="ident">fulcio_pub_key</span>: <span class="kw-2">&amp;</span><span class="ident">SubjectPublicKeyInfo</span>,
+        <span class="ident">bundle</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Bundle</span><span class="op">&gt;</span>,
+        <span class="ident">cert_email</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CosignVerificationKey</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">certificate_key</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">annotations</span>.<span class="ident">get</span>(<span class="ident">SIGSTORE_CERT_ANNOTATION</span>) {
+            <span class="prelude-val">Some</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">verify_certificate_and_extract_public_key</span>(
+                <span class="ident">value</span>.<span class="ident">as_bytes</span>(),
+                <span class="ident">fulcio_pub_key</span>,
+                <span class="ident">cert_email</span>,
+                <span class="ident">bundle</span>,
+            )<span class="question-mark">?</span>),
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+        };
+        <span class="prelude-val">Ok</span>(<span class="ident">certificate_key</span>)
+    }
+
+    <span class="doccomment">/// Checks whether the SignatureLayer&#39;s can be verified using the given `verification_key`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// When no `verification_key` is given, the verification will be done using the Certificate</span>
+    <span class="doccomment">/// and the Bundle that are eventually part of the SignatureLayer. If none of them is available,</span>
+    <span class="doccomment">/// the verification will fail.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The given `verification_key` has precedence over the eventually available Certificate and</span>
+    <span class="doccomment">/// Bundle.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">verified</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">verification_key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">CosignVerificationKey</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">if</span> <span class="ident">verification_key</span>.<span class="ident">is_none</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">certificate_key</span>.<span class="ident">is_none</span>() {
+            <span class="macro">warn!</span>(<span class="ident">digest</span><span class="op">=</span><span class="self">self</span>.<span class="ident">oci_digest</span>.<span class="ident">as_str</span>(), <span class="string">&quot;Layer cannot be verified: no verification key provided and no trusted certificate key associated found&quot;</span>);
+            <span class="kw">return</span> <span class="bool-val">false</span>;
+        }
+
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">vk</span>) <span class="op">=</span> <span class="ident">verification_key</span> {
+            <span class="kw">return</span> <span class="self">self</span>.<span class="ident">is_signed_by_key</span>(<span class="ident">vk</span>);
+        }
+
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">vk</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">certificate_key</span> {
+            <span class="kw">return</span> <span class="self">self</span>.<span class="ident">is_signed_by_key</span>(<span class="kw-2">&amp;</span><span class="ident">vk</span>);
         }
 
         <span class="bool-val">false</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">are_bundles_signed_by_rekor</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">rekor_pub_key</span>: <span class="kw-2">&amp;</span><span class="ident">CosignVerificationKey</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
-        <span class="kw">for</span> <span class="ident">bundle</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bundles</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ser</span> <span class="op">=</span>
-                <span class="ident">serde_json::Serializer::with_formatter</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>, <span class="ident">CanonicalFormatter::new</span>());
-            <span class="ident">bundle</span>.<span class="ident">payload</span>.<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ser</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> {
-                <span class="macro">anyhow!</span>(
-                    <span class="string">&quot;Cannot create canonical JSON representation of bundle: {:?}&quot;</span>,
-                    <span class="ident">e</span>
-                )
-            })<span class="question-mark">?</span>;
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span>
-                <span class="ident"><span class="kw">crate</span>::crypto::verify_signature</span>(<span class="ident">rekor_pub_key</span>, <span class="kw-2">&amp;</span><span class="ident">bundle</span>.<span class="ident">signed_entry_timestamp</span>, <span class="kw-2">&amp;</span><span class="ident">buf</span>)
-            {
-                <span class="macro">info!</span>(<span class="ident">bundle</span><span class="op">=</span> <span class="question-mark">?</span><span class="ident">bundle</span>, <span class="ident">reason</span><span class="op">=</span><span class="question-mark">?</span><span class="ident">e</span>, <span class="string">&quot;Cannot verify bundle with the given rekor public key&quot;</span>);
-                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
+    <span class="doccomment">/// Given a Cosign public key, check whether one of the signatures embedded into</span>
+    <span class="doccomment">/// the SignatureLayer has been produced by the given key</span>
+    <span class="kw">fn</span> <span class="ident">is_signed_by_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">verification_key</span>: <span class="kw-2">&amp;</span><span class="ident">CosignVerificationKey</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">match</span> <span class="ident"><span class="kw">crate</span>::crypto::verify_signature</span>(<span class="ident">verification_key</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">signature</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">raw_data</span>) {
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="macro">debug!</span>(<span class="ident">signature</span><span class="op">=</span><span class="self">self</span>.<span class="ident">signature</span>.<span class="ident">as_str</span>(), <span class="ident">reason</span><span class="op">=</span><span class="question-mark">?</span><span class="ident">e</span>, <span class="string">&quot;Cannot verify signature with the given key&quot;</span>);
+                <span class="bool-val">false</span>
             }
         }
-
-        <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>)
     }
 }
 
-<span class="doccomment">/// Create a list of unique SignatureLayer objects starting from the</span>
-<span class="doccomment">/// data fetched from an OCI registry</span>
+<span class="doccomment">/// Creates a list of SignatureLayer objects by inspecting</span>
+<span class="doccomment">/// the given OCI manifest and its associated layers.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// **Note well:** the returned SignatureLayer have been</span>
+<span class="doccomment">/// verified using the given rekor and fulcio keys.</span>
+<span class="doccomment">/// When a certificate email is given, this is used to ensure</span>
+<span class="doccomment">/// the bundled certificate issued by Fulcio have this identity</span>
+<span class="doccomment">/// associated.</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">build_signature_layers</span>(
     <span class="ident">manifest</span>: <span class="kw-2">&amp;</span><span class="ident">oci_distribution::manifest::OciManifest</span>,
     <span class="ident">layers</span>: <span class="kw-2">&amp;</span>[<span class="ident">oci_distribution::client::ImageLayer</span>],
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">HashSet</span><span class="op">&lt;</span><span class="ident">SignatureLayer</span><span class="op">&gt;</span> {
-    <span class="comment">// Given the OCI manifest of the signature object,</span>
-    <span class="comment">// this hash has:</span>
-    <span class="comment">// * keys: the digest of the layer</span>
-    <span class="comment">// * value: the OciDescriptor(s) of that layer</span>
-    <span class="comment">//</span>
-    <span class="comment">// Only layers of type &quot;application/vnd.dev.cosign.simplesigning.v1+json&quot;</span>
-    <span class="comment">// are considered.</span>
-    <span class="comment">//</span>
-    <span class="comment">// Note well: signatures made by different users can have the same digest,</span>
-    <span class="comment">// that&#39;s why the value of the HashMap is a list.</span>
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">signature_layers_manifest_metadata</span>: <span class="ident">HashMap</span><span class="op">&lt;</span>
-        <span class="ident">String</span>,
-        <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">oci_distribution::manifest::OciDescriptor</span><span class="op">&gt;</span>,
-    <span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
+    <span class="ident">rekor_pub_key</span>: <span class="kw-2">&amp;</span><span class="ident">CosignVerificationKey</span>,
+    <span class="ident">fulcio_pub_key</span>: <span class="ident">SubjectPublicKeyInfo</span>,
+    <span class="ident">cert_email</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">String</span><span class="op">&gt;</span>,
+) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">SignatureLayer</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">signature_layers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">SignatureLayer</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
 
-    <span class="kw">for</span> <span class="ident">l</span> <span class="kw">in</span> <span class="ident">manifest</span>.<span class="ident">clone</span>().<span class="ident">layers</span> {
-        <span class="kw">if</span> <span class="ident">l</span>.<span class="ident">media_type</span> <span class="op">!</span><span class="op">=</span> <span class="ident">SIGSTORE_OCI_MEDIA_TYPE</span> {
-            <span class="kw">continue</span>;
-        }
-        <span class="kw">match</span> <span class="ident">signature_layers_manifest_metadata</span>.<span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="ident">l</span>.<span class="ident">digest</span>) {
-            <span class="prelude-val">Some</span>(<span class="ident">descriptors</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">descriptors</span>.<span class="ident">push</span>(<span class="ident">l</span>),
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">let</span> <span class="ident">descriptors</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="ident">l</span>.<span class="ident">clone</span>()];
-                <span class="ident">signature_layers_manifest_metadata</span>.<span class="ident">insert</span>(<span class="ident">l</span>.<span class="ident">digest</span>, <span class="ident">descriptors</span>);
+    <span class="kw">for</span> <span class="ident">manifest_layer</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">manifest</span>.<span class="ident">layers</span> {
+        <span class="kw">let</span> <span class="ident">matching_layer</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">oci_distribution::client::ImageLayer</span><span class="op">&gt;</span> <span class="op">=</span>
+            <span class="ident">layers</span>.<span class="ident">iter</span>().<span class="ident">find</span>(<span class="op">|</span><span class="ident">l</span><span class="op">|</span> {
+                <span class="kw">let</span> <span class="ident">tmp</span>: <span class="ident">ImageLayer</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">l</span>).<span class="ident">clone</span>();
+                <span class="ident">tmp</span>.<span class="ident">sha256_digest</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">manifest_layer</span>.<span class="ident">digest</span>
+            });
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">layer</span>) <span class="op">=</span> <span class="ident">matching_layer</span> {
+            <span class="kw">match</span> <span class="ident">SignatureLayer::new</span>(
+                <span class="ident">manifest_layer</span>,
+                <span class="ident">layer</span>,
+                <span class="ident">rekor_pub_key</span>,
+                <span class="kw-2">&amp;</span><span class="ident">fulcio_pub_key</span>,
+                <span class="ident">cert_email</span>,
+            ) {
+                <span class="prelude-val">Ok</span>(<span class="ident">sl</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">signature_layers</span>.<span class="ident">push</span>(<span class="ident">sl</span>),
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="macro">info!</span>(<span class="ident">error</span> <span class="op">=</span> <span class="question-mark">?</span><span class="ident">e</span>, <span class="string">&quot;Skipping OCI layer because of error&quot;</span>);
+                }
             }
         }
     }
-
-    <span class="kw">let</span> <span class="ident">signature_layers</span>: <span class="ident">HashSet</span><span class="op">&lt;</span><span class="ident">SignatureLayer</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">layers</span>
-        .<span class="ident">iter</span>()
-        .<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">image_layer</span><span class="op">|</span> {
-            <span class="kw">let</span> <span class="ident">sl</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SignatureLayer</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">image_layer</span>.<span class="ident">try_into</span>();
-            <span class="kw">match</span> <span class="ident">sl</span> {
-                <span class="prelude-val">Ok</span>(<span class="kw-2">mut</span> <span class="ident">sl</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">signature_layers_manifest_metadata</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">sl</span>.<span class="ident">oci_digest</span>) {
-                    <span class="prelude-val">Some</span>(<span class="ident">oci_descriptions</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="kw">for</span> <span class="ident">description</span> <span class="kw">in</span> <span class="ident">oci_descriptions</span> {
-                            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">sl</span>.<span class="ident">parse_annotations</span>(<span class="ident">description</span>.<span class="ident">annotations</span>.<span class="ident">clone</span>()) {
-                                <span class="macro">warn!</span>(<span class="ident">error</span> <span class="op">=</span><span class="question-mark">?</span><span class="ident">e</span>, <span class="string">&quot;Ignoring layer&quot;</span>);
-                                <span class="kw">return</span> <span class="prelude-val">None</span>;
-                            }
-                        }
-                        <span class="prelude-val">Some</span>(<span class="ident">sl</span>)
-                    }
-                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
-                },
-                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="macro">warn!</span>(<span class="ident">error</span> <span class="op">=</span> <span class="question-mark">?</span><span class="ident">e</span>, <span class="string">&quot;Ignoring layer&quot;</span>);
-                    <span class="prelude-val">None</span>
-                }
-            }
-        })
-        .<span class="ident">collect</span>();
 
     <span class="ident">signature_layers</span>
 }
 
+<span class="doccomment">/// Ensure the given certificate can be trusted, then extracts</span>
+<span class="doccomment">/// its public key</span>
+<span class="kw">fn</span> <span class="ident">verify_certificate_and_extract_public_key</span>(
+    <span class="ident">cert_raw</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
+    <span class="ident">fulcio_pub_key</span>: <span class="kw-2">&amp;</span><span class="ident">SubjectPublicKeyInfo</span>,
+    <span class="ident">cert_email</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">trusted_bundle</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Bundle</span><span class="op">&gt;</span>,
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CosignVerificationKey</span><span class="op">&gt;</span> {
+    <span class="kw">if</span> <span class="ident">trusted_bundle</span>.<span class="ident">is_none</span>() {
+        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(
+            <span class="string">&quot;Cannot verify attached certificate because rekor bundle is missing&quot;</span>
+        ));
+    }
+    <span class="kw">let</span> (<span class="kw">_</span>, <span class="ident">pem</span>) <span class="op">=</span>
+        <span class="ident">parse_x509_pem</span>(<span class="ident">cert_raw</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="macro">anyhow!</span>(<span class="string">&quot;Error parsing PEM certificate: {:?}&quot;</span>, <span class="ident">e</span>))<span class="question-mark">?</span>;
+    <span class="kw">let</span> (<span class="kw">_</span>, <span class="ident">cert</span>) <span class="op">=</span> <span class="ident">parse_x509_certificate</span>(<span class="kw-2">&amp;</span><span class="ident">pem</span>.<span class="ident">contents</span>)
+        .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="macro">anyhow!</span>(<span class="string">&quot;Error parsing bundled certificate: {:?}&quot;</span>, <span class="ident">e</span>))<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">integrated_time</span> <span class="op">=</span> <span class="ident">trusted_bundle</span>.<span class="ident">unwrap</span>().<span class="ident">payload</span>.<span class="ident">integrated_time</span>;
+    <span class="ident">verify_certificate_can_be_trusted</span>(<span class="kw-2">&amp;</span><span class="ident">cert</span>, <span class="ident">fulcio_pub_key</span>, <span class="ident">integrated_time</span>, <span class="ident">cert_email</span>)<span class="question-mark">?</span>;
+
+    <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident"><span class="kw">crate</span>::crypto::new_verification_key_from_public_key_der</span>(<span class="ident">cert</span>.<span class="ident">public_key</span>().<span class="ident">raw</span>)
+        .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="macro">anyhow!</span>(<span class="string">&quot;Cannot parse key from bundled certificate: {:?}&quot;</span>, <span class="ident">e</span>))<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(<span class="ident">key</span>)
+}
+
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::cosign::tests::REKOR_PUB_KEY</span>;
-    <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::crypto</span>;
-
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
     <span class="kw">use</span> <span class="ident">serde_json::json</span>;
+    <span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
+    <span class="kw">use</span> <span class="ident">x509_parser::traits::FromDer</span>;
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">build_correct_signature_layer_without_bundles</span>(
+    <span class="kw">use</span> <span class="kw">crate</span>::{
+        <span class="ident">cosign::tests</span>::{<span class="ident">get_fulcio_public_key</span>, <span class="ident">get_rekor_public_key</span>},
+        <span class="ident">crypto</span>::{<span class="ident">extract_public_key_from_pem_cert</span>, <span class="ident">new_verification_key_from_public_key_der</span>},
+    };
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">build_correct_signature_layer_without_bundle</span>(
     ) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">SignatureLayer</span>, <span class="ident">CosignVerificationKey</span>) {
         <span class="kw">let</span> <span class="ident">public_key</span> <span class="op">=</span> <span class="string">r#&quot;-----BEGIN PUBLIC KEY-----
 MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAENptdY/l3nB0yqkXLBWkZWQwo6+cu
@@ -761,103 +871,74 @@ OSWS1X9vPavpiQOoTTGC0xX57OojUadxF1cdQmrsiReWg2Wn4FneJfa8xw==
             <span class="ident">SignatureLayer</span> {
                 <span class="ident">simple_signing</span>: <span class="ident">serde_json::from_value</span>(<span class="ident">ss_value</span>.<span class="ident">clone</span>()).<span class="ident">unwrap</span>(),
                 <span class="ident">oci_digest</span>: <span class="ident">String::from</span>(<span class="string">&quot;digest&quot;</span>),
-                <span class="ident">cosign_signatures</span>: <span class="macro">vec!</span>[<span class="ident">signature</span>],
-                <span class="ident">bundles</span>: <span class="ident">Vec::new</span>(),
+                <span class="ident">signature</span>,
+                <span class="ident">bundle</span>: <span class="prelude-val">None</span>,
+                <span class="ident">certificate_key</span>: <span class="prelude-val">None</span>,
                 <span class="ident">raw_data</span>: <span class="ident">serde_json::to_vec</span>(<span class="kw-2">&amp;</span><span class="ident">ss_value</span>).<span class="ident">unwrap</span>(),
             },
             <span class="ident">verification_key</span>,
         )
     }
 
-    <span class="kw">fn</span> <span class="ident">build_correct_bundle</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Bundle</span> {
-        <span class="kw">let</span> <span class="ident">bundle_json</span> <span class="op">=</span> <span class="macro">json!</span>({
-          <span class="string">&quot;SignedEntryTimestamp&quot;</span>: <span class="string">&quot;MEUCIDx9M+yRpD0O47/Mzm8NAPCbtqy4uiTkLWWexW0bo4jZAiEA1wwueIW8XzJWNkut5y9snYj7UOfbMmUXp7fH3CzJmWg=&quot;</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">build_correct_signature_layer_with_certificate</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SignatureLayer</span> {
+        <span class="kw">let</span> <span class="ident">ss_value</span> <span class="op">=</span> <span class="macro">json!</span>({
+            <span class="string">&quot;critical&quot;</span>: {
+              <span class="string">&quot;identity&quot;</span>: {
+                <span class="string">&quot;docker-reference&quot;</span>: <span class="string">&quot;registry-testing.svc.lan/kubewarden/disallow-service-nodeport&quot;</span>
+              },
+              <span class="string">&quot;image&quot;</span>: {
+                <span class="string">&quot;docker-manifest-digest&quot;</span>: <span class="string">&quot;sha256:5f481572d088dc4023afb35fced9530ced3d9b03bf7299c6f492163cb9f0452e&quot;</span>
+              },
+              <span class="string">&quot;type&quot;</span>: <span class="string">&quot;cosign container image signature&quot;</span>
+            },
+            <span class="string">&quot;optional&quot;</span>: <span class="ident">null</span>
+        });
+
+        <span class="kw">let</span> <span class="ident">bundle_value</span> <span class="op">=</span> <span class="macro">json!</span>({
+          <span class="string">&quot;SignedEntryTimestamp&quot;</span>: <span class="string">&quot;MEUCIDBGJijj2FqU25yRWzlEWHqE64XKwUvychBs1bSM1PaKAiEAwcR2u81c42TLBk3lWJqhtB7SnM7Lh0OYEl6Bfa7ZA4s=&quot;</span>,
           <span class="string">&quot;Payload&quot;</span>: {
-            <span class="string">&quot;body&quot;</span>: <span class="string">&quot;eyJhcGlWZXJzaW9uIjoiMC4wLjEiLCJraW5kIjoicmVrb3JkIiwic3BlYyI6eyJkYXRhIjp7Imhhc2giOnsiYWxnb3JpdGhtIjoic2hhMjU2IiwidmFsdWUiOiIzYWY0NDE0ZDIwYzllMWNiNzZjY2M3MmFhZThiMjQyMTY2ZGFiZTZhZjUzMWE0YTc5MGRiOGUyZjBlNWVlN2M5In19LCJzaWduYXR1cmUiOnsiY29udGVudCI6Ik1FWUNJUURXV3hQUWEzWEZVc1BieVRZK24rYlp1LzZQd2hnNVd3eVlEUXRFZlFobzl3SWhBUGtLVzdldWI4YjdCWCtZYmJSYWM4VHd3SXJLNUt4dmR0UTZOdW9EK2l2VyIsImZvcm1hdCI6Ing1MDkiLCJwdWJsaWNLZXkiOnsiY29udGVudCI6IkxTMHRMUzFDUlVkSlRpQlFWVUpNU1VNZ1MwVlpMUzB0TFMwS1RVWnJkMFYzV1VoTGIxcEplbW93UTBGUldVbExiMXBKZW1vd1JFRlJZMFJSWjBGRlRFdG9SRGRHTlU5TGVUYzNXalU0TWxrMmFEQjFNVW96UjA1Qkt3cHJkbFZ6YURSbFMzQmtNV3gzYTBSQmVtWkdSSE0zZVZoRlJYaHpSV3RRVUhWcFVVcENaV3hFVkRZNGJqZFFSRWxYUWk5UlJWazNiWEpCUFQwS0xTMHRMUzFGVGtRZ1VGVkNURWxESUV0RldTMHRMUzB0Q2c9PSJ9fX19&quot;</span>,
-            <span class="string">&quot;integratedTime&quot;</span>: <span class="number">1634714179</span>,
-            <span class="string">&quot;logIndex&quot;</span>: <span class="number">783606</span>,
+            <span class="string">&quot;body&quot;</span>: <span class="string">&quot;eyJhcGlWZXJzaW9uIjoiMC4wLjEiLCJraW5kIjoicmVrb3JkIiwic3BlYyI6eyJkYXRhIjp7Imhhc2giOnsiYWxnb3JpdGhtIjoic2hhMjU2IiwidmFsdWUiOiJlNzgwMWRlOTM1NTEyZTIyYjIzN2M3YjU3ZTQyY2E0ZDIwZTIxMzRiZGYxYjk4Zjk3NmM4ZjU1ZDljZmU0MDY3In19LCJzaWduYXR1cmUiOnsiY29udGVudCI6Ik1FVUNJR3FXU2N6N3M5YVAyc0dYTkZLZXFpdnczQjZrUFJzNTZBSVRJSG52ZDVpZ0FpRUExa3piYVYyWTV5UEU4MUVOOTJOVUZPbDMxTExKU3Z3c2pGUTA3bTJYcWFBPSIsImZvcm1hdCI6Ing1MDkiLCJwdWJsaWNLZXkiOnsiY29udGVudCI6IkxTMHRMUzFDUlVkSlRpQkRSVkpVU1VaSlEwRlVSUzB0TFMwdENrMUpTVU5rZWtORFFXWjVaMEYzU1VKQlowbFVRU3RRYzJGTGFtRkZXbkZ1TjBsWk9UUmlNV1V2YWtwdWFYcEJTMEpuWjNGb2EycFBVRkZSUkVGNlFYRUtUVkpWZDBWM1dVUldVVkZMUlhkNGVtRlhaSHBrUnpsNVdsTTFhMXBZV1hoRlZFRlFRbWRPVmtKQlRWUkRTRTV3V2pOT01HSXpTbXhOUWpSWVJGUkplQXBOVkVGNVRVUkJNMDFxVlhoT2JHOVlSRlJKZUUxVVFYbE5SRUV6VGtSVmVFNVdiM2RCUkVKYVRVSk5SMEo1Y1VkVFRUUTVRV2RGUjBORGNVZFRUVFE1Q2tGM1JVaEJNRWxCUWtsT1pYZFJRbE14WmpSQmJVNUpSVTVrVEN0VkwwaEtiM1JOVTAwM1drNXVhMVJ1V1dWbWVIZFdPVlJGY25CMmJrRmFNQ3RFZWt3S2VXWkJRVlpoWlVwMFMycEdkbUpQVkdJNFJqRjVhRXBHVlRCWVdTdFNhV3BuWjBWd1RVbEpRa3BVUVU5Q1owNVdTRkU0UWtGbU9FVkNRVTFEUWpSQmR3cEZkMWxFVmxJd2JFSkJkM2REWjFsSlMzZFpRa0pSVlVoQmQwMTNSRUZaUkZaU01GUkJVVWd2UWtGSmQwRkVRV1JDWjA1V1NGRTBSVVpuVVZWTlpqRlNDazFOYzNGT1JrSnlWMko0T0cxU1RtUjRUMnRGUlZsemQwaDNXVVJXVWpCcVFrSm5kMFp2UVZWNVRWVmtRVVZIWVVwRGEzbFZVMVJ5UkdFMVN6ZFZiMGNLTUN0M2QyZFpNRWREUTNOSFFWRlZSa0ozUlVKQ1NVZEJUVWcwZDJaQldVbExkMWxDUWxGVlNFMUJTMGRqUjJnd1pFaEJOa3g1T1hkamJXd3lXVmhTYkFwWk1rVjBXVEk1ZFdSSFZuVmtRekF5VFVST2JWcFVaR3hPZVRCM1RVUkJkMHhVU1hsTmFtTjBXVzFaTTA1VE1XMU9SMWt4V2xSbmQxcEVTVFZPVkZGMUNtTXpVblpqYlVadVdsTTFibUl5T1c1aVIxWm9ZMGRzZWt4dFRuWmlVemxxV1ZSTk1sbFVSbXhQVkZsNVRrUkthVTlYV21wWmFrVXdUbWs1YWxsVE5Xb0tZMjVSZDBsQldVUldVakJTUVZGSUwwSkNXWGRHU1VWVFdtMTRhR1J0YkhaUlIwNW9Zek5TYkdKSGVIQk1iVEZzVFVGdlIwTkRjVWRUVFRRNVFrRk5SQXBCTW10QlRVZFpRMDFSUXpOWk1uVnNVRlJ6VUcxT1V6UmplbUZMWldwbE1FSnVUMUZJZWpWbE5rNUNXREJDY1hnNVdHTmhLM1F5YTA5cE1UZHpiM0JqQ2k5MkwzaElNWGhNZFZCdlEwMVJSRXRPUkRSWGFraG1TM0ZZV0U5bFZYWmFPVUU1TmtSeGNrVjNSMkZ4UjAxMGJrbDFUalJLZWxwWllWVk1Xbko0T1djS2IxaHhjVzh2UXpsUmJrOUlWSFJ2UFFvdExTMHRMVVZPUkNCRFJWSlVTVVpKUTBGVVJTMHRMUzB0Q2c9PSJ9fX19&quot;</span>,
+            <span class="string">&quot;integratedTime&quot;</span>: <span class="number">1634714717</span>,
+            <span class="string">&quot;logIndex&quot;</span>: <span class="number">783607</span>,
             <span class="string">&quot;logID&quot;</span>: <span class="string">&quot;c0d23d6ad406973f9559f3ba2d1ca01f84147d8ffc5b8445c224f98b9591801d&quot;</span>
           }
         });
-        <span class="kw">let</span> <span class="ident">bundle</span>: <span class="ident">Bundle</span> <span class="op">=</span> <span class="ident">serde_json::from_value</span>(<span class="ident">bundle_json</span>.<span class="ident">clone</span>()).<span class="ident">unwrap</span>();
-        <span class="ident">bundle</span>
-    }
+        <span class="kw">let</span> <span class="ident">bundle</span>: <span class="ident">Bundle</span> <span class="op">=</span> <span class="ident">serde_json::from_value</span>(<span class="ident">bundle_value</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot parse bundle&quot;</span>);
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">build_correct_signature_layer_with_bundles</span>(
-    ) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">SignatureLayer</span>, <span class="ident">CosignVerificationKey</span>) {
-        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">signature_layer</span>, <span class="ident">verification_key</span>) <span class="op">=</span>
-            <span class="ident">build_correct_signature_layer_without_bundles</span>();
-        <span class="ident">signature_layer</span>.<span class="ident">bundles</span>.<span class="ident">push</span>(<span class="ident">build_correct_bundle</span>());
+        <span class="kw">let</span> <span class="ident">cert_raw</span> <span class="op">=</span> <span class="string">r#&quot;-----BEGIN CERTIFICATE-----
+MIICdzCCAfygAwIBAgITA+PsaKjaEZqn7IY94b1e/jJnizAKBggqhkjOPQQDAzAq
+MRUwEwYDVQQKEwxzaWdzdG9yZS5kZXYxETAPBgNVBAMTCHNpZ3N0b3JlMB4XDTIx
+MTAyMDA3MjUxNloXDTIxMTAyMDA3NDUxNVowADBZMBMGByqGSM49AgEGCCqGSM49
+AwEHA0IABINewQBS1f4AmNIENdL+U/HJotMSM7ZNnkTnYefxwV9TErpvnAZ0+DzL
+yfAAVaeJtKjFvbOTb8F1yhJFU0XY+RijggEpMIIBJTAOBgNVHQ8BAf8EBAMCB4Aw
+EwYDVR0lBAwwCgYIKwYBBQUHAwMwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQUMf1R
+MMsqNFBrWbx8mRNdxOkEEYswHwYDVR0jBBgwFoAUyMUdAEGaJCkyUSTrDa5K7UoG
+0+wwgY0GCCsGAQUFBwEBBIGAMH4wfAYIKwYBBQUHMAKGcGh0dHA6Ly9wcml2YXRl
+Y2EtY29udGVudC02MDNmZTdlNy0wMDAwLTIyMjctYmY3NS1mNGY1ZTgwZDI5NTQu
+c3RvcmFnZS5nb29nbGVhcGlzLmNvbS9jYTM2YTFlOTYyNDJiOWZjYjE0Ni9jYS5j
+cnQwIAYDVR0RAQH/BBYwFIESZmxhdmlvQGNhc3RlbGxpLm1lMAoGCCqGSM49BAMD
+A2kAMGYCMQC3Y2ulPTsPmNS4czaKeje0BnOQHz5e6NBX0Bqx9Xca+t2kOi17sopc
+/v/xH1xLuPoCMQDKND4WjHfKqXXOeUvZ9A96DqrEwGaqGMtnIuN4JzZYaULZrx9g
+oXqqo/C9QnOHTto=
+-----END CERTIFICATE-----&quot;#</span>;
+        <span class="kw">let</span> <span class="ident">cert_key</span> <span class="op">=</span> <span class="ident">extract_public_key_from_pem_cert</span>(<span class="ident">cert_raw</span>.<span class="ident">as_bytes</span>())
+            .<span class="ident">expect</span>(<span class="string">&quot;Cannot extract public key from cert&quot;</span>);
+        <span class="kw">let</span> <span class="ident">cert_key</span> <span class="op">=</span>
+            <span class="ident">new_verification_key_from_public_key_der</span>(<span class="kw-2">&amp;</span><span class="ident">cert_key</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot build public key&quot;</span>);
 
-        (<span class="ident">signature_layer</span>, <span class="ident">verification_key</span>)
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">is_signed_by_key_success</span>() {
-        <span class="kw">let</span> (<span class="ident">signature_layer</span>, <span class="ident">verification_key</span>) <span class="op">=</span> <span class="ident">build_correct_signature_layer_without_bundles</span>();
-
-        <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span> <span class="ident">signature_layer</span>.<span class="ident">is_signed_by_key</span>(<span class="kw-2">&amp;</span><span class="ident">verification_key</span>);
-        <span class="macro">assert!</span>(<span class="ident">actual</span>, <span class="string">&quot;expected true, got false&quot;</span>);
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">is_signed_by_key_success_even_when_multiple_signatures_are_available</span>() {
-        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">signature_layer</span>, <span class="ident">verification_key</span>) <span class="op">=</span>
-            <span class="ident">build_correct_signature_layer_without_bundles</span>();
-        <span class="ident">signature_layer</span>.<span class="ident">cosign_signatures</span>.<span class="ident">push</span>(
-            <span class="ident">String::from</span>(<span class="string">&quot;MEUCIQDcb5mP/PmZhB5ywI01N/R1T5hqyIjgwebdIA4DA6Gp7QIgIVEq/Wr7aajgwP9c7MJFIlScfW035TrdnNAwoOQsEcw=&quot;</span>));
-
-        <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span> <span class="ident">signature_layer</span>.<span class="ident">is_signed_by_key</span>(<span class="kw-2">&amp;</span><span class="ident">verification_key</span>);
-        <span class="macro">assert!</span>(<span class="ident">actual</span>, <span class="string">&quot;expected true, got false&quot;</span>);
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">are_bundles_signed_by_rekor_success</span>() {
-        <span class="kw">let</span> (<span class="ident">signature_layer</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">build_correct_signature_layer_with_bundles</span>();
-        <span class="kw">let</span> <span class="ident">rekor_pub_key</span> <span class="op">=</span> <span class="ident">crypto::new_verification_key</span>(<span class="ident">REKOR_PUB_KEY</span>).<span class="ident">unwrap</span>();
-
-        <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span> <span class="ident">signature_layer</span>.<span class="ident">are_bundles_signed_by_rekor</span>(<span class="kw-2">&amp;</span><span class="ident">rekor_pub_key</span>);
-        <span class="macro">assert!</span>(<span class="ident">actual</span>.<span class="ident">is_ok</span>());
-        <span class="macro">assert!</span>(<span class="ident">actual</span>.<span class="ident">unwrap</span>(), <span class="string">&quot;expected true, got false&quot;</span>);
+        <span class="ident">SignatureLayer</span> {
+            <span class="ident">simple_signing</span>: <span class="ident">serde_json::from_value</span>(<span class="ident">ss_value</span>.<span class="ident">clone</span>()).<span class="ident">unwrap</span>(),
+            <span class="ident">oci_digest</span>: <span class="ident">String::from</span>(<span class="string">&quot;sha256:5f481572d088dc4023afb35fced9530ced3d9b03bf7299c6f492163cb9f0452e&quot;</span>),
+            <span class="ident">signature</span>: <span class="ident">String::from</span>(<span class="string">&quot;MEUCIGqWScz7s9aP2sGXNFKeqivw3B6kPRs56AITIHnvd5igAiEA1kzbaV2Y5yPE81EN92NUFOl31LLJSvwsjFQ07m2XqaA=&quot;</span>),
+            <span class="ident">bundle</span>: <span class="prelude-val">Some</span>(<span class="ident">bundle</span>),
+            <span class="ident">certificate_key</span>: <span class="prelude-val">Some</span>(<span class="ident">cert_key</span>),
+            <span class="ident">raw_data</span>: <span class="ident">serde_json::to_vec</span>(<span class="kw-2">&amp;</span><span class="ident">ss_value</span>).<span class="ident">unwrap</span>(),
+        }
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">are_bundles_signed_by_rekor_fails_because_wrong_verification_key</span>() {
-        <span class="kw">let</span> (<span class="ident">signature_layer</span>, <span class="ident">a_signature_key</span>) <span class="op">=</span> <span class="ident">build_correct_signature_layer_with_bundles</span>();
-        <span class="kw">let</span> <span class="ident">rekor_pub_key</span> <span class="op">=</span> <span class="ident">a_signature_key</span>;
-
-        <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span> <span class="ident">signature_layer</span>.<span class="ident">are_bundles_signed_by_rekor</span>(<span class="kw-2">&amp;</span><span class="ident">rekor_pub_key</span>);
-        <span class="macro">assert!</span>(<span class="ident">actual</span>.<span class="ident">is_ok</span>());
-        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">actual</span>.<span class="ident">unwrap</span>(), <span class="string">&quot;expected false, got true&quot;</span>);
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">are_bundles_signed_by_rekor_fails_because_one_of_bundles_fails_verification</span>() {
-        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">signature_layer</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">build_correct_signature_layer_with_bundles</span>();
-        <span class="kw">let</span> <span class="ident">rekor_pub_key</span> <span class="op">=</span> <span class="ident">crypto::new_verification_key</span>(<span class="ident">REKOR_PUB_KEY</span>).<span class="ident">unwrap</span>();
-
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">a_wrong_bundle</span> <span class="op">=</span> <span class="ident">signature_layer</span>.<span class="ident">bundles</span>.<span class="ident">first</span>().<span class="ident">unwrap</span>().<span class="ident">clone</span>();
-        <span class="ident">a_wrong_bundle</span>.<span class="ident">payload</span>.<span class="ident">body</span> <span class="op">=</span> <span class="string">&quot;This is not the body that was signed&quot;</span>.<span class="ident">to_string</span>();
-        <span class="ident">signature_layer</span>.<span class="ident">bundles</span>.<span class="ident">push</span>(<span class="ident">a_wrong_bundle</span>);
-
-        <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span> <span class="ident">signature_layer</span>.<span class="ident">are_bundles_signed_by_rekor</span>(<span class="kw-2">&amp;</span><span class="ident">rekor_pub_key</span>);
-        <span class="macro">assert!</span>(<span class="ident">actual</span>.<span class="ident">is_ok</span>());
-        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">actual</span>.<span class="ident">unwrap</span>(), <span class="string">&quot;expected false, got true&quot;</span>);
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">is_signed_by_key_fails_when_no_signatures_are_available</span>() {
-        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">signature_layer</span>, <span class="ident">verification_key</span>) <span class="op">=</span>
-            <span class="ident">build_correct_signature_layer_without_bundles</span>();
-        <span class="ident">signature_layer</span>.<span class="ident">cosign_signatures</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-
-        <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span> <span class="ident">signature_layer</span>.<span class="ident">is_signed_by_key</span>(<span class="kw-2">&amp;</span><span class="ident">verification_key</span>);
-        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">actual</span>, <span class="string">&quot;expected false, got true&quot;</span>);
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">is_signed_by_key_fails_when_no_signatures_is_valid</span>() {
-        <span class="kw">let</span> (<span class="ident">signature_layer</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">build_correct_signature_layer_without_bundles</span>();
+    <span class="kw">fn</span> <span class="ident">is_signed_by_key_fails_when_signature_is_not_valid</span>() {
+        <span class="kw">let</span> (<span class="ident">signature_layer</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">build_correct_signature_layer_without_bundle</span>();
         <span class="kw">let</span> <span class="ident">verification_key</span> <span class="op">=</span> <span class="ident"><span class="kw">crate</span>::crypto::new_verification_key</span>(
             <span class="string">r#&quot;-----BEGIN PUBLIC KEY-----
 MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAETJP9cqpUQsn2ggmJniWGjHdlsHzD
@@ -871,113 +952,170 @@ JsB89BPhZYch0U0hKANx5TY+ncrm0s8bfJxxHoenAEFhwhuXeb4PqIrtoQ==
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">parse_annotations_considers_only_sigstore_annotations</span>() {
-        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">signature_layer</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">build_correct_signature_layer_without_bundles</span>();
-        <span class="ident">signature_layer</span>.<span class="ident">cosign_signatures</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-
-        <span class="kw">let</span> <span class="ident">expected_signature</span> <span class="op">=</span> <span class="ident">String::from</span>(<span class="string">&quot;this is the exepected signature&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">oci_annotations</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
-        <span class="ident">oci_annotations</span>.<span class="ident">insert</span>(
-            <span class="ident"><span class="kw">crate</span>::cosign::SIGSTORE_SIGNATURE_ANNOTATION</span>.<span class="ident">into</span>(),
-            <span class="ident">expected_signature</span>.<span class="ident">clone</span>(),
-        );
-        <span class="ident">oci_annotations</span>.<span class="ident">insert</span>(<span class="string">&quot;something-else&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;not a signature&quot;</span>.<span class="ident">into</span>());
-        <span class="macro">assert!</span>(<span class="ident">signature_layer</span>
-            .<span class="ident">parse_annotations</span>(<span class="prelude-val">Some</span>(<span class="ident">oci_annotations</span>))
-            .<span class="ident">is_ok</span>());
-
-        <span class="macro">assert_eq!</span>(<span class="ident">signature_layer</span>.<span class="ident">cosign_signatures</span>.<span class="ident">len</span>(), <span class="number">1</span>);
-        <span class="macro">assert_eq!</span>(
-            <span class="ident">signature_layer</span>.<span class="ident">cosign_signatures</span>.<span class="ident">iter</span>().<span class="ident">next</span>(),
-            <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">expected_signature</span>)
-        );
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">parse_annotations_handles_oci_manifests_without_annotations</span>() {
-        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">signature_layer</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">build_correct_signature_layer_without_bundles</span>();
-        <span class="ident">signature_layer</span>.<span class="ident">cosign_signatures</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-        <span class="macro">assert!</span>(<span class="ident">signature_layer</span>.<span class="ident">parse_annotations</span>(<span class="prelude-val">None</span>).<span class="ident">is_ok</span>());
-
-        <span class="macro">assert!</span>(<span class="ident">signature_layer</span>.<span class="ident">cosign_signatures</span>.<span class="ident">is_empty</span>());
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">parse_annotations_handles_cosign_bundles</span>() {
-        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">signature_layer</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">build_correct_signature_layer_without_bundles</span>();
-        <span class="ident">signature_layer</span>.<span class="ident">cosign_signatures</span> <span class="op">=</span> <span class="macro">vec!</span>[];
-
-        <span class="kw">let</span> <span class="ident">expected_bundle</span> <span class="op">=</span> <span class="ident">build_correct_bundle</span>();
-
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">oci_annotations</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
-        <span class="ident">oci_annotations</span>.<span class="ident">insert</span>(
-            <span class="ident"><span class="kw">crate</span>::cosign::SIGSTORE_BUNDLE_ANNOTATION</span>.<span class="ident">into</span>(),
-            <span class="ident">serde_json::to_string</span>(<span class="kw-2">&amp;</span><span class="ident">expected_bundle</span>.<span class="ident">clone</span>()).<span class="ident">unwrap</span>(),
-        );
-        <span class="macro">assert!</span>(<span class="ident">signature_layer</span>
-            .<span class="ident">parse_annotations</span>(<span class="prelude-val">Some</span>(<span class="ident">oci_annotations</span>))
-            .<span class="ident">is_ok</span>());
-
-        <span class="macro">assert_eq!</span>(<span class="ident">signature_layer</span>.<span class="ident">bundles</span>.<span class="ident">len</span>(), <span class="number">1</span>);
-        <span class="macro">assert_eq!</span>(
-            <span class="ident">signature_layer</span>.<span class="ident">bundles</span>.<span class="ident">iter</span>().<span class="ident">next</span>(),
-            <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">expected_bundle</span>)
-        );
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">build_signature_layers_when_multiple_signatures_are_available</span>() {
-        <span class="kw">let</span> <span class="ident">signatures</span> <span class="op">=</span> <span class="macro">vec!</span>[
-            <span class="string">&quot;MEQCIHES47aY6xcCSH/Q8FC8v8qQmqWx5Tq8rHskzmfp4fM2AiBsXDgGMgW5I68DsqoCSdobPr282UXHv/iM3ABBkIGBYA==&quot;</span>,
-            <span class="string">&quot;MEUCIQDcb5mP/PmZhB5ywI01N/R1T5hqyIjgwebdIA4DA6Gp7QIgIVEq/Wr7aajgwP9c7MJFIlScfW035TrdnNAwoOQsEcw=&quot;</span>,
-        ];
-        <span class="kw">let</span> <span class="ident">manifest_json</span> <span class="op">=</span> <span class="macro">json!</span>({
-              <span class="string">&quot;schemaVersion&quot;</span>: <span class="number">2</span>,
-              <span class="string">&quot;config&quot;</span>: {
-                <span class="string">&quot;mediaType&quot;</span>: <span class="string">&quot;application/vnd.oci.image.config.v1+json&quot;</span>,
-                <span class="string">&quot;size&quot;</span>: <span class="number">342</span>,
-                <span class="string">&quot;digest&quot;</span>: <span class="string">&quot;sha256:44f7cbc918de5e174ac682fa0c83b35122482b9900ff312340709ac95a3d5372&quot;</span>
-              },
-              <span class="string">&quot;layers&quot;</span>: [
-                {
-                  <span class="string">&quot;mediaType&quot;</span>: <span class="string">&quot;application/vnd.dev.cosign.simplesigning.v1+json&quot;</span>,
-                  <span class="string">&quot;size&quot;</span>: <span class="number">247</span>,
-                  <span class="string">&quot;digest&quot;</span>: <span class="string">&quot;sha256:3b135f3a4b97f77a80e332f3bd09737b449c627fbca957cb464a3322d35ec13f&quot;</span>,
-                  <span class="string">&quot;annotations&quot;</span>: {
-                    <span class="string">&quot;dev.cosignproject.cosign/signature&quot;</span>: <span class="ident">signatures</span>[<span class="number">0</span>]
-                  }
-                },
-                {
-                  <span class="string">&quot;mediaType&quot;</span>: <span class="string">&quot;application/vnd.dev.cosign.simplesigning.v1+json&quot;</span>,
-                  <span class="string">&quot;size&quot;</span>: <span class="number">247</span>,
-                  <span class="string">&quot;digest&quot;</span>: <span class="string">&quot;sha256:3b135f3a4b97f77a80e332f3bd09737b449c627fbca957cb464a3322d35ec13f&quot;</span>,
-                  <span class="string">&quot;annotations&quot;</span>: {
-                    <span class="string">&quot;dev.cosignproject.cosign/signature&quot;</span>: <span class="ident">signatures</span>[<span class="number">1</span>]
-                  }
-                }
-              ]
-        });
-
-        <span class="kw">let</span> <span class="ident">manifest</span>: <span class="ident">oci_distribution::manifest::OciManifest</span> <span class="op">=</span>
-            <span class="ident">serde_json::from_value</span>(<span class="ident">manifest_json</span>).<span class="ident">unwrap</span>();
-
-        <span class="kw">let</span> <span class="ident">layer</span> <span class="op">=</span> <span class="ident">oci_distribution::client::ImageLayer</span>{
-            <span class="ident">media_type</span>: <span class="ident">SIGSTORE_OCI_MEDIA_TYPE</span>.<span class="ident">into</span>(),
-            <span class="ident">data</span>: <span class="string">r#&quot;{&quot;critical&quot;:{&quot;identity&quot;:{&quot;docker-reference&quot;:&quot;registry-testing.svc.lan/alpine&quot;},&quot;image&quot;:{&quot;docker-manifest-digest&quot;:&quot;sha256:69704ef328d05a9f806b6b8502915e6a0a4faa4d72018dc42343f511490daf8a&quot;},&quot;type&quot;:&quot;cosign container image signature&quot;},&quot;optional&quot;:null}&quot;#</span>.<span class="ident">into</span>(),
+    <span class="kw">fn</span> <span class="ident">new_signature_layer_fails_because_bad_descriptor</span>() {
+        <span class="kw">let</span> <span class="ident">descriptor</span> <span class="op">=</span> <span class="ident">oci_distribution::manifest::OciDescriptor</span> {
+            <span class="ident">media_type</span>: <span class="string">&quot;not what you would expected&quot;</span>.<span class="ident">into</span>(),
+            ..<span class="ident">Default::default</span>()
+        };
+        <span class="kw">let</span> <span class="ident">layer</span> <span class="op">=</span> <span class="ident">oci_distribution::client::ImageLayer</span> {
+            <span class="ident">media_type</span>: <span class="ident"><span class="kw">super</span>::SIGSTORE_OCI_MEDIA_TYPE</span>.<span class="ident">to_string</span>(),
+            <span class="ident">data</span>: <span class="ident">Vec::new</span>(),
         };
 
-        <span class="comment">// adding the same layer more than once, this happens when multiple people sign the</span>
-        <span class="comment">// artifact</span>
-        <span class="kw">let</span> <span class="ident">layers</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="ident">layer</span>.<span class="ident">clone</span>(), <span class="ident">layer</span>];
+        <span class="kw">let</span> <span class="ident">rekor_pub_key</span> <span class="op">=</span> <span class="ident">get_rekor_public_key</span>();
 
-        <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span> <span class="ident">build_signature_layers</span>(<span class="kw-2">&amp;</span><span class="ident">manifest</span>, <span class="kw-2">&amp;</span><span class="ident">layers</span>);
+        <span class="kw">let</span> <span class="ident">fulcio_key_raw</span> <span class="op">=</span> <span class="ident">get_fulcio_public_key</span>();
+        <span class="kw">let</span> (<span class="kw">_</span>, <span class="ident">fulcio_pub_key</span>) <span class="op">=</span> <span class="ident">SubjectPublicKeyInfo::from_der</span>(<span class="kw-2">&amp;</span><span class="ident">fulcio_key_raw</span>)
+            .<span class="ident">expect</span>(<span class="string">&quot;Cannot parse fulcio public key&quot;</span>);
 
-        <span class="macro">assert_eq!</span>(<span class="ident">actual</span>.<span class="ident">len</span>(), <span class="number">1</span>);
-        <span class="kw">let</span> <span class="ident">signature_layer</span> <span class="op">=</span> <span class="ident">actual</span>.<span class="ident">iter</span>().<span class="ident">next</span>().<span class="ident">unwrap</span>();
-        <span class="macro">assert_eq!</span>(
-            <span class="ident">signature_layer</span>.<span class="ident">cosign_signatures</span>.<span class="ident">clone</span>().<span class="ident">sort</span>(),
-            <span class="ident">signatures</span>.<span class="ident">clone</span>().<span class="ident">sort</span>()
+        <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span>
+            <span class="ident">SignatureLayer::new</span>(<span class="kw-2">&amp;</span><span class="ident">descriptor</span>, <span class="kw-2">&amp;</span><span class="ident">layer</span>, <span class="kw-2">&amp;</span><span class="ident">rekor_pub_key</span>, <span class="kw-2">&amp;</span><span class="ident">fulcio_pub_key</span>, <span class="prelude-val">None</span>);
+        <span class="macro">assert!</span>(<span class="ident">actual</span>.<span class="ident">is_err</span>());
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">new_signature_layer_fails_because_bad_layer</span>() {
+        <span class="kw">let</span> <span class="ident">descriptor</span> <span class="op">=</span> <span class="ident">oci_distribution::manifest::OciDescriptor</span> {
+            <span class="ident">media_type</span>: <span class="ident"><span class="kw">super</span>::SIGSTORE_OCI_MEDIA_TYPE</span>.<span class="ident">to_string</span>(),
+            ..<span class="ident">Default::default</span>()
+        };
+        <span class="kw">let</span> <span class="ident">layer</span> <span class="op">=</span> <span class="ident">oci_distribution::client::ImageLayer</span> {
+            <span class="ident">media_type</span>: <span class="string">&quot;not what you would expect&quot;</span>.<span class="ident">into</span>(),
+            <span class="ident">data</span>: <span class="ident">Vec::new</span>(),
+        };
+
+        <span class="kw">let</span> <span class="ident">rekor_pub_key</span> <span class="op">=</span> <span class="ident">get_rekor_public_key</span>();
+
+        <span class="kw">let</span> <span class="ident">fulcio_key_raw</span> <span class="op">=</span> <span class="ident">get_fulcio_public_key</span>();
+        <span class="kw">let</span> (<span class="kw">_</span>, <span class="ident">fulcio_pub_key</span>) <span class="op">=</span> <span class="ident">SubjectPublicKeyInfo::from_der</span>(<span class="kw-2">&amp;</span><span class="ident">fulcio_key_raw</span>)
+            .<span class="ident">expect</span>(<span class="string">&quot;Cannot parse fulcio public key&quot;</span>);
+
+        <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span>
+            <span class="ident">SignatureLayer::new</span>(<span class="kw-2">&amp;</span><span class="ident">descriptor</span>, <span class="kw-2">&amp;</span><span class="ident">layer</span>, <span class="kw-2">&amp;</span><span class="ident">rekor_pub_key</span>, <span class="kw-2">&amp;</span><span class="ident">fulcio_pub_key</span>, <span class="prelude-val">None</span>);
+        <span class="macro">assert!</span>(<span class="ident">actual</span>.<span class="ident">is_err</span>());
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">new_signature_layer_fails_because_checksum_mismatch</span>() {
+        <span class="kw">let</span> <span class="ident">descriptor</span> <span class="op">=</span> <span class="ident">oci_distribution::manifest::OciDescriptor</span> {
+            <span class="ident">media_type</span>: <span class="ident"><span class="kw">super</span>::SIGSTORE_OCI_MEDIA_TYPE</span>.<span class="ident">to_string</span>(),
+            <span class="ident">digest</span>: <span class="string">&quot;some digest&quot;</span>.<span class="ident">into</span>(),
+            ..<span class="ident">Default::default</span>()
+        };
+        <span class="kw">let</span> <span class="ident">layer</span> <span class="op">=</span> <span class="ident">oci_distribution::client::ImageLayer</span> {
+            <span class="ident">media_type</span>: <span class="ident"><span class="kw">super</span>::SIGSTORE_OCI_MEDIA_TYPE</span>.<span class="ident">to_string</span>(),
+            <span class="ident">data</span>: <span class="string">&quot;some other contents&quot;</span>.<span class="ident">into</span>(),
+        };
+
+        <span class="kw">let</span> <span class="ident">rekor_pub_key</span> <span class="op">=</span> <span class="ident">get_rekor_public_key</span>();
+
+        <span class="kw">let</span> <span class="ident">fulcio_key_raw</span> <span class="op">=</span> <span class="ident">get_fulcio_public_key</span>();
+        <span class="kw">let</span> (<span class="kw">_</span>, <span class="ident">fulcio_pub_key</span>) <span class="op">=</span> <span class="ident">SubjectPublicKeyInfo::from_der</span>(<span class="kw-2">&amp;</span><span class="ident">fulcio_key_raw</span>)
+            .<span class="ident">expect</span>(<span class="string">&quot;Cannot parse fulcio public key&quot;</span>);
+
+        <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span>
+            <span class="ident">SignatureLayer::new</span>(<span class="kw-2">&amp;</span><span class="ident">descriptor</span>, <span class="kw-2">&amp;</span><span class="ident">layer</span>, <span class="kw-2">&amp;</span><span class="ident">rekor_pub_key</span>, <span class="kw-2">&amp;</span><span class="ident">fulcio_pub_key</span>, <span class="prelude-val">None</span>);
+        <span class="macro">assert!</span>(<span class="ident">actual</span>.<span class="ident">is_err</span>());
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">get_signature_from_annotations_success</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">annotations</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
+        <span class="ident">annotations</span>.<span class="ident">insert</span>(<span class="ident">SIGSTORE_SIGNATURE_ANNOTATION</span>.<span class="ident">into</span>(), <span class="string">&quot;foo&quot;</span>.<span class="ident">into</span>());
+
+        <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span> <span class="ident">SignatureLayer::get_signature_from_annotations</span>(<span class="kw-2">&amp;</span><span class="ident">annotations</span>);
+        <span class="macro">assert!</span>(<span class="ident">actual</span>.<span class="ident">is_ok</span>());
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">get_signature_from_annotations_failure</span>() {
+        <span class="kw">let</span> <span class="ident">annotations</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
+
+        <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span> <span class="ident">SignatureLayer::get_signature_from_annotations</span>(<span class="kw-2">&amp;</span><span class="ident">annotations</span>);
+        <span class="macro">assert!</span>(<span class="ident">actual</span>.<span class="ident">is_err</span>());
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">get_bundle_from_annotations_works</span>() {
+        <span class="comment">// we are **not** going to test neither the creation from a valid bundle</span>
+        <span class="comment">// nor the fauilure because the bundle cannot be verified. These cases</span>
+        <span class="comment">// are already covered by Bundle&#39;s test suite</span>
+        <span class="comment">//</span>
+        <span class="comment">// We care only about the only case not tested: to not</span>
+        <span class="comment">// fail when no bundle is specified.</span>
+        <span class="kw">let</span> <span class="ident">annotations</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
+        <span class="kw">let</span> <span class="ident">rekor_pub_key</span> <span class="op">=</span> <span class="ident">get_rekor_public_key</span>();
+
+        <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span> <span class="ident">SignatureLayer::get_bundle_from_annotations</span>(<span class="kw-2">&amp;</span><span class="ident">annotations</span>, <span class="kw-2">&amp;</span><span class="ident">rekor_pub_key</span>);
+        <span class="macro">assert!</span>(<span class="ident">actual</span>.<span class="ident">is_ok</span>());
+        <span class="macro">assert!</span>(<span class="ident">actual</span>.<span class="ident">unwrap</span>().<span class="ident">is_none</span>());
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">get_certificate_from_annotations_returns_none</span>() {
+        <span class="kw">let</span> <span class="ident">annotations</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
+        <span class="kw">let</span> <span class="ident">fulcio_key_raw</span> <span class="op">=</span> <span class="ident">get_fulcio_public_key</span>();
+        <span class="kw">let</span> (<span class="kw">_</span>, <span class="ident">fulcio_pub_key</span>) <span class="op">=</span> <span class="ident">SubjectPublicKeyInfo::from_der</span>(<span class="kw-2">&amp;</span><span class="ident">fulcio_key_raw</span>)
+            .<span class="ident">expect</span>(<span class="string">&quot;Cannot parse fulcio public key&quot;</span>);
+
+        <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span> <span class="ident">SignatureLayer::get_certificate_from_annotations</span>(
+            <span class="kw-2">&amp;</span><span class="ident">annotations</span>,
+            <span class="kw-2">&amp;</span><span class="ident">fulcio_pub_key</span>,
+            <span class="prelude-val">None</span>,
+            <span class="prelude-val">None</span>,
         );
+
+        <span class="macro">assert!</span>(<span class="ident">actual</span>.<span class="ident">is_ok</span>());
+        <span class="macro">assert!</span>(<span class="ident">actual</span>.<span class="ident">unwrap</span>().<span class="ident">is_none</span>());
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">verify_certificate_and_extract_public_key_fails_when_no_bundle_is_found</span>() {
+        <span class="kw">let</span> <span class="ident">fulcio_key_raw</span> <span class="op">=</span> <span class="ident">get_fulcio_public_key</span>();
+        <span class="kw">let</span> (<span class="kw">_</span>, <span class="ident">fulcio_pub_key</span>) <span class="op">=</span> <span class="ident">SubjectPublicKeyInfo::from_der</span>(<span class="kw-2">&amp;</span><span class="ident">fulcio_key_raw</span>)
+            .<span class="ident">expect</span>(<span class="string">&quot;Cannot parse fulcio public key&quot;</span>);
+
+        <span class="comment">// the actual contents of the certificate do not matter</span>
+        <span class="kw">let</span> <span class="ident">cert</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+
+        <span class="kw">let</span> <span class="ident">actual</span> <span class="op">=</span> <span class="ident">verify_certificate_and_extract_public_key</span>(<span class="kw-2">&amp;</span><span class="ident">cert</span>, <span class="kw-2">&amp;</span><span class="ident">fulcio_pub_key</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
+
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">actual</span> {
+            <span class="macro">assert_eq!</span>(
+                <span class="ident">e</span>.<span class="ident">to_string</span>(),
+                <span class="string">&quot;Cannot verify attached certificate because rekor bundle is missing&quot;</span>.<span class="ident">to_string</span>()
+            );
+        } <span class="kw">else</span> {
+            <span class="macro">panic!</span>(<span class="string">&quot;Didn&#39;t get an error as expected&quot;</span>);
+        }
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">verify_with_key</span>() {
+        <span class="kw">let</span> (<span class="ident">sl</span>, <span class="ident">key</span>) <span class="op">=</span> <span class="ident">build_correct_signature_layer_without_bundle</span>();
+        <span class="macro">assert!</span>(<span class="ident">sl</span>.<span class="ident">verified</span>(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">key</span>)));
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">verify_without_key_and_layer_does_not_have_certificate</span>() {
+        <span class="kw">let</span> (<span class="ident">sl</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">build_correct_signature_layer_without_bundle</span>();
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">sl</span>.<span class="ident">verified</span>(<span class="prelude-val">None</span>));
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">verify_layer_signed_only_in_keyless_mode</span>() {
+        <span class="kw">let</span> <span class="ident">sl</span> <span class="op">=</span> <span class="ident">build_correct_signature_layer_with_certificate</span>();
+        <span class="macro">assert!</span>(<span class="ident">sl</span>.<span class="ident">verified</span>(<span class="prelude-val">None</span>));
+
+        <span class="comment">// fail because the signature layer wasn&#39;t signed with the given key</span>
+        <span class="kw">let</span> <span class="ident">verification_key</span> <span class="op">=</span> <span class="ident"><span class="kw">crate</span>::crypto::new_verification_key</span>(
+            <span class="string">r#&quot;-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAETJP9cqpUQsn2ggmJniWGjHdlsHzD
+JsB89BPhZYch0U0hKANx5TY+ncrm0s8bfJxxHoenAEFhwhuXeb4PqIrtoQ==
+-----END PUBLIC KEY-----&quot;#</span>,
+        )
+        .<span class="ident">unwrap</span>();
+        <span class="macro">assert!</span>(<span class="op">!</span><span class="ident">sl</span>.<span class="ident">verified</span>(<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">verification_key</span>)));
     }
 }
 </code></pre></div>
