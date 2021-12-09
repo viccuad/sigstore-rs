@@ -176,7 +176,7 @@
     <span class="doccomment">///     ContentType(mime::TEXT_HTML)</span>
     <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    (<span class="ident">ContentType</span>, <span class="string">&quot;Content-Type&quot;</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">danger</span> [<span class="ident">Mime</span>]
+    (<span class="ident">ContentType</span>, <span class="string">&quot;Content-Type&quot;</span>) =&gt; <span class="ident">danger</span> [<span class="ident">Mime</span>]
 
     <span class="ident">test_content_type</span> {
         <span class="macro">test_header!</span>(
@@ -189,7 +189,7 @@
 <span class="kw">impl</span> <span class="ident">ContentType</span> {
     <span class="doccomment">/// A constructor  to easily create a `Content-Type: application/json` header.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">json</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ContentType</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">json</span>() -&gt; <span class="ident">ContentType</span> {
         <span class="ident">ContentType</span>(<span class="ident">mime::APPLICATION_JSON</span>)
     }
 
@@ -197,54 +197,54 @@
     <span class="comment">// But don&#39;t bother with an actual #[deprecated], because the whole</span>
     <span class="comment">// header system is changing in 0.12 anyways.</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">plaintext</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ContentType</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">plaintext</span>() -&gt; <span class="ident">ContentType</span> {
         <span class="ident">ContentType</span>(<span class="ident">mime::TEXT_PLAIN_UTF_8</span>)
     }
 
     <span class="doccomment">/// A constructor  to easily create a `Content-Type: text/plain` header.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">text</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ContentType</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">text</span>() -&gt; <span class="ident">ContentType</span> {
         <span class="ident">ContentType</span>(<span class="ident">mime::TEXT_PLAIN</span>)
     }
 
     <span class="doccomment">/// A constructor  to easily create a `Content-Type: text/plain; charset=utf-8` header.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">text_utf8</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ContentType</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">text_utf8</span>() -&gt; <span class="ident">ContentType</span> {
         <span class="ident">ContentType</span>(<span class="ident">mime::TEXT_PLAIN_UTF_8</span>)
     }
 
     <span class="doccomment">/// A constructor  to easily create a `Content-Type: text/html` header.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">html</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ContentType</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">html</span>() -&gt; <span class="ident">ContentType</span> {
         <span class="ident">ContentType</span>(<span class="ident">mime::TEXT_HTML</span>)
     }
 
     <span class="doccomment">/// A constructor  to easily create a `Content-Type: text/xml` header.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">xml</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ContentType</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">xml</span>() -&gt; <span class="ident">ContentType</span> {
         <span class="ident">ContentType</span>(<span class="ident">mime::TEXT_XML</span>)
     }
 
     <span class="doccomment">/// A constructor  to easily create a `Content-Type: application/www-form-url-encoded` header.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">form_url_encoded</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ContentType</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">form_url_encoded</span>() -&gt; <span class="ident">ContentType</span> {
         <span class="ident">ContentType</span>(<span class="ident">mime::APPLICATION_WWW_FORM_URLENCODED</span>)
     }
     <span class="doccomment">/// A constructor  to easily create a `Content-Type: image/jpeg` header.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">jpeg</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ContentType</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">jpeg</span>() -&gt; <span class="ident">ContentType</span> {
         <span class="ident">ContentType</span>(<span class="ident">mime::IMAGE_JPEG</span>)
     }
 
     <span class="doccomment">/// A constructor  to easily create a `Content-Type: image/png` header.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">png</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ContentType</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">png</span>() -&gt; <span class="ident">ContentType</span> {
         <span class="ident">ContentType</span>(<span class="ident">mime::IMAGE_PNG</span>)
     }
 
     <span class="doccomment">/// A constructor  to easily create a `Content-Type: application/octet-stream` header.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">octet_stream</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ContentType</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">octet_stream</span>() -&gt; <span class="ident">ContentType</span> {
         <span class="ident">ContentType</span>(<span class="ident">mime::APPLICATION_OCTET_STREAM</span>)
     }
 }

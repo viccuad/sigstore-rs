@@ -430,17 +430,17 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [1]: ./struct.ObjectIdentifier.html#impl-FromStr</span>
     <span class="doccomment">/// [2]: https://doc.rust-lang.org/nightly/std/primitive.str.html#method.parse</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">parser::Parser::parse</span>(<span class="ident">s</span>).<span class="ident">finish</span>()
     }
 
     <span class="doccomment">/// Parse an OID from a slice of [`Arc`] values (i.e. integers).</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_arcs</span>(<span class="ident">arcs</span>: <span class="kw-2">&amp;</span>[<span class="ident">Arc</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_arcs</span>(<span class="ident">arcs</span>: <span class="kw-2">&amp;</span>[<span class="ident">Arc</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span> <span class="op">=</span> [<span class="number">0u8</span>; <span class="ident"><span class="self">Self</span>::MAX_LENGTH</span>];
 
         <span class="ident">bytes</span>[<span class="number">0</span>] <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">arcs</span> {
-            [<span class="ident">first</span>, <span class="ident">second</span>, <span class="kw">_</span>, ..] <span class="op">=</span><span class="op">&gt;</span> <span class="ident">RootArcs::new</span>(<span class="ident">first</span>, <span class="ident">second</span>)<span class="question-mark">?</span>.<span class="ident">into</span>(),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>),
+            [<span class="ident">first</span>, <span class="ident">second</span>, <span class="kw">_</span>, ..] =&gt; <span class="ident">RootArcs::new</span>(<span class="ident">first</span>, <span class="ident">second</span>)<span class="question-mark">?</span>.<span class="ident">into</span>(),
+            <span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>),
         };
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span> <span class="op">=</span> <span class="number">1</span>;
@@ -456,7 +456,7 @@
     }
 
     <span class="doccomment">/// Parse an OID from from its BER/DER encoding.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_bytes</span>(<span class="ident">ber_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_bytes</span>(<span class="ident">ber_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">ber_bytes</span>.<span class="ident">len</span>();
 
         <span class="kw">if</span> <span class="op">!</span>(<span class="number">2</span>..<span class="op">=</span><span class="ident"><span class="self">Self</span>::MAX_LENGTH</span>).<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">len</span>) {
@@ -477,20 +477,20 @@
         <span class="comment">// TODO(tarcieri): consolidate this with `Arcs::next`?</span>
         <span class="kw">while</span> <span class="ident">arc_offset</span> <span class="op">&lt;</span> <span class="ident">len</span> {
             <span class="kw">match</span> <span class="ident">ber_bytes</span>.<span class="ident">get</span>(<span class="ident">arc_offset</span> <span class="op">+</span> <span class="ident">arc_bytes</span>).<span class="ident">cloned</span>() {
-                <span class="prelude-val">Some</span>(<span class="ident">byte</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="kw">if</span> (<span class="ident">arc_bytes</span> <span class="op">=</span><span class="op">=</span> <span class="ident">ARC_MAX_BYTES</span>) <span class="op">&amp;&amp;</span> (<span class="ident">byte</span> <span class="op">&amp;</span> <span class="ident">ARC_MAX_LAST_OCTET</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>) {
+                <span class="prelude-val">Some</span>(<span class="ident">byte</span>) =&gt; {
+                    <span class="kw">if</span> (<span class="ident">arc_bytes</span> <span class="op">==</span> <span class="ident">ARC_MAX_BYTES</span>) <span class="op">&amp;&amp;</span> (<span class="ident">byte</span> <span class="op">&amp;</span> <span class="ident">ARC_MAX_LAST_OCTET</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>) {
                         <span class="comment">// Overflowed `Arc` (u32)</span>
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>);
                     }
 
                     <span class="ident">arc_bytes</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
 
-                    <span class="kw">if</span> <span class="ident">byte</span> <span class="op">&amp;</span> <span class="number">0b10000000</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                    <span class="kw">if</span> <span class="ident">byte</span> <span class="op">&amp;</span> <span class="number">0b10000000</span> <span class="op">==</span> <span class="number">0</span> {
                         <span class="ident">arc_offset</span> <span class="op">+</span><span class="op">=</span> <span class="ident">arc_bytes</span>;
                         <span class="ident">arc_bytes</span> <span class="op">=</span> <span class="number">0</span>;
                     }
                 }
-                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>), <span class="comment">// truncated OID</span>
+                <span class="prelude-val">None</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>), <span class="comment">// truncated OID</span>
             }
         }
 
@@ -507,12 +507,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Note that this encoding omits the tag/length, and only contains the</span>
     <span class="doccomment">/// value portion of the encoded OID.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bytes</span>[..<span class="self">self</span>.<span class="ident">length</span> <span class="kw">as</span> <span class="ident">usize</span>]
     }
 
     <span class="doccomment">/// Return the arc with the given index, if it exists.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">arc</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">index</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Arc</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">arc</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">index</span>: <span class="ident">usize</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Arc</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">arcs</span>().<span class="ident">nth</span>(<span class="ident">index</span>)
     }
 
@@ -520,13 +520,13 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns [`Arcs`], an iterator over `Arc` values representing the value</span>
     <span class="doccomment">/// of each arc/node.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">arcs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Arcs</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">arcs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Arcs</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="ident">Arcs::new</span>(<span class="self">self</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ObjectIdentifier</span> {
-    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="self">self</span>.<span class="ident">as_bytes</span>()
     }
 }
@@ -534,7 +534,7 @@
 <span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">ObjectIdentifier</span> {
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">Error</span>;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">split</span> <span class="op">=</span> <span class="ident">string</span>.<span class="ident">split</span>(<span class="string">&#39;.&#39;</span>);
         <span class="kw">let</span> <span class="ident">first_arc</span> <span class="op">=</span> <span class="ident">split</span>.<span class="ident">next</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">parse</span>().<span class="ident">ok</span>()).<span class="ident">ok_or</span>(<span class="ident">Error</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">second_arc</span> <span class="op">=</span> <span class="ident">split</span>.<span class="ident">next</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">parse</span>().<span class="ident">ok</span>()).<span class="ident">ok_or</span>(<span class="ident">Error</span>)<span class="question-mark">?</span>;
@@ -564,25 +564,25 @@
 <span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ObjectIdentifier</span> {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Error</span>;
 
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">ber_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">ber_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::from_bytes</span>(<span class="ident">ber_bytes</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">ObjectIdentifier</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ObjectIdentifier</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">oid</span>: <span class="kw-2">&amp;</span><span class="ident">ObjectIdentifier</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ObjectIdentifier</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">oid</span>: <span class="kw-2">&amp;</span><span class="ident">ObjectIdentifier</span>) -&gt; <span class="ident">ObjectIdentifier</span> {
         <span class="kw-2">*</span><span class="ident">oid</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">ObjectIdentifier</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;ObjectIdentifier({})&quot;</span>, <span class="self">self</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">ObjectIdentifier</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">arcs</span>().<span class="ident">count</span>();
 
         <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">arc</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">arcs</span>().<span class="ident">enumerate</span>() {

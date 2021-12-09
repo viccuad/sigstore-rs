@@ -173,22 +173,22 @@
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">X509Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">nom::Err</span><span class="op">&lt;</span><span class="ident">X509Error</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">X509Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">nom::Err</span><span class="op">&lt;</span><span class="ident">X509Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">X509Error</span>) -&gt; <span class="ident">nom::Err</span><span class="op">&lt;</span><span class="ident">X509Error</span><span class="op">&gt;</span> {
         <span class="ident">nom::Err::Error</span>(<span class="ident">e</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ErrorKind</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">X509Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">ErrorKind</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">X509Error</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">ErrorKind</span>) -&gt; <span class="ident">X509Error</span> {
         <span class="ident">X509Error::NomError</span>(<span class="ident">e</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> <span class="ident">ParseError</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">X509Error</span> {
-    <span class="kw">fn</span> <span class="ident">from_error_kind</span>(<span class="ident">_input</span>: <span class="ident">I</span>, <span class="ident">kind</span>: <span class="ident">ErrorKind</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_error_kind</span>(<span class="ident">_input</span>: <span class="ident">I</span>, <span class="ident">kind</span>: <span class="ident">ErrorKind</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">X509Error::NomError</span>(<span class="ident">kind</span>)
     }
-    <span class="kw">fn</span> <span class="ident">append</span>(<span class="ident">_input</span>: <span class="ident">I</span>, <span class="ident">kind</span>: <span class="ident">ErrorKind</span>, <span class="ident">_other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">append</span>(<span class="ident">_input</span>: <span class="ident">I</span>, <span class="ident">kind</span>: <span class="ident">ErrorKind</span>, <span class="ident">_other</span>: <span class="self">Self</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">X509Error::NomError</span>(<span class="ident">kind</span>)
     }
 }

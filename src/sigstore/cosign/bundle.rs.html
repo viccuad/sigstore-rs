@@ -144,7 +144,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Note well:** The bundle will be returned only if it can be verified</span>
     <span class="doccomment">/// using the supplied `rekor_pub_key` public key.</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new_verified</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">rekor_pub_key</span>: <span class="kw-2">&amp;</span><span class="ident">CosignVerificationKey</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new_verified</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">rekor_pub_key</span>: <span class="kw-2">&amp;</span><span class="ident">CosignVerificationKey</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">bundle</span>: <span class="ident">Bundle</span> <span class="op">=</span> <span class="ident">serde_json::from_str</span>(<span class="ident">raw</span>)
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="macro">anyhow!</span>(<span class="string">&quot;Cannot parse bundle |{}|: {:?}&quot;</span>, <span class="ident">raw</span>, <span class="ident">e</span>))<span class="question-mark">?</span>;
 
@@ -158,8 +158,8 @@
         })<span class="question-mark">?</span>;
 
         <span class="kw">match</span> <span class="ident">verify_signature</span>(<span class="ident">rekor_pub_key</span>, <span class="kw-2">&amp;</span><span class="ident">bundle</span>.<span class="ident">signed_entry_timestamp</span>, <span class="kw-2">&amp;</span><span class="ident">buf</span>) {
-            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">bundle</span>),
-            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">bundle</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(
                 <span class="string">&quot;Cannot verify bundle with the given rekor public key: {:?}&quot;</span>,
                 <span class="ident">e</span>
             )),
@@ -185,7 +185,7 @@
     <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::cosign::tests::get_rekor_public_key</span>;
     <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::crypto</span>;
 
-    <span class="kw">fn</span> <span class="ident">build_correct_bundle</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="kw">fn</span> <span class="ident">build_correct_bundle</span>() -&gt; <span class="ident">String</span> {
         <span class="kw">let</span> <span class="ident">bundle_json</span> <span class="op">=</span> <span class="macro">json!</span>({
           <span class="string">&quot;SignedEntryTimestamp&quot;</span>: <span class="string">&quot;MEUCIDx9M+yRpD0O47/Mzm8NAPCbtqy4uiTkLWWexW0bo4jZAiEA1wwueIW8XzJWNkut5y9snYj7UOfbMmUXp7fH3CzJmWg=&quot;</span>,
           <span class="string">&quot;Payload&quot;</span>: {

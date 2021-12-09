@@ -259,13 +259,13 @@
 
 <span class="doccomment">/// Any printable character except hyphen-minus, as defined in the</span>
 <span class="doccomment">/// &#39;labelchar&#39; production in the RFC 7468 ABNF grammar</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">is_labelchar</span>(<span class="ident">char</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">is_labelchar</span>(<span class="ident">char</span>: <span class="ident">u8</span>) -&gt; <span class="ident">bool</span> {
     <span class="macro">matches!</span>(<span class="ident">char</span>, <span class="number">0x21</span>..<span class="op">=</span><span class="number">0x2C</span> <span class="op">|</span> <span class="number">0x2E</span>..<span class="op">=</span><span class="number">0x7E</span>)
 }
 
 <span class="doccomment">/// Does the provided byte match a character allowed in a label?</span>
 <span class="comment">// TODO: allow hyphen-minus to match the &#39;label&#39; production in the ABNF grammar</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">is_allowed_in_label</span>(<span class="ident">char</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">is_allowed_in_label</span>(<span class="ident">char</span>: <span class="ident">u8</span>) -&gt; <span class="ident">bool</span> {
     <span class="ident">is_labelchar</span>(<span class="ident">char</span>) <span class="op">|</span><span class="op">|</span> <span class="macro">matches!</span>(<span class="ident">char</span>, <span class="ident">CHAR_HT</span> <span class="op">|</span> <span class="ident">CHAR_SP</span>)
 }
 
@@ -273,7 +273,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// &gt; The common ABNF production WSP is congruent with &quot;blank&quot;;</span>
 <span class="doccomment">/// &gt; a new production W is used for &quot;whitespace&quot;</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">is_wsp</span>(<span class="ident">char</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">is_wsp</span>(<span class="ident">char</span>: <span class="ident">u8</span>) -&gt; <span class="ident">bool</span> {
     <span class="macro">matches!</span>(<span class="ident">char</span>, <span class="ident">CHAR_HT</span> <span class="op">|</span> <span class="ident">CHAR_SP</span>)
 }
 
@@ -290,20 +290,20 @@
 <span class="doccomment">/// From RFC7468:</span>
 <span class="doccomment">/// &gt; Data before the encapsulation boundaries are permitted, and</span>
 <span class="doccomment">/// &gt; parsers MUST NOT malfunction when processing such data.</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">strip_preamble</span>(<span class="kw-2">mut</span> <span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">strip_preamble</span>(<span class="kw-2">mut</span> <span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">bytes</span>.<span class="ident">starts_with</span>(<span class="ident">PRE_ENCAPSULATION_BOUNDARY</span>) {
         <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">bytes</span>);
     }
 
     <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">byte</span>, <span class="ident">remaining</span>)) <span class="op">=</span> <span class="ident">bytes</span>.<span class="ident">split_first</span>() {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">byte</span> {
-            <span class="ident">CHAR_NUL</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">CHAR_NUL</span> =&gt; {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::Preamble</span>);
             }
-            <span class="ident">CHAR_LF</span> <span class="kw">if</span> <span class="ident">remaining</span>.<span class="ident">starts_with</span>(<span class="ident">PRE_ENCAPSULATION_BOUNDARY</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">CHAR_LF</span> <span class="kw">if</span> <span class="ident">remaining</span>.<span class="ident">starts_with</span>(<span class="ident">PRE_ENCAPSULATION_BOUNDARY</span>) =&gt; {
                 <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">remaining</span>);
             }
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (),
+            <span class="kw">_</span> =&gt; (),
         }
 
         <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">remaining</span>;
@@ -319,12 +319,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// From RFC 7468 Section 3:</span>
 <span class="doccomment">/// &gt; lines are divided with CRLF, CR, or LF.</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">strip_leading_eol</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">strip_leading_eol</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
     <span class="kw">match</span> <span class="ident">bytes</span> {
-        [<span class="ident">CHAR_LF</span>, <span class="ident">rest</span> @ ..] <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">rest</span>),
-        [<span class="ident">CHAR_CR</span>, <span class="ident">CHAR_LF</span>, <span class="ident">rest</span> @ ..] <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">rest</span>),
-        [<span class="ident">CHAR_CR</span>, <span class="ident">rest</span> @ ..] <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">rest</span>),
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+        [<span class="ident">CHAR_LF</span>, <span class="ident">rest</span> @ ..] =&gt; <span class="prelude-val">Some</span>(<span class="ident">rest</span>),
+        [<span class="ident">CHAR_CR</span>, <span class="ident">CHAR_LF</span>, <span class="ident">rest</span> @ ..] =&gt; <span class="prelude-val">Some</span>(<span class="ident">rest</span>),
+        [<span class="ident">CHAR_CR</span>, <span class="ident">rest</span> @ ..] =&gt; <span class="prelude-val">Some</span>(<span class="ident">rest</span>),
+        <span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
     }
 }
 
@@ -335,12 +335,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// From RFC 7468 Section 3:</span>
 <span class="doccomment">/// &gt; lines are divided with CRLF, CR, or LF.</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">strip_trailing_eol</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">strip_trailing_eol</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
     <span class="kw">match</span> <span class="ident">bytes</span> {
-        [<span class="ident">head</span> @ .., <span class="ident">CHAR_CR</span>, <span class="ident">CHAR_LF</span>] <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">head</span>),
-        [<span class="ident">head</span> @ .., <span class="ident">CHAR_LF</span>] <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">head</span>),
-        [<span class="ident">head</span> @ .., <span class="ident">CHAR_CR</span>] <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">head</span>),
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+        [<span class="ident">head</span> @ .., <span class="ident">CHAR_CR</span>, <span class="ident">CHAR_LF</span>] =&gt; <span class="prelude-val">Some</span>(<span class="ident">head</span>),
+        [<span class="ident">head</span> @ .., <span class="ident">CHAR_LF</span>] =&gt; <span class="prelude-val">Some</span>(<span class="ident">head</span>),
+        [<span class="ident">head</span> @ .., <span class="ident">CHAR_CR</span>] =&gt; <span class="prelude-val">Some</span>(<span class="ident">head</span>),
+        <span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
     }
 }
 
@@ -362,7 +362,7 @@
 <span class="doccomment">///   (NOTE: this is an overly strict initial implementation and should be relaxed)</span>
 <span class="doccomment">/// - Whitespace MUST NOT contain more than one consecutive WSP character</span>
 <span class="comment">// TODO(tarcieri): evaluate whether this is too strict; support &#39;-&#39;</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">split_label</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span>[<span class="ident">u8</span>])<span class="op">&gt;</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">split_label</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span>[<span class="ident">u8</span>])<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">n</span> <span class="op">=</span> <span class="number">0</span>;
 
     <span class="comment">// TODO(tarcieri): handle hyphens in labels as well as spaces</span>
@@ -372,7 +372,7 @@
         <span class="comment">// Validate character</span>
         <span class="kw">if</span> <span class="ident">is_labelchar</span>(<span class="ident">char</span>) {
             <span class="ident">last_was_wsp</span> <span class="op">=</span> <span class="bool-val">false</span>;
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">char</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;-&#39;</span> {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">char</span> <span class="op">==</span> <span class="string">b&#39;-&#39;</span> {
             <span class="comment">// Possible start of encapsulation boundary delimiter</span>
             <span class="kw">break</span>;
         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">n</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">is_wsp</span>(<span class="ident">char</span>) {
@@ -393,14 +393,14 @@
     <span class="kw">let</span> <span class="ident">label</span> <span class="op">=</span> <span class="ident">str::from_utf8</span>(<span class="ident">raw_label</span>).<span class="ident">ok</span>()<span class="question-mark">?</span>;
 
     <span class="kw">match</span> <span class="ident">rest</span> {
-        [<span class="string">b&#39;-&#39;</span>, <span class="string">b&#39;-&#39;</span>, <span class="string">b&#39;-&#39;</span>, <span class="string">b&#39;-&#39;</span>, <span class="string">b&#39;-&#39;</span>, <span class="ident">body</span> @ ..] <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>((<span class="ident">label</span>, <span class="ident">strip_leading_eol</span>(<span class="ident">body</span>)<span class="question-mark">?</span>)),
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+        [<span class="string">b&#39;-&#39;</span>, <span class="string">b&#39;-&#39;</span>, <span class="string">b&#39;-&#39;</span>, <span class="string">b&#39;-&#39;</span>, <span class="string">b&#39;-&#39;</span>, <span class="ident">body</span> @ ..] =&gt; <span class="prelude-val">Some</span>((<span class="ident">label</span>, <span class="ident">strip_leading_eol</span>(<span class="ident">body</span>)<span class="question-mark">?</span>)),
+        <span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
     }
 }
 
 <span class="doccomment">/// Validate that the given bytes are allowed as a PEM type label, i.e. the</span>
 <span class="doccomment">/// label encoded in the `BEGIN` and `END` encapsulation boundaries.</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">validate_label</span>(<span class="ident">label</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">validate_label</span>(<span class="ident">label</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="comment">// TODO(tarcieri): handle hyphens in labels as well as spaces</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">last_was_wsp</span> <span class="op">=</span> <span class="bool-val">false</span>;
 

@@ -3,25 +3,25 @@
 in SEC1: Elliptic Curve Cryptography (Version 2.0) section 2.3.3 (p.10):</p>
 <p><a href="https://www.secg.org/sec1-v2.pdf">https://www.secg.org/sec1-v2.pdf</a></p>
 </div></details><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="struct" href="struct.EncodedPoint.html" title="elliptic_curve::sec1::EncodedPoint struct">EncodedPoint</a></div><div class="item-right docblock-short"><p>SEC1 encoded curve point.</p>
-</div></div><h2 id="enums" class="section-header"><a href="#enums">Enums</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="enum" href="enum.Coordinates.html" title="elliptic_curve::sec1::Coordinates enum">Coordinates</a></div><div class="item-right docblock-short"><p>Enum representing the coordinates of either compressed or uncompressed
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.EncodedPoint.html" title="elliptic_curve::sec1::EncodedPoint struct">EncodedPoint</a></div><div class="item-right docblock-short"><p>SEC1 encoded curve point.</p>
+</div></div></div><h2 id="enums" class="section-header"><a href="#enums">Enums</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.Coordinates.html" title="elliptic_curve::sec1::Coordinates enum">Coordinates</a></div><div class="item-right docblock-short"><p>Enum representing the coordinates of either compressed or uncompressed
 SEC1-encoded elliptic curve points.</p>
-</div><div class="item-left module-item"><a class="enum" href="enum.Tag.html" title="elliptic_curve::sec1::Tag enum">Tag</a></div><div class="item-right docblock-short"><p>Tag byte used by the <code>Elliptic-Curve-Point-to-Octet-String</code> encoding.</p>
-</div></div><h2 id="traits" class="section-header"><a href="#traits">Traits</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="trait" href="trait.FromEncodedPoint.html" title="elliptic_curve::sec1::FromEncodedPoint trait">FromEncodedPoint</a></div><div class="item-right docblock-short"><p>Trait for deserializing a value from a SEC1 encoded curve point.</p>
-</div><div class="item-left module-item"><a class="trait" href="trait.ToCompactEncodedPoint.html" title="elliptic_curve::sec1::ToCompactEncodedPoint trait">ToCompactEncodedPoint</a></div><div class="item-right docblock-short"><p>Trait for serializing a value to a SEC1 encoded curve point with compaction.</p>
-</div><div class="item-left module-item"><a class="trait" href="trait.ToEncodedPoint.html" title="elliptic_curve::sec1::ToEncodedPoint trait">ToEncodedPoint</a></div><div class="item-right docblock-short"><p>Trait for serializing a value to a SEC1 encoded curve point.</p>
-</div><div class="item-left module-item"><a class="trait" href="trait.ValidatePublicKey.html" title="elliptic_curve::sec1::ValidatePublicKey trait">ValidatePublicKey</a></div><div class="item-right docblock-short"><p>Validate that the given <a href="struct.EncodedPoint.html" title="EncodedPoint"><code>EncodedPoint</code></a> represents the encoded public key
+</div></div><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.Tag.html" title="elliptic_curve::sec1::Tag enum">Tag</a></div><div class="item-right docblock-short"><p>Tag byte used by the <code>Elliptic-Curve-Point-to-Octet-String</code> encoding.</p>
+</div></div></div><h2 id="traits" class="section-header"><a href="#traits">Traits</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.FromEncodedPoint.html" title="elliptic_curve::sec1::FromEncodedPoint trait">FromEncodedPoint</a></div><div class="item-right docblock-short"><p>Trait for deserializing a value from a SEC1 encoded curve point.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.ToCompactEncodedPoint.html" title="elliptic_curve::sec1::ToCompactEncodedPoint trait">ToCompactEncodedPoint</a></div><div class="item-right docblock-short"><p>Trait for serializing a value to a SEC1 encoded curve point with compaction.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.ToEncodedPoint.html" title="elliptic_curve::sec1::ToEncodedPoint trait">ToEncodedPoint</a></div><div class="item-right docblock-short"><p>Trait for serializing a value to a SEC1 encoded curve point.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.ValidatePublicKey.html" title="elliptic_curve::sec1::ValidatePublicKey trait">ValidatePublicKey</a></div><div class="item-right docblock-short"><p>Validate that the given <a href="struct.EncodedPoint.html" title="EncodedPoint"><code>EncodedPoint</code></a> represents the encoded public key
 value of the given secret.</p>
-</div></div><h2 id="types" class="section-header"><a href="#types">Type Definitions</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="type" href="type.CompressedPointSize.html" title="elliptic_curve::sec1::CompressedPointSize type">CompressedPointSize</a></div><div class="item-right docblock-short"><p>Size of a compressed point for the given elliptic curve when encoded
+</div></div></div><h2 id="types" class="section-header"><a href="#types">Type Definitions</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="type" href="type.CompressedPointSize.html" title="elliptic_curve::sec1::CompressedPointSize type">CompressedPointSize</a></div><div class="item-right docblock-short"><p>Size of a compressed point for the given elliptic curve when encoded
 using the SEC1 <code>Elliptic-Curve-Point-to-Octet-String</code> algorithm
 (including leading <code>0x02</code> or <code>0x03</code> tag byte).</p>
-</div><div class="item-left module-item"><a class="type" href="type.UncompressedPointSize.html" title="elliptic_curve::sec1::UncompressedPointSize type">UncompressedPointSize</a></div><div class="item-right docblock-short"><p>Size of an uncompressed point for the given elliptic curve when encoded
+</div></div><div class="item-row"><div class="item-left module-item"><a class="type" href="type.UncompressedPointSize.html" title="elliptic_curve::sec1::UncompressedPointSize type">UncompressedPointSize</a></div><div class="item-right docblock-short"><p>Size of an uncompressed point for the given elliptic curve when encoded
 using the SEC1 <code>Elliptic-Curve-Point-to-Octet-String</code> algorithm
 (including leading <code>0x04</code> tag byte).</p>
-</div><div class="item-left module-item"><a class="type" href="type.UntaggedPointSize.html" title="elliptic_curve::sec1::UntaggedPointSize type">UntaggedPointSize</a></div><div class="item-right docblock-short"><p>Size of an untagged point for given elliptic curve.</p>
-</div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="elliptic_curve" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="type" href="type.UntaggedPointSize.html" title="elliptic_curve::sec1::UntaggedPointSize type">UntaggedPointSize</a></div><div class="item-right docblock-short"><p>Size of an untagged point for given elliptic curve.</p>
+</div></div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="elliptic_curve" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script>
 </body></html>

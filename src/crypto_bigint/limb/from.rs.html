@@ -80,19 +80,19 @@
 <span class="kw">impl</span> <span class="ident">Limb</span> {
     <span class="doccomment">/// Create a [`Limb`] from a `u8` integer (const-friendly)</span>
     <span class="comment">// TODO(tarcieri): replace with `const impl From&lt;u8&gt;` when stable</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u8</span>(<span class="ident">n</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u8</span>(<span class="ident">n</span>: <span class="ident">u8</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Limb</span>(<span class="ident">n</span> <span class="kw">as</span> <span class="ident">Inner</span>)
     }
 
     <span class="doccomment">/// Create a [`Limb`] from a `u16` integer (const-friendly)</span>
     <span class="comment">// TODO(tarcieri): replace with `const impl From&lt;u16&gt;` when stable</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u16</span>(<span class="ident">n</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u16</span>(<span class="ident">n</span>: <span class="ident">u16</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Limb</span>(<span class="ident">n</span> <span class="kw">as</span> <span class="ident">Inner</span>)
     }
 
     <span class="doccomment">/// Create a [`Limb`] from a `u32` integer (const-friendly)</span>
     <span class="comment">// TODO(tarcieri): replace with `const impl From&lt;u32&gt;` when stable</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u32</span>(<span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u32</span>(<span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Limb</span>(<span class="ident">n</span> <span class="kw">as</span> <span class="ident">Inner</span>)
     }
 
@@ -100,28 +100,28 @@
     <span class="comment">// TODO(tarcieri): replace with `const impl From&lt;u64&gt;` when stable</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)))]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u64</span>(<span class="ident">n</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u64</span>(<span class="ident">n</span>: <span class="ident">u64</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Limb</span>(<span class="ident">n</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Limb</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Limb</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u8</span>) -&gt; <span class="ident">Limb</span> {
         <span class="ident">Limb</span>(<span class="ident">n</span>.<span class="ident">into</span>())
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Limb</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Limb</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u16</span>) -&gt; <span class="ident">Limb</span> {
         <span class="ident">Limb</span>(<span class="ident">n</span>.<span class="ident">into</span>())
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Limb</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Limb</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="ident">Limb</span> {
         <span class="ident">Limb</span>(<span class="ident">n</span>.<span class="ident">into</span>())
     }
 }
@@ -130,21 +130,21 @@
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Limb</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Limb</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u64</span>) -&gt; <span class="ident">Limb</span> {
         <span class="ident">Limb</span>(<span class="ident">n</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Limb</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Inner</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">limb</span>: <span class="ident">Limb</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Inner</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">limb</span>: <span class="ident">Limb</span>) -&gt; <span class="ident">Inner</span> {
         <span class="ident">limb</span>.<span class="number">0</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Limb</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Wide</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">limb</span>: <span class="ident">Limb</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Wide</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">limb</span>: <span class="ident">Limb</span>) -&gt; <span class="ident">Wide</span> {
         <span class="ident">limb</span>.<span class="number">0</span>.<span class="ident">into</span>()
     }
 }

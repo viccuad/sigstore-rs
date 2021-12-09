@@ -132,8 +132,8 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">AlgorithmIdentifier</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Assert the `algorithm` OID is an expected value.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">assert_algorithm_oid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">expected_oid</span>: <span class="ident">ObjectIdentifier</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ObjectIdentifier</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">oid</span> <span class="op">=</span><span class="op">=</span> <span class="ident">expected_oid</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">assert_algorithm_oid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">expected_oid</span>: <span class="ident">ObjectIdentifier</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ObjectIdentifier</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">oid</span> <span class="op">==</span> <span class="ident">expected_oid</span> {
             <span class="prelude-val">Ok</span>(<span class="ident">expected_oid</span>)
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">ErrorKind::UnknownOid</span> { <span class="ident">oid</span>: <span class="ident">expected_oid</span> }.<span class="ident">into</span>())
@@ -144,10 +144,10 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">assert_parameters_oid</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">expected_oid</span>: <span class="ident">ObjectIdentifier</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ObjectIdentifier</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ObjectIdentifier</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">actual_oid</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">parameters_oid</span>()<span class="question-mark">?</span>;
 
-        <span class="kw">if</span> <span class="ident">actual_oid</span> <span class="op">=</span><span class="op">=</span> <span class="ident">expected_oid</span> {
+        <span class="kw">if</span> <span class="ident">actual_oid</span> <span class="op">==</span> <span class="ident">expected_oid</span> {
             <span class="prelude-val">Ok</span>(<span class="ident">actual_oid</span>)
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">ErrorKind::UnknownOid</span> { <span class="ident">oid</span>: <span class="ident">expected_oid</span> }.<span class="ident">into</span>())
@@ -159,7 +159,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">algorithm</span>: <span class="ident">ObjectIdentifier</span>,
         <span class="ident">parameters</span>: <span class="ident">ObjectIdentifier</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">assert_algorithm_oid</span>(<span class="ident">algorithm</span>)<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="ident">assert_parameters_oid</span>(<span class="ident">parameters</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
@@ -168,14 +168,14 @@
     <span class="doccomment">/// Get the `parameters` field as an [`Any`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns an error if `parameters` are `None`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parameters_any</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parameters_any</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">parameters</span>.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">ErrorKind::Truncated</span>.<span class="ident">into</span>())
     }
 
     <span class="doccomment">/// Get the `parameters` field as an [`ObjectIdentifier`].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns an error if it is absent or not an OID.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parameters_oid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ObjectIdentifier</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parameters_oid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ObjectIdentifier</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">parameters_any</span>().<span class="ident">and_then</span>(<span class="ident">TryInto::try_into</span>)
     }
 }
@@ -183,7 +183,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">AlgorithmIdentifier</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Error</span>;
 
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::from_der</span>(<span class="ident">bytes</span>)
     }
 }
@@ -191,7 +191,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">AlgorithmIdentifier</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Error</span>;
 
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">any</span>: <span class="ident">Any</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">AlgorithmIdentifier</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">any</span>: <span class="ident">Any</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">AlgorithmIdentifier</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">any</span>.<span class="ident">sequence</span>(<span class="op">|</span><span class="ident">decoder</span><span class="op">|</span> {
             <span class="kw">let</span> <span class="ident">oid</span> <span class="op">=</span> <span class="ident">decoder</span>.<span class="ident">decode</span>()<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">parameters</span> <span class="op">=</span> <span class="ident">decoder</span>.<span class="ident">decode</span>()<span class="question-mark">?</span>;
@@ -201,9 +201,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Message</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">AlgorithmIdentifier</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fields</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">fields</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Encodable</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="kw">dyn</span> <span class="ident">Encodable</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
     {
         <span class="ident">f</span>(<span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">oid</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">parameters</span>])
     }

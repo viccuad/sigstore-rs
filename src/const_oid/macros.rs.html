@@ -14,7 +14,7 @@
 <span class="comment">// TODO(tarcieri): use const panic when stable.</span>
 <span class="comment">// See: https://github.com/rust-lang/rust/issues/51999</span>
 <span class="macro">macro_rules!</span> <span class="ident">const_assert</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">bool</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">msg</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">bool</span>:<span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">msg</span>:<span class="ident">expr</span>) =&gt; {
         [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">msg</span>][<span class="op">!</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">bool</span> <span class="kw">as</span> <span class="ident">usize</span>]
     };
 }

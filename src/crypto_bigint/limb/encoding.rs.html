@@ -47,22 +47,22 @@
     <span class="kw">type</span> <span class="ident">Repr</span> <span class="op">=</span> [<span class="ident">u8</span>; <span class="number">8</span>];
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from_be_bytes</span>(<span class="ident">bytes</span>: <span class="ident"><span class="self">Self</span>::Repr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_be_bytes</span>(<span class="ident">bytes</span>: <span class="ident"><span class="self">Self</span>::Repr</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Limb</span>(<span class="ident">Inner::from_be_bytes</span>(<span class="ident">bytes</span>))
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from_le_bytes</span>(<span class="ident">bytes</span>: <span class="ident"><span class="self">Self</span>::Repr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_le_bytes</span>(<span class="ident">bytes</span>: <span class="ident"><span class="self">Self</span>::Repr</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Limb</span>(<span class="ident">Inner::from_le_bytes</span>(<span class="ident">bytes</span>))
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">to_be_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Repr</span> {
+    <span class="kw">fn</span> <span class="ident">to_be_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Repr</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">to_be_bytes</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">to_le_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Repr</span> {
+    <span class="kw">fn</span> <span class="ident">to_le_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Repr</span> {
         <span class="self">self</span>.<span class="number">0</span>.<span class="ident">to_le_bytes</span>()
     }
 }

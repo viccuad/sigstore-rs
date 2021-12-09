@@ -439,14 +439,14 @@
 {
     <span class="doccomment">/// Create a [`Signature`] from the serialized `r` and `s` scalar values</span>
     <span class="doccomment">/// which comprise the signature.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_scalars</span>(<span class="ident">r</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">FieldBytes</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">s</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">FieldBytes</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_scalars</span>(<span class="ident">r</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">FieldBytes</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">s</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">FieldBytes</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::try_from</span>(<span class="ident">r</span>.<span class="ident">into</span>().<span class="ident">concat</span>(<span class="ident">s</span>.<span class="ident">into</span>()).<span class="ident">as_slice</span>())
     }
 
     <span class="doccomment">/// Parse a signature from ASN.1 DER</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;der&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;der&quot;</span>)))]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_der</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_der</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">der::MaxSize</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>: <span class="ident">ArrayLength</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
         <span class="op">&lt;</span><span class="ident">FieldSize</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">Add</span><span class="op">&gt;</span><span class="ident">::Output</span>: <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">der::MaxOverhead</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">ArrayLength</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
@@ -457,7 +457,7 @@
     <span class="doccomment">/// Serialize this signature as ASN.1 DER</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;der&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;der&quot;</span>)))]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_der</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">der::Signature</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_der</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">der::Signature</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">der::MaxSize</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>: <span class="ident">ArrayLength</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
         <span class="op">&lt;</span><span class="ident">FieldSize</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">Add</span><span class="op">&gt;</span><span class="ident">::Output</span>: <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">der::MaxOverhead</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">ArrayLength</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
@@ -475,14 +475,14 @@
     <span class="ident">SignatureSize</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>: <span class="ident">ArrayLength</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
 {
     <span class="doccomment">/// Get the `r` component of this signature</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">r</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NonZeroScalar</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">r</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">NonZeroScalar</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">r_bytes</span> <span class="op">=</span> <span class="ident">GenericArray::clone_from_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bytes</span>[..<span class="ident">C::UInt::BYTE_SIZE</span>]);
         <span class="ident">NonZeroScalar::from_repr</span>(<span class="ident">r_bytes</span>)
             .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">unreachable!</span>(<span class="string">&quot;r-component ensured valid in constructor&quot;</span>))
     }
 
     <span class="doccomment">/// Get the `s` component of this signature</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">s</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NonZeroScalar</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">s</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">NonZeroScalar</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">s_bytes</span> <span class="op">=</span> <span class="ident">GenericArray::clone_from_slice</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bytes</span>[<span class="ident">C::UInt::BYTE_SIZE</span>..]);
         <span class="ident">NonZeroScalar::from_repr</span>(<span class="ident">s_bytes</span>)
             .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">unreachable!</span>(<span class="string">&quot;r-component ensured valid in constructor&quot;</span>))
@@ -492,7 +492,7 @@
     <span class="doccomment">/// [BIP 0062: Dealing with Malleability][1].</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [1]: https://github.com/bitcoin/bips/blob/master/bip-0062.mediawiki</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">normalize_s</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">normalize_s</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">Scalar</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>: <span class="ident">NormalizeLow</span>,
     {
@@ -516,7 +516,7 @@
     <span class="ident">C</span>: <span class="ident">Curve</span>,
     <span class="ident">SignatureSize</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>: <span class="ident">ArrayLength</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">from_bytes</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_bytes</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::try_from</span>(<span class="ident">bytes</span>)
     }
 }
@@ -526,7 +526,7 @@
     <span class="ident">C</span>: <span class="ident">Curve</span>,
     <span class="ident">SignatureSize</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>: <span class="ident">ArrayLength</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">as_slice</span>()
     }
 }
@@ -544,7 +544,7 @@
     <span class="ident">C</span>: <span class="ident">Curve</span>,
     <span class="ident">SignatureSize</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>: <span class="ident">ArrayLength</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="macro">write!</span>(
             <span class="ident">f</span>,
             <span class="string">&quot;ecdsa::Signature&lt;{:?}&gt;({:?})&quot;</span>,
@@ -561,13 +561,13 @@
 {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">Error</span>;
 
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">bytes</span>.<span class="ident">len</span>() <span class="op">!</span><span class="op">=</span> <span class="op">&lt;</span><span class="ident">SignatureSize</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::to_usize</span>() {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>());
         }
 
         <span class="kw">for</span> <span class="ident">scalar</span> <span class="kw">in</span> <span class="ident">bytes</span>.<span class="ident">chunks_exact</span>(<span class="ident">C::UInt::BYTE_SIZE</span>) {
-            <span class="kw">if</span> <span class="ident">scalar</span>.<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">byte</span><span class="op">|</span> <span class="ident">byte</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>) {
+            <span class="kw">if</span> <span class="ident">scalar</span>.<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">byte</span><span class="op">|</span> <span class="ident">byte</span> <span class="op">==</span> <span class="number">0</span>) {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::new</span>());
             }
 
@@ -596,7 +596,7 @@
     <span class="doccomment">/// was in the higher half.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// May be implemented to work in variable time.</span>
-    <span class="kw">fn</span> <span class="ident">normalize_low</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="self">Self</span>, <span class="ident">bool</span>);
+    <span class="kw">fn</span> <span class="ident">normalize_low</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<span class="self">Self</span>, <span class="ident">bool</span>);
 }
 </code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ecdsa" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>

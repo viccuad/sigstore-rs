@@ -74,7 +74,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">LIMBS</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Decoder</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new decoder.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">limbs</span>: [<span class="ident">Limb::ZERO</span>; <span class="ident">LIMBS</span>],
             <span class="ident">index</span>: <span class="number">0</span>,
@@ -83,8 +83,8 @@
     }
 
     <span class="doccomment">/// Add a byte onto the [`UInt`] being decoded.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">add_byte</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">byte</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">bytes</span> <span class="op">=</span><span class="op">=</span> <span class="ident">limb::BYTE_SIZE</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">add_byte</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">byte</span>: <span class="ident">u8</span>) -&gt; <span class="self">Self</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">bytes</span> <span class="op">==</span> <span class="ident">limb::BYTE_SIZE</span> {
             <span class="macro">const_assert!</span>(<span class="self">self</span>.<span class="ident">index</span> <span class="op">&lt;</span> <span class="ident">LIMBS</span>, <span class="string">&quot;too many bytes in UInt&quot;</span>);
             <span class="self">self</span>.<span class="ident">index</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             <span class="self">self</span>.<span class="ident">bytes</span> <span class="op">=</span> <span class="number">0</span>;
@@ -97,10 +97,10 @@
 
     <span class="doccomment">/// Finish decoding a [`UInt`], returning a decoded value only if we&#39;ve</span>
     <span class="doccomment">/// received the expected number of bytes.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">finish</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span> {
-        <span class="macro">const_assert!</span>(<span class="self">self</span>.<span class="ident">index</span> <span class="op">=</span><span class="op">=</span> <span class="ident">LIMBS</span> <span class="op">-</span> <span class="number">1</span>, <span class="string">&quot;decoded UInt is missing limbs&quot;</span>);
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">finish</span>(<span class="self">self</span>) -&gt; <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span> {
+        <span class="macro">const_assert!</span>(<span class="self">self</span>.<span class="ident">index</span> <span class="op">==</span> <span class="ident">LIMBS</span> <span class="op">-</span> <span class="number">1</span>, <span class="string">&quot;decoded UInt is missing limbs&quot;</span>);
         <span class="macro">const_assert!</span>(
-            <span class="self">self</span>.<span class="ident">bytes</span> <span class="op">=</span><span class="op">=</span> <span class="ident">limb::BYTE_SIZE</span>,
+            <span class="self">self</span>.<span class="ident">bytes</span> <span class="op">==</span> <span class="ident">limb::BYTE_SIZE</span>,
             <span class="string">&quot;decoded UInt is missing bytes&quot;</span>
         );
         <span class="ident">UInt</span> { <span class="ident">limbs</span>: <span class="self">self</span>.<span class="ident">limbs</span> }
@@ -108,7 +108,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">LIMBS</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Decoder</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
         <span class="ident"><span class="self">Self</span>::new</span>()
     }
 }

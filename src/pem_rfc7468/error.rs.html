@@ -107,17 +107,17 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">Error::Base64</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;PEM Base64 error&quot;</span>,
-            <span class="ident">Error::CharacterEncoding</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;PEM character encoding error&quot;</span>,
-            <span class="ident">Error::EncapsulatedText</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;PEM error in encapsulated text&quot;</span>,
-            <span class="ident">Error::HeaderDisallowed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;PEM headers disallowed by RFC7468&quot;</span>,
-            <span class="ident">Error::Label</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;PEM type label invalid&quot;</span>,
-            <span class="ident">Error::Length</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;PEM length invalid&quot;</span>,
-            <span class="ident">Error::Preamble</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;PEM preamble contains invalid data (NUL byte)&quot;</span>,
-            <span class="ident">Error::PreEncapsulationBoundary</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;PEM error in pre-encapsulation boundary&quot;</span>,
-            <span class="ident">Error::PostEncapsulationBoundary</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;PEM error in post-encapsulation boundary&quot;</span>,
+            <span class="ident">Error::Base64</span> =&gt; <span class="string">&quot;PEM Base64 error&quot;</span>,
+            <span class="ident">Error::CharacterEncoding</span> =&gt; <span class="string">&quot;PEM character encoding error&quot;</span>,
+            <span class="ident">Error::EncapsulatedText</span> =&gt; <span class="string">&quot;PEM error in encapsulated text&quot;</span>,
+            <span class="ident">Error::HeaderDisallowed</span> =&gt; <span class="string">&quot;PEM headers disallowed by RFC7468&quot;</span>,
+            <span class="ident">Error::Label</span> =&gt; <span class="string">&quot;PEM type label invalid&quot;</span>,
+            <span class="ident">Error::Length</span> =&gt; <span class="string">&quot;PEM length invalid&quot;</span>,
+            <span class="ident">Error::Preamble</span> =&gt; <span class="string">&quot;PEM preamble contains invalid data (NUL byte)&quot;</span>,
+            <span class="ident">Error::PreEncapsulationBoundary</span> =&gt; <span class="string">&quot;PEM error in pre-encapsulation boundary&quot;</span>,
+            <span class="ident">Error::PostEncapsulationBoundary</span> =&gt; <span class="string">&quot;PEM error in post-encapsulation boundary&quot;</span>,
         })
     }
 }
@@ -126,13 +126,13 @@
 <span class="kw">impl</span> <span class="ident">std::error::Error</span> <span class="kw">for</span> <span class="ident">Error</span> {}
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">base64ct::Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="kw">_</span>: <span class="ident">base64ct::Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="kw">_</span>: <span class="ident">base64ct::Error</span>) -&gt; <span class="ident">Error</span> {
         <span class="ident">Error::Base64</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">base64ct::InvalidLengthError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="kw">_</span>: <span class="ident">base64ct::InvalidLengthError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="kw">_</span>: <span class="ident">base64ct::InvalidLengthError</span>) -&gt; <span class="ident">Error</span> {
         <span class="ident">Error::Length</span>
     }
 }

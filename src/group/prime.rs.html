@@ -88,17 +88,17 @@
     <span class="kw">type</span> <span class="ident">Curve</span>: <span class="ident">PrimeCurve</span><span class="op">&lt;</span><span class="ident">Affine</span> <span class="op">=</span> <span class="self">Self</span>, <span class="ident">Scalar</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::Scalar</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Returns the additive identity.</span>
-    <span class="kw">fn</span> <span class="ident">identity</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">identity</span>() -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Returns a fixed generator of unknown exponent.</span>
-    <span class="kw">fn</span> <span class="ident">generator</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">generator</span>() -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Determines if this point represents the point at infinity; the</span>
     <span class="doccomment">/// additive identity.</span>
-    <span class="kw">fn</span> <span class="ident">is_identity</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Choice</span>;
+    <span class="kw">fn</span> <span class="ident">is_identity</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Choice</span>;
 
     <span class="doccomment">/// Converts this element to its curve representation.</span>
-    <span class="kw">fn</span> <span class="ident">to_curve</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Curve</span>;
+    <span class="kw">fn</span> <span class="ident">to_curve</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Curve</span>;
 }
 </code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="group" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>

@@ -254,7 +254,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">LIMBS</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a [`UInt`] from a `u8` (const-friendly)</span>
     <span class="comment">// TODO(tarcieri): replace with `const impl From&lt;u8&gt;` when stable</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u8</span>(<span class="ident">n</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u8</span>(<span class="ident">n</span>: <span class="ident">u8</span>) -&gt; <span class="self">Self</span> {
         <span class="macro">const_assert!</span>(<span class="ident">LIMBS</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">1</span>, <span class="string">&quot;number of limbs must be greater than zero&quot;</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">limbs</span> <span class="op">=</span> [<span class="ident">Limb::ZERO</span>; <span class="ident">LIMBS</span>];
         <span class="ident">limbs</span>[<span class="number">0</span>].<span class="number">0</span> <span class="op">=</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">limb::Inner</span>;
@@ -263,7 +263,7 @@
 
     <span class="doccomment">/// Create a [`UInt`] from a `u16` (const-friendly)</span>
     <span class="comment">// TODO(tarcieri): replace with `const impl From&lt;u16&gt;` when stable</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u16</span>(<span class="ident">n</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u16</span>(<span class="ident">n</span>: <span class="ident">u16</span>) -&gt; <span class="self">Self</span> {
         <span class="macro">const_assert!</span>(<span class="ident">LIMBS</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">1</span>, <span class="string">&quot;number of limbs must be greater than zero&quot;</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">limbs</span> <span class="op">=</span> [<span class="ident">Limb::ZERO</span>; <span class="ident">LIMBS</span>];
         <span class="ident">limbs</span>[<span class="number">0</span>].<span class="number">0</span> <span class="op">=</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">limb::Inner</span>;
@@ -272,7 +272,7 @@
 
     <span class="doccomment">/// Create a [`UInt`] from a `u32` (const-friendly)</span>
     <span class="comment">// TODO(tarcieri): replace with `const impl From&lt;u32&gt;` when stable</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u32</span>(<span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u32</span>(<span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span> {
         <span class="macro">const_assert!</span>(<span class="ident">LIMBS</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">1</span>, <span class="string">&quot;number of limbs must be greater than zero&quot;</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">limbs</span> <span class="op">=</span> [<span class="ident">Limb::ZERO</span>; <span class="ident">LIMBS</span>];
         <span class="ident">limbs</span>[<span class="number">0</span>].<span class="number">0</span> <span class="op">=</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">limb::Inner</span>;
@@ -282,7 +282,7 @@
     <span class="doccomment">/// Create a [`UInt`] from a `u64` (const-friendly)</span>
     <span class="comment">// TODO(tarcieri): replace with `const impl From&lt;u64&gt;` when stable</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u64</span>(<span class="ident">n</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u64</span>(<span class="ident">n</span>: <span class="ident">u64</span>) -&gt; <span class="self">Self</span> {
         <span class="macro">const_assert!</span>(<span class="ident">LIMBS</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">2</span>, <span class="string">&quot;number of limbs must be two or greater&quot;</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">limbs</span> <span class="op">=</span> [<span class="ident">Limb::ZERO</span>; <span class="ident">LIMBS</span>];
         <span class="ident">limbs</span>[<span class="number">0</span>].<span class="number">0</span> <span class="op">=</span> (<span class="ident">n</span> <span class="op">&amp;</span> <span class="number">0xFFFFFFFF</span>) <span class="kw">as</span> <span class="ident">u32</span>;
@@ -293,7 +293,7 @@
     <span class="doccomment">/// Create a [`UInt`] from a `u64` (const-friendly)</span>
     <span class="comment">// TODO(tarcieri): replace with `const impl From&lt;u64&gt;` when stable</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u64</span>(<span class="ident">n</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u64</span>(<span class="ident">n</span>: <span class="ident">u64</span>) -&gt; <span class="self">Self</span> {
         <span class="macro">const_assert!</span>(<span class="ident">LIMBS</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">1</span>, <span class="string">&quot;number of limbs must be greater than zero&quot;</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">limbs</span> <span class="op">=</span> [<span class="ident">Limb::ZERO</span>; <span class="ident">LIMBS</span>];
         <span class="ident">limbs</span>[<span class="number">0</span>].<span class="number">0</span> <span class="op">=</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">limb::Inner</span>;
@@ -302,7 +302,7 @@
 
     <span class="doccomment">/// Create a [`UInt`] from a `u128` (const-friendly)</span>
     <span class="comment">// TODO(tarcieri): replace with `const impl From&lt;u128&gt;` when stable</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u128</span>(<span class="ident">n</span>: <span class="ident">u128</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_u128</span>(<span class="ident">n</span>: <span class="ident">u128</span>) -&gt; <span class="self">Self</span> {
         <span class="macro">const_assert!</span>(
             <span class="ident">LIMBS</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">128</span> <span class="op">/</span> <span class="ident">limb::BIT_SIZE</span>),
             <span class="string">&quot;number of limbs must be greater than zero&quot;</span>
@@ -332,7 +332,7 @@
     <span class="doccomment">/// unsigned integer type.</span>
     <span class="comment">// TODO(tarcieri): replace with `const impl From&lt;[limb::Inner; LIMBS]&gt;` when stable</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_uint_array</span>(<span class="ident">arr</span>: [<span class="ident">limb::Inner</span>; <span class="ident">LIMBS</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_uint_array</span>(<span class="ident">arr</span>: [<span class="ident">limb::Inner</span>; <span class="ident">LIMBS</span>]) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">limbs</span> <span class="op">=</span> [<span class="ident">Limb::ZERO</span>; <span class="ident">LIMBS</span>];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="number">0</span>;
 
@@ -347,7 +347,7 @@
     <span class="doccomment">/// Create an array of [`limb::Inner`] unsigned integer type from a [`UInt`].</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="comment">// TODO(tarcieri): replace with `const impl From&lt;Self&gt; for [limb::Inner; LIMBS]` when stable</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">to_uint_array</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> [<span class="ident">limb::Inner</span>; <span class="ident">LIMBS</span>] {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">to_uint_array</span>(<span class="self">self</span>) -&gt; [<span class="ident">limb::Inner</span>; <span class="ident">LIMBS</span>] {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">arr</span> <span class="op">=</span> [<span class="number">0</span>; <span class="ident">LIMBS</span>];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="number">0</span>;
 
@@ -361,7 +361,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">LIMBS</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u8</span>) -&gt; <span class="self">Self</span> {
         <span class="comment">// TODO(tarcieri): const where clause when possible</span>
         <span class="macro">debug_assert!</span>(<span class="ident">LIMBS</span> <span class="op">&gt;</span> <span class="number">0</span>, <span class="string">&quot;limbs must be non-zero&quot;</span>);
         <span class="ident"><span class="self">Self</span>::from_u8</span>(<span class="ident">n</span>)
@@ -369,7 +369,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">LIMBS</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u16</span>) -&gt; <span class="self">Self</span> {
         <span class="comment">// TODO(tarcieri): const where clause when possible</span>
         <span class="macro">debug_assert!</span>(<span class="ident">LIMBS</span> <span class="op">&gt;</span> <span class="number">0</span>, <span class="string">&quot;limbs must be non-zero&quot;</span>);
         <span class="ident"><span class="self">Self</span>::from_u16</span>(<span class="ident">n</span>)
@@ -377,7 +377,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">LIMBS</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span> {
         <span class="comment">// TODO(tarcieri): const where clause when possible</span>
         <span class="macro">debug_assert!</span>(<span class="ident">LIMBS</span> <span class="op">&gt;</span> <span class="number">0</span>, <span class="string">&quot;limbs must be non-zero&quot;</span>);
         <span class="ident"><span class="self">Self</span>::from_u32</span>(<span class="ident">n</span>)
@@ -385,7 +385,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">LIMBS</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u64</span>) -&gt; <span class="self">Self</span> {
         <span class="comment">// TODO(tarcieri): const where clause when possible</span>
         <span class="macro">debug_assert!</span>(<span class="ident">LIMBS</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">64</span> <span class="op">/</span> <span class="ident">limb::BIT_SIZE</span>), <span class="string">&quot;not enough limbs&quot;</span>);
         <span class="ident"><span class="self">Self</span>::from_u64</span>(<span class="ident">n</span>)
@@ -393,7 +393,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">LIMBS</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u128</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">u128</span>) -&gt; <span class="self">Self</span> {
         <span class="comment">// TODO(tarcieri): const where clause when possible</span>
         <span class="macro">debug_assert!</span>(<span class="ident">LIMBS</span> <span class="op">&gt;</span><span class="op">=</span> (<span class="number">128</span> <span class="op">/</span> <span class="ident">limb::BIT_SIZE</span>), <span class="string">&quot;not enough limbs&quot;</span>);
         <span class="ident"><span class="self">Self</span>::from_u128</span>(<span class="ident">n</span>)
@@ -403,7 +403,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">U64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u64</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">U64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">U64</span>) -&gt; <span class="ident">u64</span> {
         (<span class="ident">n</span>.<span class="ident">limbs</span>[<span class="number">0</span>].<span class="number">0</span> <span class="kw">as</span> <span class="ident">u64</span>) <span class="op">|</span> ((<span class="ident">n</span>.<span class="ident">limbs</span>[<span class="number">1</span>].<span class="number">0</span> <span class="kw">as</span> <span class="ident">u64</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">32</span>)
     }
 }
@@ -411,44 +411,44 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">U64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u64</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">U64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">U64</span>) -&gt; <span class="ident">u64</span> {
         <span class="ident">n</span>.<span class="ident">limbs</span>[<span class="number">0</span>].<span class="ident">into</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">U128</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u128</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">U128</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u128</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">U128</span>) -&gt; <span class="ident">u128</span> {
         <span class="kw">let</span> (<span class="ident">hi</span>, <span class="ident">lo</span>) <span class="op">=</span> <span class="ident">n</span>.<span class="ident">split</span>();
         (<span class="ident">u64::from</span>(<span class="ident">hi</span>) <span class="kw">as</span> <span class="ident">u128</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">64</span> <span class="op">|</span> (<span class="ident">u64::from</span>(<span class="ident">lo</span>) <span class="kw">as</span> <span class="ident">u128</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">LIMBS</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span>[<span class="ident">limb::Inner</span>; <span class="ident">LIMBS</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">arr</span>: [<span class="ident">limb::Inner</span>; <span class="ident">LIMBS</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">arr</span>: [<span class="ident">limb::Inner</span>; <span class="ident">LIMBS</span>]) -&gt; <span class="self">Self</span> {
         <span class="ident"><span class="self">Self</span>::from_uint_array</span>(<span class="ident">arr</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">LIMBS</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> [<span class="ident">limb::Inner</span>; <span class="ident">LIMBS</span>] {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> [<span class="ident">limb::Inner</span>; <span class="ident">LIMBS</span>] {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span>) -&gt; [<span class="ident">limb::Inner</span>; <span class="ident">LIMBS</span>] {
         <span class="ident">n</span>.<span class="ident">to_uint_array</span>()
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">LIMBS</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span>[<span class="ident">Limb</span>; <span class="ident">LIMBS</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">limbs</span>: [<span class="ident">Limb</span>; <span class="ident">LIMBS</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">limbs</span>: [<span class="ident">Limb</span>; <span class="ident">LIMBS</span>]) -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> { <span class="ident">limbs</span> }
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">LIMBS</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> [<span class="ident">Limb</span>; <span class="ident">LIMBS</span>] {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> [<span class="ident">Limb</span>; <span class="ident">LIMBS</span>] {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">n</span>: <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span>) -&gt; [<span class="ident">Limb</span>; <span class="ident">LIMBS</span>] {
         <span class="ident">n</span>.<span class="ident">limbs</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="kw">const</span> <span class="ident">LIMBS</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Limb</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">LIMBS</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">limb</span>: <span class="ident">Limb</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">limb</span>: <span class="ident">Limb</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">limb</span>.<span class="number">0</span>.<span class="ident">into</span>()
     }
 }

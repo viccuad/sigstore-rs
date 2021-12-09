@@ -337,7 +337,7 @@
     <span class="kw">const</span> <span class="ident">OID</span>: <span class="ident">pkcs8::ObjectIdentifier</span>;
 
     <span class="doccomment">/// Get the [`pkcs8::AlgorithmIdentifier`] for this curve</span>
-    <span class="kw">fn</span> <span class="ident">algorithm_identifier</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">pkcs8::AlgorithmIdentifier</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">algorithm_identifier</span>() -&gt; <span class="ident">pkcs8::AlgorithmIdentifier</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
         <span class="ident">pkcs8::AlgorithmIdentifier</span> {
             <span class="ident">oid</span>: <span class="ident">ALGORITHM_OID</span>,
             <span class="ident">parameters</span>: <span class="prelude-val">Some</span>((<span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::OID</span>).<span class="ident">into</span>()),

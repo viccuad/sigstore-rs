@@ -114,7 +114,7 @@
 
 <span class="kw">impl</span> <span class="ident">Parser</span> {
     <span class="doccomment">/// Parse an OID from a dot-delimited string e.g. `1.2.840.113549.1.1.1`</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">as_bytes</span>();
         <span class="macro">const_assert!</span>(<span class="op">!</span><span class="ident">bytes</span>.<span class="ident">is_empty</span>(), <span class="string">&quot;OID string is empty&quot;</span>);
         <span class="macro">const_assert!</span>(
@@ -132,29 +132,29 @@
     }
 
     <span class="doccomment">/// Finish parsing, returning the result</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">finish</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ObjectIdentifier</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">finish</span>(<span class="self">self</span>) -&gt; <span class="ident">ObjectIdentifier</span> {
         <span class="self">self</span>.<span class="ident">encoder</span>.<span class="ident">finish</span>()
     }
 
     <span class="doccomment">/// Parse the remaining bytes</span>
-    <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">parse_bytes</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">parse_bytes</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="self">Self</span> {
         <span class="kw">match</span> <span class="ident">bytes</span> {
-            [] <span class="op">=</span><span class="op">&gt;</span> {
+            [] =&gt; {
                 <span class="self">self</span>.<span class="ident">encoder</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">encoder</span>.<span class="ident">encode</span>(<span class="self">self</span>.<span class="ident">current_arc</span>);
                 <span class="self">self</span>
             }
-            [<span class="ident">byte</span> @ <span class="string">b&#39;0&#39;</span>..<span class="op">=</span><span class="string">b&#39;9&#39;</span>, <span class="ident">remaining</span> @ ..] <span class="op">=</span><span class="op">&gt;</span> {
+            [<span class="ident">byte</span> @ <span class="string">b&#39;0&#39;</span>..<span class="op">=</span><span class="string">b&#39;9&#39;</span>, <span class="ident">remaining</span> @ ..] =&gt; {
                 <span class="kw">let</span> <span class="ident">digit</span> <span class="op">=</span> <span class="ident">byte</span>.<span class="ident">saturating_sub</span>(<span class="string">b&#39;0&#39;</span>);
                 <span class="self">self</span>.<span class="ident">current_arc</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">current_arc</span> <span class="op">*</span> <span class="number">10</span> <span class="op">+</span> <span class="ident">digit</span> <span class="kw">as</span> <span class="ident">Arc</span>;
                 <span class="self">self</span>.<span class="ident">parse_bytes</span>(<span class="ident">remaining</span>)
             }
-            [<span class="string">b&#39;.&#39;</span>, <span class="ident">remaining</span> @ ..] <span class="op">=</span><span class="op">&gt;</span> {
+            [<span class="string">b&#39;.&#39;</span>, <span class="ident">remaining</span> @ ..] =&gt; {
                 <span class="macro">const_assert!</span>(<span class="op">!</span><span class="ident">remaining</span>.<span class="ident">is_empty</span>(), <span class="string">&quot;invalid trailing &#39;.&#39; in OID&quot;</span>);
                 <span class="self">self</span>.<span class="ident">encoder</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">encoder</span>.<span class="ident">encode</span>(<span class="self">self</span>.<span class="ident">current_arc</span>);
                 <span class="self">self</span>.<span class="ident">current_arc</span> <span class="op">=</span> <span class="number">0</span>;
                 <span class="self">self</span>.<span class="ident">parse_bytes</span>(<span class="ident">remaining</span>)
             }
-            [<span class="ident">byte</span>, ..] <span class="op">=</span><span class="op">&gt;</span> {
+            [<span class="ident">byte</span>, ..] =&gt; {
                 <span class="macro">const_assert!</span>(
                     <span class="macro">matches!</span>(<span class="ident">byte</span>, <span class="string">b&#39;0&#39;</span>..<span class="op">=</span><span class="string">b&#39;9&#39;</span> <span class="op">|</span> <span class="string">b&#39;.&#39;</span>),
                     <span class="string">&quot;invalid character in OID&quot;</span>

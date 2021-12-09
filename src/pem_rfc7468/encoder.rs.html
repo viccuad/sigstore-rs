@@ -189,7 +189,7 @@
     <span class="ident">line_ending</span>: <span class="ident">LineEnding</span>,
     <span class="ident">input</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
     <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> [<span class="ident">u8</span>],
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> {
     <span class="ident">grammar::validate_label</span>(<span class="ident">label</span>.<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">Buffer::new</span>(<span class="ident">buf</span>, <span class="ident">line_ending</span>);
@@ -208,7 +208,7 @@
 }
 
 <span class="doccomment">/// Get the length of a PEM encoded document with the given bytes and label.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encoded_len</span>(<span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">line_ending</span>: <span class="ident">LineEnding</span>, <span class="ident">input</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encoded_len</span>(<span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">line_ending</span>: <span class="ident">LineEnding</span>, <span class="ident">input</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="ident">usize</span> {
     <span class="comment">// TODO(tarcieri): use checked arithmetic</span>
     <span class="ident">PRE_ENCAPSULATION_BOUNDARY</span>.<span class="ident">len</span>()
         <span class="op">+</span> <span class="ident">label</span>.<span class="ident">as_bytes</span>().<span class="ident">len</span>()
@@ -229,7 +229,7 @@
 <span class="doccomment">/// the result as a [`String`].</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode_string</span>(<span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">line_ending</span>: <span class="ident">LineEnding</span>, <span class="ident">input</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode_string</span>(<span class="ident">label</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">line_ending</span>: <span class="ident">LineEnding</span>, <span class="ident">input</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="number">0u8</span>; <span class="ident">encoded_len</span>(<span class="ident">label</span>, <span class="ident">line_ending</span>, <span class="ident">input</span>)];
     <span class="ident">encode</span>(<span class="ident">label</span>, <span class="ident">line_ending</span>, <span class="ident">input</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span>;
     <span class="ident">String::from_utf8</span>(<span class="ident">buf</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::CharacterEncoding</span>)
@@ -255,11 +255,11 @@
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">LineEnding</span> {
     <span class="doccomment">/// Use the line ending for the current OS</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LineEnding</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="ident">LineEnding</span> {
         <span class="ident">LineEnding::CRLF</span>
     }
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">windows</span>))]</span>
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LineEnding</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="ident">LineEnding</span> {
         <span class="ident">LineEnding::LF</span>
     }
 }
@@ -267,16 +267,16 @@
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::len_without_is_empty</span>)]</span>
 <span class="kw">impl</span> <span class="ident">LineEnding</span> {
     <span class="doccomment">/// Get the byte serialization of this [`LineEnding`].</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">u8</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">u8</span>] {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">LineEnding::CR</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">CHAR_CR</span>],
-            <span class="ident">LineEnding::LF</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">CHAR_LF</span>],
-            <span class="ident">LineEnding::CRLF</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">CHAR_CR</span>, <span class="ident">CHAR_LF</span>],
+            <span class="ident">LineEnding::CR</span> =&gt; <span class="kw-2">&amp;</span>[<span class="ident">CHAR_CR</span>],
+            <span class="ident">LineEnding::LF</span> =&gt; <span class="kw-2">&amp;</span>[<span class="ident">CHAR_LF</span>],
+            <span class="ident">LineEnding::CRLF</span> =&gt; <span class="kw-2">&amp;</span>[<span class="ident">CHAR_CR</span>, <span class="ident">CHAR_LF</span>],
         }
     }
 
     <span class="doccomment">/// Get the encoded length of this [`LineEnding`].</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="self">self</span>) -&gt; <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">as_bytes</span>().<span class="ident">len</span>()
     }
 }
@@ -295,7 +295,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Buffer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Initialize buffer.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> [<span class="ident">u8</span>], <span class="ident">line_ending</span>: <span class="ident">LineEnding</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> [<span class="ident">u8</span>], <span class="ident">line_ending</span>: <span class="ident">LineEnding</span>) -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">bytes</span>,
             <span class="ident">position</span>: <span class="number">0</span>,
@@ -304,14 +304,14 @@
     }
 
     <span class="doccomment">/// Write a byte slice to the buffer.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">reserved</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">reserve</span>(<span class="ident">slice</span>.<span class="ident">len</span>())<span class="question-mark">?</span>;
         <span class="ident">reserved</span>.<span class="ident">copy_from_slice</span>(<span class="ident">slice</span>);
         <span class="prelude-val">Ok</span>(())
     }
 
     <span class="doccomment">/// Write a byte slice to the buffer with a newline at the end.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">writeln</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">writeln</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">write</span>(<span class="ident">slice</span>)<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="ident">write</span>(<span class="self">self</span>.<span class="ident">line_ending</span>.<span class="ident">as_bytes</span>())
     }
@@ -319,7 +319,7 @@
     <span class="doccomment">/// Write Base64-encoded data to the buffer.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Automatically adds a newline at the end.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_base64ln</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_base64ln</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">reserved</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">reserve</span>(<span class="ident">Base64::encoded_len</span>(<span class="ident">bytes</span>))<span class="question-mark">?</span>;
         <span class="ident">Base64::encode</span>(<span class="ident">bytes</span>, <span class="ident">reserved</span>)<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="ident">write</span>(<span class="self">self</span>.<span class="ident">line_ending</span>.<span class="ident">as_bytes</span>())
@@ -327,12 +327,12 @@
 
     <span class="doccomment">/// Finish writing to the buffer, returning the portion that has been</span>
     <span class="doccomment">/// written to.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">finish</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">finish</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">get</span>(..<span class="self">self</span>.<span class="ident">position</span>).<span class="ident">ok_or</span>(<span class="ident">Error::Length</span>)
     }
 
     <span class="doccomment">/// Reserve space in the encoding buffer, returning a mutable slice.</span>
-    <span class="kw">fn</span> <span class="ident">reserve</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">nbytes</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">reserve</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">nbytes</span>: <span class="ident">usize</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">new_position</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">position</span>.<span class="ident">checked_add</span>(<span class="ident">nbytes</span>).<span class="ident">ok_or</span>(<span class="ident">Error::Length</span>)<span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="ident">reserved</span> <span class="op">=</span> <span class="self">self</span>

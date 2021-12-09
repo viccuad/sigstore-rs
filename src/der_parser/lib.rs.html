@@ -568,17 +568,17 @@
 <span class="doccomment">/// Procedural macro to get encoded oids, see the [oid module](oid/index.html).</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules!</span> <span class="ident">oid</span> {
-    (<span class="ident">raw</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {{
+    (<span class="ident">raw</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {{
         <span class="macro-nonterminal">$</span><span class="macro">crate::exports::der_oid_macro::encode_oid!</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>)<span class="kw-2">*</span>)
     }};
-    (<span class="ident">rel</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {{
+    (<span class="ident">rel</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {{
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::oid::Oid::new_relative</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::exports::borrow::Cow::Borrowed</span>(<span class="op">&amp;</span>
                 <span class="macro-nonterminal">$</span><span class="macro">crate::exports::der_oid_macro::encode_oid!</span>(<span class="macro-nonterminal">rel</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>)<span class="kw-2">*</span>)
             )
         )
     }};
-    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {{
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) =&gt; {{
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::oid::Oid::new</span>(
             <span class="macro-nonterminal">$</span><span class="macro-nonterminal">crate::exports::borrow::Cow::Borrowed</span>(<span class="op">&amp;</span>
                 <span class="macro-nonterminal">$</span><span class="macro">crate::exports::der_oid_macro::encode_oid!</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">args</span>)<span class="kw-2">*</span>)

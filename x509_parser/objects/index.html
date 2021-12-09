@@ -2,7 +2,7 @@
 <p>All OID objects and definitions are now stored in the <a href="https://crates.io/crates/oid-registry">oid-registry</a> crate.</p>
 <p>This crate is re-exporting <code>oid-registry</code>, so to access the OID constants the
 <code>x509_parser::oid_oid_registry</code> namespace can be used (see example below).</p>
-<h2 id="example" class="section-header"><a href="#example">Example</a></h2>
+<h3 id="example" class="section-header"><a href="#example">Example</a></h3>
 <p>To get the short name for a given OID:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">x509_parser::objects</span>::<span class="kw-2">*</span>;
@@ -12,10 +12,10 @@
 <span class="kw">let</span> <span class="ident">sn</span> <span class="op">=</span> <span class="ident">oid2sn</span>(<span class="ident">oid</span>, <span class="ident">oid_registry</span>());
 <span class="macro">assert_eq!</span>(<span class="ident">sn</span>, <span class="prelude-val">Ok</span>(<span class="string">&quot;commonName&quot;</span>));</code></pre></div>
 </div></details><h2 id="functions" class="section-header"><a href="#functions">Functions</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="fn" href="fn.oid2abbrev.html" title="x509_parser::objects::oid2abbrev fn">oid2abbrev</a></div><div class="item-right docblock-short"><p>Return the abbreviation (for ex. CN for Common Name), or if not found, the OID short name</p>
-</div><div class="item-left module-item"><a class="fn" href="fn.oid2description.html" title="x509_parser::objects::oid2description fn">oid2description</a></div><div class="item-right docblock-short"><p>Returns the description corresponding to the OID</p>
-</div><div class="item-left module-item"><a class="fn" href="fn.oid2sn.html" title="x509_parser::objects::oid2sn fn">oid2sn</a></div><div class="item-right docblock-short"><p>Returns the short name corresponding to the OID</p>
-</div><div class="item-left module-item"><a class="fn" href="fn.oid_registry.html" title="x509_parser::objects::oid_registry fn">oid_registry</a></div><div class="item-right docblock-short"><p>Return a reference to the default registry of known OIDs</p>
-</div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="x509_parser" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.oid2abbrev.html" title="x509_parser::objects::oid2abbrev fn">oid2abbrev</a></div><div class="item-right docblock-short"><p>Return the abbreviation (for ex. CN for Common Name), or if not found, the OID short name</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.oid2description.html" title="x509_parser::objects::oid2description fn">oid2description</a></div><div class="item-right docblock-short"><p>Returns the description corresponding to the OID</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.oid2sn.html" title="x509_parser::objects::oid2sn fn">oid2sn</a></div><div class="item-right docblock-short"><p>Returns the short name corresponding to the OID</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.oid_registry.html" title="x509_parser::objects::oid_registry fn">oid_registry</a></div><div class="item-right docblock-short"><p>Return a reference to the default registry of known OIDs</p>
+</div></div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="x509_parser" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script>
 </body></html>

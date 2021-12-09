@@ -190,22 +190,22 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">Error::Asn1</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;PKCS#8 ASN.1 error: {}&quot;</span>, <span class="ident">err</span>),
-            <span class="ident">Error::Crypto</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;PKCS#8 cryptographic error&quot;</span>),
+            <span class="ident">Error::Asn1</span>(<span class="ident">err</span>) =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;PKCS#8 ASN.1 error: {}&quot;</span>, <span class="ident">err</span>),
+            <span class="ident">Error::Crypto</span> =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;PKCS#8 cryptographic error&quot;</span>),
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-            <span class="ident">Error::FileNotFound</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;file not found&quot;</span>),
-            <span class="ident">Error::KeyMalformed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;PKCS#8 cryptographic key data malformed&quot;</span>),
+            <span class="ident">Error::FileNotFound</span> =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;file not found&quot;</span>),
+            <span class="ident">Error::KeyMalformed</span> =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;PKCS#8 cryptographic key data malformed&quot;</span>),
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-            <span class="ident">Error::Io</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;I/O error&quot;</span>),
-            <span class="ident">Error::ParametersMalformed</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;PKCS#8 algorithm parameters malformed&quot;</span>),
+            <span class="ident">Error::Io</span> =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;I/O error&quot;</span>),
+            <span class="ident">Error::ParametersMalformed</span> =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;PKCS#8 algorithm parameters malformed&quot;</span>),
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pem&quot;</span>)]</span>
-            <span class="ident">Error::Pem</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;PKCS#8 PEM error&quot;</span>),
+            <span class="ident">Error::Pem</span> =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;PKCS#8 PEM error&quot;</span>),
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-            <span class="ident">Error::PermissionDenied</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;permission denied&quot;</span>),
+            <span class="ident">Error::PermissionDenied</span> =&gt; <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;permission denied&quot;</span>),
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pkcs1&quot;</span>)]</span>
-            <span class="ident">Error::Pkcs1</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">err</span>),
+            <span class="ident">Error::Pkcs1</span>(<span class="ident">err</span>) =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">err</span>),
         }
     }
 }
@@ -214,20 +214,20 @@
 <span class="kw">impl</span> <span class="ident">std::error::Error</span> <span class="kw">for</span> <span class="ident">Error</span> {}
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">der::Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">der::Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">der::Error</span>) -&gt; <span class="ident">Error</span> {
         <span class="ident">Error::Asn1</span>(<span class="ident">err</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">der::ErrorKind</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">der::ErrorKind</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">der::ErrorKind</span>) -&gt; <span class="ident">Error</span> {
         <span class="ident">Error::Asn1</span>(<span class="ident">err</span>.<span class="ident">into</span>())
     }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pem&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">pem_rfc7468::Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="kw">_</span>: <span class="ident">pem_rfc7468::Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="kw">_</span>: <span class="ident">pem_rfc7468::Error</span>) -&gt; <span class="ident">Error</span> {
         <span class="comment">// TODO(tarcieri): propagate `pem_rfc7468::Error`</span>
         <span class="ident">Error::Pem</span>
     }
@@ -235,18 +235,18 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;pkcs1&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">pkcs1::Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">pkcs1::Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">pkcs1::Error</span>) -&gt; <span class="ident">Error</span> {
         <span class="ident">Error::Pkcs1</span>(<span class="ident">err</span>)
     }
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">std::io::Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Error</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">std::io::Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">std::io::Error</span>) -&gt; <span class="ident">Error</span> {
         <span class="kw">match</span> <span class="ident">err</span>.<span class="ident">kind</span>() {
-            <span class="ident">std::io::ErrorKind::NotFound</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Error::FileNotFound</span>,
-            <span class="ident">std::io::ErrorKind::PermissionDenied</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Error::PermissionDenied</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Error::Io</span>,
+            <span class="ident">std::io::ErrorKind::NotFound</span> =&gt; <span class="ident">Error::FileNotFound</span>,
+            <span class="ident">std::io::ErrorKind::PermissionDenied</span> =&gt; <span class="ident">Error::PermissionDenied</span>,
+            <span class="kw">_</span> =&gt; <span class="ident">Error::Io</span>,
         }
     }
 }

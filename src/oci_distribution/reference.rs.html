@@ -338,20 +338,20 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">ParseError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">ParseError::DigestInvalidFormat</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid checksum digest format&quot;</span>),
-            <span class="ident">ParseError::DigestInvalidLength</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid checksum digest length&quot;</span>),
-            <span class="ident">ParseError::DigestUnsupported</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;unsupported digest algorithm&quot;</span>),
-            <span class="ident">ParseError::NameContainsUppercase</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;repository name must be lowercase&quot;</span>),
-            <span class="ident">ParseError::NameEmpty</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;repository name must have at least one component&quot;</span>),
-            <span class="ident">ParseError::NameTooLong</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(
+            <span class="ident">ParseError::DigestInvalidFormat</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid checksum digest format&quot;</span>),
+            <span class="ident">ParseError::DigestInvalidLength</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid checksum digest length&quot;</span>),
+            <span class="ident">ParseError::DigestUnsupported</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;unsupported digest algorithm&quot;</span>),
+            <span class="ident">ParseError::NameContainsUppercase</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;repository name must be lowercase&quot;</span>),
+            <span class="ident">ParseError::NameEmpty</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;repository name must have at least one component&quot;</span>),
+            <span class="ident">ParseError::NameTooLong</span> =&gt; <span class="macro">write!</span>(
                 <span class="ident">f</span>,
                 <span class="string">&quot;repository name must not be more than {} characters&quot;</span>,
                 <span class="ident">NAME_TOTAL_LENGTH_MAX</span>
             ),
-            <span class="ident">ParseError::ReferenceInvalidFormat</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid reference format&quot;</span>),
-            <span class="ident">ParseError::TagInvalidFormat</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid tag format&quot;</span>),
+            <span class="ident">ParseError::ReferenceInvalidFormat</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid reference format&quot;</span>),
+            <span class="ident">ParseError::TagInvalidFormat</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid tag format&quot;</span>),
         }
     }
 }
@@ -385,28 +385,28 @@
 
 <span class="kw">impl</span> <span class="ident">Reference</span> {
     <span class="doccomment">/// registry returns the name of the registry.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">registry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">registry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">registry</span>
     }
 
     <span class="doccomment">/// repository returns the name of the repository.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">repository</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">repository</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">repository</span>
     }
 
     <span class="doccomment">/// tag returns the object&#39;s tag, if present.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">tag</span>.<span class="ident">as_deref</span>()
     }
 
     <span class="doccomment">/// digest returns the object&#39;s digest, if present.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">digest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">digest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">digest</span>.<span class="ident">as_deref</span>()
     }
 
     <span class="doccomment">/// full_name returns the full repository name and path.</span>
-    <span class="kw">fn</span> <span class="ident">full_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">registry</span>() <span class="op">=</span><span class="op">=</span> <span class="string">&quot;&quot;</span> {
+    <span class="kw">fn</span> <span class="ident">full_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">String</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">registry</span>() <span class="op">==</span> <span class="string">&quot;&quot;</span> {
             <span class="self">self</span>.<span class="ident">repository</span>().<span class="ident">to_string</span>()
         } <span class="kw">else</span> {
             <span class="macro">format!</span>(<span class="string">&quot;{}/{}&quot;</span>, <span class="self">self</span>.<span class="ident">registry</span>(), <span class="self">self</span>.<span class="ident">repository</span>())
@@ -414,7 +414,7 @@
     }
 
     <span class="doccomment">/// whole returns the whole reference.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">whole</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">whole</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">String</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">full_name</span>();
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">t</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">tag</span>() {
             <span class="kw">if</span> <span class="op">!</span><span class="ident">s</span>.<span class="ident">is_empty</span>() {
@@ -433,13 +433,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">Reference</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">std::fmt::Result</span> {
         <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">whole</span>())
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Reference</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">whole</span>())
     }
 }
@@ -447,7 +447,7 @@
 <span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">Reference</span> {
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">ParseError</span>;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
         <span class="ident">Reference::try_from</span>(<span class="ident">s</span>)
     }
 }
@@ -455,7 +455,7 @@
 <span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Reference</span> {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">ParseError</span>;
 
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">s</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">s</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">is_empty</span>() {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::NameEmpty</span>);
         }
@@ -464,8 +464,8 @@
         };
         <span class="kw">let</span> <span class="ident">captures</span>;
         <span class="kw">match</span> <span class="ident">RE</span>.<span class="ident">captures</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>) {
-            <span class="prelude-val">Some</span>(<span class="ident">caps</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">captures</span> <span class="op">=</span> <span class="ident">caps</span>,
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">caps</span>) =&gt; <span class="ident">captures</span> <span class="op">=</span> <span class="ident">caps</span>,
+            <span class="prelude-val">None</span> =&gt; {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::ReferenceInvalidFormat</span>);
             }
         }
@@ -495,22 +495,22 @@
             <span class="kw">let</span> <span class="ident">algo</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">d</span>[<span class="number">0</span>..<span class="number">6</span>];
             <span class="kw">let</span> <span class="ident">digest</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">d</span>[<span class="number">7</span>..];
             <span class="kw">match</span> <span class="ident">algo</span> {
-                <span class="string">&quot;sha256&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="string">&quot;sha256&quot;</span> =&gt; {
                     <span class="kw">if</span> <span class="ident">digest</span>.<span class="ident">len</span>() <span class="op">!</span><span class="op">=</span> <span class="number">64</span> {
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::DigestInvalidLength</span>);
                     }
                 }
-                <span class="string">&quot;sha384&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="string">&quot;sha384&quot;</span> =&gt; {
                     <span class="kw">if</span> <span class="ident">digest</span>.<span class="ident">len</span>() <span class="op">!</span><span class="op">=</span> <span class="number">96</span> {
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::DigestInvalidLength</span>);
                     }
                 }
-                <span class="string">&quot;sha512&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="string">&quot;sha512&quot;</span> =&gt; {
                     <span class="kw">if</span> <span class="ident">digest</span>.<span class="ident">len</span>() <span class="op">!</span><span class="op">=</span> <span class="number">128</span> {
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::DigestInvalidLength</span>);
                     }
                 }
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::DigestUnsupported</span>),
+                <span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::DigestUnsupported</span>),
             }
         }
         <span class="prelude-val">Ok</span>(<span class="ident">reference</span>)
@@ -519,25 +519,25 @@
 
 <span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Reference</span> {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">ParseError</span>;
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
         <span class="ident">TryFrom::try_from</span>(<span class="ident">string</span>.<span class="ident">to_owned</span>())
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Reference</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">String</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">reference</span>: <span class="ident">Reference</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">reference</span>: <span class="ident">Reference</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">reference</span>.<span class="ident">whole</span>()
     }
 }
 
-<span class="kw">fn</span> <span class="ident">split_domain</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">String</span>, <span class="ident">String</span>) {
+<span class="kw">fn</span> <span class="ident">split_domain</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; (<span class="ident">String</span>, <span class="ident">String</span>) {
     <span class="macro">lazy_static!</span> {
         <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">RE</span>: <span class="ident">regex::Regex</span> <span class="op">=</span> <span class="ident">regexp::must_compile</span>(<span class="ident">regexp::ANCHORED_NAME_REGEXP</span>);
     };
     <span class="kw">let</span> <span class="ident">captures</span>;
     <span class="kw">match</span> <span class="ident">RE</span>.<span class="ident">captures</span>(<span class="ident">name</span>) {
-        <span class="prelude-val">Some</span>(<span class="ident">caps</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">captures</span> <span class="op">=</span> <span class="ident">caps</span>,
-        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="prelude-val">Some</span>(<span class="ident">caps</span>) =&gt; <span class="ident">captures</span> <span class="op">=</span> <span class="ident">caps</span>,
+        <span class="prelude-val">None</span> =&gt; {
             <span class="kw">return</span> (<span class="string">&quot;&quot;</span>.<span class="ident">to_owned</span>(), <span class="ident">name</span>.<span class="ident">to_owned</span>());
         }
     }

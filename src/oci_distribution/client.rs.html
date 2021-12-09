@@ -1714,7 +1714,7 @@
 
 <span class="kw">impl</span> <span class="ident">ImageData</span> {
     <span class="doccomment">/// Helper function to compute the digest of the image layers</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sha256_digest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sha256_digest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">String</span> {
         <span class="ident">sha256_digest</span>(
             <span class="kw-2">&amp;</span><span class="self">self</span>
                 .<span class="ident">layers</span>
@@ -1728,7 +1728,7 @@
 
     <span class="doccomment">/// Returns the image digest, either the value in the field or by computing it</span>
     <span class="doccomment">/// If the value in the field is None, the computed value will be stored</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">digest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">digest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">String</span> {
         <span class="self">self</span>.<span class="ident">digest</span>.<span class="ident">clone</span>().<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">sha256_digest</span>())
     }
 }
@@ -1744,23 +1744,23 @@
 
 <span class="kw">impl</span> <span class="ident">ImageLayer</span> {
     <span class="doccomment">/// Constructs a new ImageLayer struct with provided data and media type</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">media_type</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">media_type</span>: <span class="ident">String</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">ImageLayer</span> { <span class="ident">data</span>, <span class="ident">media_type</span> }
     }
 
     <span class="doccomment">/// Constructs a new ImageLayer struct with provided data and</span>
     <span class="doccomment">/// media type application/vnd.oci.image.layer.v1.tar</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">oci_v1</span>(<span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">oci_v1</span>(<span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
         <span class="ident"><span class="self">Self</span>::new</span>(<span class="ident">data</span>, <span class="ident">IMAGE_LAYER_MEDIA_TYPE</span>.<span class="ident">to_string</span>())
     }
     <span class="doccomment">/// Constructs a new ImageLayer struct with provided data and</span>
     <span class="doccomment">/// media type application/vnd.oci.image.layer.v1.tar+gzip</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">oci_v1_gzip</span>(<span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">oci_v1_gzip</span>(<span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
         <span class="ident"><span class="self">Self</span>::new</span>(<span class="ident">data</span>, <span class="ident">IMAGE_LAYER_GZIP_MEDIA_TYPE</span>.<span class="ident">to_string</span>())
     }
 
     <span class="doccomment">/// Helper function to compute the sha256 digest of an image layer</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sha256_digest</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sha256_digest</span>(<span class="self">self</span>) -&gt; <span class="ident">String</span> {
         <span class="ident">sha256_digest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data</span>)
     }
 }
@@ -1791,21 +1791,21 @@
 <span class="doccomment">/// trait on your configuration type so that it can be passed to `Client::from_source`.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ClientConfigSource</span> {
     <span class="doccomment">/// Provides a `ClientConfig`.</span>
-    <span class="kw">fn</span> <span class="ident">client_config</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ClientConfig</span>;
+    <span class="kw">fn</span> <span class="ident">client_config</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">ClientConfig</span>;
 }
 
 <span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">ClientConfig</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Client</span> {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">anyhow::Error</span>;
 
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">config</span>: <span class="ident">ClientConfig</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">config</span>: <span class="ident">ClientConfig</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">client_builder</span> <span class="op">=</span> <span class="ident">reqwest::Client::builder</span>()
             .<span class="ident">danger_accept_invalid_certs</span>(<span class="ident">config</span>.<span class="ident">accept_invalid_certificates</span>);
 
         <span class="ident">client_builder</span> <span class="op">=</span> <span class="kw">match</span> () {
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;native-tls&quot;</span>)]</span>
-            () <span class="op">=</span><span class="op">&gt;</span> <span class="ident">client_builder</span>.<span class="ident">danger_accept_invalid_hostnames</span>(<span class="ident">config</span>.<span class="ident">accept_invalid_hostnames</span>),
+            () =&gt; <span class="ident">client_builder</span>.<span class="ident">danger_accept_invalid_hostnames</span>(<span class="ident">config</span>.<span class="ident">accept_invalid_hostnames</span>),
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;native-tls&quot;</span>))]</span>
-            () <span class="op">=</span><span class="op">&gt;</span> {
+            () =&gt; {
                 <span class="macro">warn!</span>(<span class="string">&quot;Cannot change value of `accept_invalid_hostnames`: missing &#39;native-tls&#39; feature&quot;</span>);
                 <span class="ident">client_builder</span>
             }
@@ -1813,8 +1813,8 @@
 
         <span class="kw">for</span> <span class="ident">c</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">config</span>.<span class="ident">extra_root_certificates</span> {
             <span class="kw">let</span> <span class="ident">cert</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">c</span>.<span class="ident">encoding</span> {
-                <span class="ident">CertificateEncoding::Der</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">reqwest::Certificate::from_der</span>(<span class="ident">c</span>.<span class="ident">data</span>.<span class="ident">as_slice</span>())<span class="question-mark">?</span>,
-                <span class="ident">CertificateEncoding::Pem</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">reqwest::Certificate::from_pem</span>(<span class="ident">c</span>.<span class="ident">data</span>.<span class="ident">as_slice</span>())<span class="question-mark">?</span>,
+                <span class="ident">CertificateEncoding::Der</span> =&gt; <span class="ident">reqwest::Certificate::from_der</span>(<span class="ident">c</span>.<span class="ident">data</span>.<span class="ident">as_slice</span>())<span class="question-mark">?</span>,
+                <span class="ident">CertificateEncoding::Pem</span> =&gt; <span class="ident">reqwest::Certificate::from_pem</span>(<span class="ident">c</span>.<span class="ident">data</span>.<span class="ident">as_slice</span>())<span class="question-mark">?</span>,
             };
             <span class="ident">client_builder</span> <span class="op">=</span> <span class="ident">client_builder</span>.<span class="ident">add_root_certificate</span>(<span class="ident">cert</span>);
         }
@@ -1829,7 +1829,7 @@
 
 <span class="kw">impl</span> <span class="ident">Client</span> {
     <span class="doccomment">/// Create a new client with the supplied config</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">config</span>: <span class="ident">ClientConfig</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">config</span>: <span class="ident">ClientConfig</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Client::try_from</span>(<span class="ident">config</span>.<span class="ident">clone</span>()).<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> {
             <span class="macro">warn!</span>(<span class="string">&quot;Cannot create OCI client from config: {:?}&quot;</span>, <span class="ident">err</span>);
             <span class="macro">warn!</span>(<span class="string">&quot;Creating client with default configuration&quot;</span>);
@@ -1842,7 +1842,7 @@
     }
 
     <span class="doccomment">/// Create a new client with the supplied config</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_source</span>(<span class="ident">config_source</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">ClientConfigSource</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_source</span>(<span class="ident">config_source</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">ClientConfigSource</span>) -&gt; <span class="self">Self</span> {
         <span class="ident"><span class="self">Self</span>::new</span>(<span class="ident">config_source</span>.<span class="ident">client_config</span>())
     }
 
@@ -1855,7 +1855,7 @@
         <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>,
         <span class="ident">auth</span>: <span class="kw-2">&amp;</span><span class="ident">RegistryAuth</span>,
         <span class="ident">accepted_media_types</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">ImageData</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">ImageData</span><span class="op">&gt;</span> {
         <span class="macro">debug!</span>(<span class="string">&quot;Pulling image: {:?}&quot;</span>, <span class="ident">image</span>);
 
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">tokens</span>.<span class="ident">contains_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">get_registry</span>(<span class="ident">image</span>)) {
@@ -1905,7 +1905,7 @@
         <span class="ident">config_media_type</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">auth</span>: <span class="kw-2">&amp;</span><span class="ident">RegistryAuth</span>,
         <span class="ident">image_manifest</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">OciManifest</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="macro">debug!</span>(<span class="string">&quot;Pushing image: {:?}&quot;</span>, <span class="ident">image_ref</span>);
 
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">tokens</span>.<span class="ident">contains_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">get_registry</span>(<span class="kw-2">&amp;</span><span class="ident">image_ref</span>)) {
@@ -1933,8 +1933,8 @@
 
         <span class="comment">// Push config and manifest to registry</span>
         <span class="kw">let</span> <span class="ident">manifest</span>: <span class="ident">OciManifest</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">image_manifest</span> {
-            <span class="prelude-val">Some</span>(<span class="ident">m</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">m</span>,
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">generate_manifest</span>(<span class="kw-2">&amp;</span><span class="ident">image_data</span>, <span class="kw-2">&amp;</span><span class="ident">config_data</span>, <span class="ident">config_media_type</span>),
+            <span class="prelude-val">Some</span>(<span class="ident">m</span>) =&gt; <span class="ident">m</span>,
+            <span class="prelude-val">None</span> =&gt; <span class="self">self</span>.<span class="ident">generate_manifest</span>(<span class="kw-2">&amp;</span><span class="ident">image_data</span>, <span class="kw-2">&amp;</span><span class="ident">config_data</span>, <span class="ident">config_media_type</span>),
         };
         <span class="self">self</span>.<span class="ident">push_config</span>(<span class="ident">image_ref</span>, <span class="kw-2">&amp;</span><span class="ident">config_data</span>, <span class="kw-2">&amp;</span><span class="ident">manifest</span>.<span class="ident">config</span>.<span class="ident">digest</span>)
             .<span class="kw">await</span><span class="question-mark">?</span>;
@@ -1952,7 +1952,7 @@
         <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>,
         <span class="ident">authentication</span>: <span class="kw-2">&amp;</span><span class="ident">RegistryAuth</span>,
         <span class="ident">operation</span>: <span class="kw-2">&amp;</span><span class="ident">RegistryOperation</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="macro">debug!</span>(<span class="string">&quot;Authorizing for image: {:?}&quot;</span>, <span class="ident">image</span>);
         <span class="comment">// The version request will tell us where to go.</span>
         <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="macro">format!</span>(
@@ -1962,8 +1962,8 @@
         );
         <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">url</span>).<span class="ident">send</span>().<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">dist_hdr</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">res</span>.<span class="ident">headers</span>().<span class="ident">get</span>(<span class="ident">reqwest::header::WWW_AUTHENTICATE</span>) {
-            <span class="prelude-val">Some</span>(<span class="ident">h</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">h</span>,
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(()),
+            <span class="prelude-val">Some</span>(<span class="ident">h</span>) =&gt; <span class="ident">h</span>,
+            <span class="prelude-val">None</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Ok</span>(()),
         };
 
         <span class="kw">let</span> <span class="ident">auth</span> <span class="op">=</span> <span class="ident">WwwAuthenticate::parse_header</span>(<span class="kw-2">&amp;</span><span class="ident">dist_hdr</span>.<span class="ident">as_bytes</span>().<span class="ident">into</span>())<span class="question-mark">?</span>;
@@ -1971,14 +1971,14 @@
         <span class="comment">// was present. Since we do not handle basic auth, it could be the case that the upstream service</span>
         <span class="comment">// is in compatibility mode with a Docker v1 registry.</span>
         <span class="kw">let</span> <span class="ident">challenge_opt</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">auth</span>.<span class="ident">get</span>::<span class="op">&lt;</span><span class="ident">BearerChallenge</span><span class="op">&gt;</span>() {
-            <span class="prelude-val">Some</span>(<span class="ident">co</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">co</span>,
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(()),
+            <span class="prelude-val">Some</span>(<span class="ident">co</span>) =&gt; <span class="ident">co</span>,
+            <span class="prelude-val">None</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Ok</span>(()),
         };
 
         <span class="comment">// Allow for either push or pull authentication</span>
         <span class="kw">let</span> <span class="ident">scope</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">operation</span> {
-            <span class="ident">RegistryOperation::Pull</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">format!</span>(<span class="string">&quot;repository:{}:pull&quot;</span>, <span class="ident">image</span>.<span class="ident">repository</span>()),
-            <span class="ident">RegistryOperation::Push</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">format!</span>(<span class="string">&quot;repository:{}:pull,push&quot;</span>, <span class="ident">image</span>.<span class="ident">repository</span>()),
+            <span class="ident">RegistryOperation::Pull</span> =&gt; <span class="macro">format!</span>(<span class="string">&quot;repository:{}:pull&quot;</span>, <span class="ident">image</span>.<span class="ident">repository</span>()),
+            <span class="ident">RegistryOperation::Push</span> =&gt; <span class="macro">format!</span>(<span class="string">&quot;repository:{}:pull,push&quot;</span>, <span class="ident">image</span>.<span class="ident">repository</span>()),
         };
 
         <span class="kw">let</span> <span class="ident">challenge</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">challenge_opt</span>[<span class="number">0</span>];
@@ -2003,7 +2003,7 @@
             .<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="kw">match</span> <span class="ident">auth_res</span>.<span class="ident">status</span>() {
-            <span class="ident">reqwest::StatusCode::OK</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">reqwest::StatusCode::OK</span> =&gt; {
                 <span class="kw">let</span> <span class="ident">text</span> <span class="op">=</span> <span class="ident">auth_res</span>.<span class="ident">text</span>().<span class="kw">await</span><span class="question-mark">?</span>;
                 <span class="macro">debug!</span>(<span class="string">&quot;Received response from auth request: {}&quot;</span>, <span class="ident">text</span>);
                 <span class="kw">let</span> <span class="ident">token</span>: <span class="ident">RegistryToken</span> <span class="op">=</span> <span class="ident">serde_json::from_str</span>(<span class="kw-2">&amp;</span><span class="ident">text</span>)
@@ -2012,7 +2012,7 @@
                 <span class="self">self</span>.<span class="ident">tokens</span>.<span class="ident">insert</span>(<span class="self">self</span>.<span class="ident">get_registry</span>(<span class="ident">image</span>), <span class="ident">token</span>);
                 <span class="prelude-val">Ok</span>(())
             }
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw">_</span> =&gt; {
                 <span class="kw">let</span> <span class="ident">reason</span> <span class="op">=</span> <span class="ident">auth_res</span>.<span class="ident">text</span>().<span class="kw">await</span><span class="question-mark">?</span>;
                 <span class="macro">debug!</span>(<span class="string">&quot;Failed to authenticate for image &#39;{:?}&#39;: {}&quot;</span>, <span class="ident">image</span>, <span class="ident">reason</span>);
                 <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;failed to authenticate: {}&quot;</span>, <span class="ident">reason</span>))
@@ -2028,7 +2028,7 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>,
         <span class="ident">auth</span>: <span class="kw-2">&amp;</span><span class="ident">RegistryAuth</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">tokens</span>.<span class="ident">contains_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">get_registry</span>(<span class="ident">image</span>)) {
             <span class="self">self</span>.<span class="ident">auth</span>(<span class="ident">image</span>, <span class="ident">auth</span>, <span class="kw-2">&amp;</span><span class="ident">RegistryOperation::Pull</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         }
@@ -2043,15 +2043,15 @@
         <span class="comment">// Obviously, HTTP servers are going to send other codes. This tries to catch the</span>
         <span class="comment">// obvious ones (200, 4XX, 5XX). Anything else is just treated as an error.</span>
         <span class="kw">match</span> <span class="ident">res</span>.<span class="ident">status</span>() {
-            <span class="ident">reqwest::StatusCode::OK</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">digest_header_value</span>(<span class="kw-2">&amp;</span><span class="ident">res</span>),
-            <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">is_client_error</span>() <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">reqwest::StatusCode::OK</span> =&gt; <span class="ident">digest_header_value</span>(<span class="kw-2">&amp;</span><span class="ident">res</span>),
+            <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">is_client_error</span>() =&gt; {
                 <span class="comment">// According to the OCI spec, we should see an error in the message body.</span>
                 <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">res</span>.<span class="ident">json</span>::<span class="op">&lt;</span><span class="ident">OciEnvelope</span><span class="op">&gt;</span>().<span class="kw">await</span><span class="question-mark">?</span>;
                 <span class="comment">// FIXME: This should not have to wrap the error.</span>
                 <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;{} on {}&quot;</span>, <span class="ident">err</span>.<span class="ident">errors</span>[<span class="number">0</span>], <span class="ident">url</span>))
             }
-            <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">is_server_error</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;Server error at {}&quot;</span>, <span class="ident">url</span>)),
-            <span class="ident">s</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(
+            <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">is_server_error</span>() =&gt; <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;Server error at {}&quot;</span>, <span class="ident">url</span>)),
+            <span class="ident">s</span> =&gt; <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(
                 <span class="string">&quot;An unexpected error occured: code={}, message=&#39;{}&#39;&quot;</span>,
                 <span class="ident">s</span>,
                 <span class="ident">res</span>.<span class="ident">text</span>().<span class="kw">await</span><span class="question-mark">?</span>
@@ -2063,7 +2063,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">manifest</span>: <span class="kw-2">&amp;</span><span class="ident">OciManifest</span>,
         <span class="ident">accepted_media_types</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">manifest</span>.<span class="ident">layers</span>.<span class="ident">is_empty</span>() {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;no layers to pull&quot;</span>));
         }
@@ -2091,7 +2091,7 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>,
         <span class="ident">auth</span>: <span class="kw-2">&amp;</span><span class="ident">RegistryAuth</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span>(<span class="ident">OciManifest</span>, <span class="ident">String</span>)<span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span>(<span class="ident">OciManifest</span>, <span class="ident">String</span>)<span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">tokens</span>.<span class="ident">contains_key</span>(<span class="ident">image</span>.<span class="ident">registry</span>()) {
             <span class="self">self</span>.<span class="ident">auth</span>(<span class="ident">image</span>, <span class="ident">auth</span>, <span class="kw-2">&amp;</span><span class="ident">RegistryOperation::Pull</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         }
@@ -2103,7 +2103,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// If the connection has already gone through authentication, this will</span>
     <span class="doccomment">/// use the bearer token. Otherwise, this will attempt an anonymous pull.</span>
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">_pull_manifest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span>(<span class="ident">OciManifest</span>, <span class="ident">String</span>)<span class="op">&gt;</span> {
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">_pull_manifest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span>(<span class="ident">OciManifest</span>, <span class="ident">String</span>)<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_v2_manifest_url</span>(<span class="ident">image</span>);
         <span class="macro">debug!</span>(<span class="string">&quot;Pulling image manifest from {}&quot;</span>, <span class="ident">url</span>);
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">url</span>);
@@ -2114,7 +2114,7 @@
         <span class="comment">// Obviously, HTTP servers are going to send other codes. This tries to catch the</span>
         <span class="comment">// obvious ones (200, 4XX, 5XX). Anything else is just treated as an error.</span>
         <span class="kw">match</span> <span class="ident">res</span>.<span class="ident">status</span>() {
-            <span class="ident">reqwest::StatusCode::OK</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">reqwest::StatusCode::OK</span> =&gt; {
                 <span class="kw">let</span> <span class="ident">digest</span> <span class="op">=</span> <span class="ident">digest_header_value</span>(<span class="kw-2">&amp;</span><span class="ident">res</span>)<span class="question-mark">?</span>;
                 <span class="kw">let</span> <span class="ident">text</span> <span class="op">=</span> <span class="ident">res</span>.<span class="ident">text</span>().<span class="kw">await</span><span class="question-mark">?</span>;
 
@@ -2129,14 +2129,14 @@
                 })<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>((<span class="ident">manifest</span>, <span class="ident">digest</span>))
             }
-            <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">is_client_error</span>() <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">is_client_error</span>() =&gt; {
                 <span class="comment">// According to the OCI spec, we should see an error in the message body.</span>
                 <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">res</span>.<span class="ident">json</span>::<span class="op">&lt;</span><span class="ident">OciEnvelope</span><span class="op">&gt;</span>().<span class="kw">await</span><span class="question-mark">?</span>;
                 <span class="comment">// FIXME: This should not have to wrap the error.</span>
                 <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;{} on {}&quot;</span>, <span class="ident">err</span>.<span class="ident">errors</span>[<span class="number">0</span>], <span class="ident">url</span>))
             }
-            <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">is_server_error</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;Server error at {}&quot;</span>, <span class="ident">url</span>)),
-            <span class="ident">s</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(
+            <span class="ident">s</span> <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">is_server_error</span>() =&gt; <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;Server error at {}&quot;</span>, <span class="ident">url</span>)),
+            <span class="ident">s</span> =&gt; <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(
                 <span class="string">&quot;An unexpected error occured: code={}, message=&#39;{}&#39;&quot;</span>,
                 <span class="ident">s</span>,
                 <span class="ident">res</span>.<span class="ident">text</span>().<span class="kw">await</span><span class="question-mark">?</span>
@@ -2144,7 +2144,7 @@
         }
     }
 
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">validate_image_manifest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">validate_image_manifest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">text</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="macro">debug!</span>(<span class="string">&quot;validating manifest: {}&quot;</span>, <span class="ident">text</span>);
         <span class="kw">let</span> <span class="ident">versioned</span>: <span class="ident">Versioned</span> <span class="op">=</span> <span class="ident">serde_json::from_str</span>(<span class="kw-2">&amp;</span><span class="ident">text</span>)
             .<span class="ident">with_context</span>(<span class="op">|</span><span class="op">|</span> <span class="string">&quot;Failed to parse manifest as a Versioned object&quot;</span>)<span class="question-mark">?</span>;
@@ -2176,7 +2176,7 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>,
         <span class="ident">auth</span>: <span class="kw-2">&amp;</span><span class="ident">RegistryAuth</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span>(<span class="ident">OciManifest</span>, <span class="ident">String</span>, <span class="ident">String</span>)<span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span>(<span class="ident">OciManifest</span>, <span class="ident">String</span>, <span class="ident">String</span>)<span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">tokens</span>.<span class="ident">contains_key</span>(<span class="ident">image</span>.<span class="ident">registry</span>()) {
             <span class="self">self</span>.<span class="ident">auth</span>(<span class="ident">image</span>, <span class="ident">auth</span>, <span class="kw-2">&amp;</span><span class="ident">RegistryOperation::Pull</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         }
@@ -2187,7 +2187,7 @@
     <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">_pull_manifest_and_config</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span>(<span class="ident">OciManifest</span>, <span class="ident">String</span>, <span class="ident">String</span>)<span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span>(<span class="ident">OciManifest</span>, <span class="ident">String</span>, <span class="ident">String</span>)<span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">manifest</span>, <span class="ident">digest</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">_pull_manifest</span>(<span class="ident">image</span>).<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
@@ -2210,7 +2210,7 @@
         <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>,
         <span class="ident">digest</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="kw-2">mut</span> <span class="ident">out</span>: <span class="ident">T</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_v2_blob_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">get_registry</span>(<span class="ident">image</span>), <span class="ident">image</span>.<span class="ident">repository</span>(), <span class="ident">digest</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">stream</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">client</span>
@@ -2230,7 +2230,7 @@
     <span class="doccomment">/// Begins a session to push an image to registry</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns URL with session UUID</span>
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">begin_push_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">begin_push_session</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">to_v2_blob_upload_url</span>(<span class="ident">image</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">auth_headers</span>(<span class="ident">image</span>);
         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Length&quot;</span>, <span class="string">&quot;0&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
@@ -2250,7 +2250,7 @@
         <span class="ident">location</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>,
         <span class="ident">digest</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;{}&amp;digest={}&quot;</span>, <span class="ident">location</span>, <span class="ident">digest</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">close_headers</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">auth_headers</span>(<span class="ident">image</span>);
         <span class="ident">close_headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Length&quot;</span>, <span class="string">&quot;0&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
@@ -2269,7 +2269,7 @@
         <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>,
         <span class="ident">layer</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
         <span class="ident">start_byte</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">layer</span>.<span class="ident">is_empty</span>() {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;cannot push a layer without data&quot;</span>));
         };
@@ -2309,7 +2309,7 @@
         <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>,
         <span class="ident">config_data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
         <span class="ident">config_digest</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">location</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">begin_push_session</span>(<span class="ident">image</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let</span> (<span class="ident">end_location</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">push_layer</span>(<span class="kw-2">&amp;</span><span class="ident">location</span>, <span class="kw-2">&amp;</span><span class="ident">image</span>, <span class="ident">config_data</span>.<span class="ident">to_vec</span>(), <span class="number">0</span>)
@@ -2325,7 +2325,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>,
         <span class="ident">manifest</span>: <span class="kw-2">&amp;</span><span class="ident">OciManifest</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_v2_manifest_url</span>(<span class="ident">image</span>);
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">auth_headers</span>(<span class="ident">image</span>);
@@ -2353,12 +2353,12 @@
         <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>,
         <span class="ident">res</span>: <span class="ident">reqwest::Response</span>,
         <span class="ident">expected_status</span>: <span class="kw-2">&amp;</span><span class="ident">reqwest::StatusCode</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">res</span>.<span class="ident">status</span>().<span class="ident">eq</span>(<span class="ident">expected_status</span>) {
             <span class="kw">let</span> <span class="ident">location_header</span> <span class="op">=</span> <span class="ident">res</span>.<span class="ident">headers</span>().<span class="ident">get</span>(<span class="string">&quot;Location&quot;</span>);
             <span class="kw">match</span> <span class="ident">location_header</span> {
-                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;registry did not return a location header&quot;</span>)),
-                <span class="prelude-val">Some</span>(<span class="ident">lh</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">location_header_to_url</span>(<span class="kw-2">&amp;</span><span class="ident">image</span>, <span class="kw-2">&amp;</span><span class="ident">lh</span>),
+                <span class="prelude-val">None</span> =&gt; <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;registry did not return a location header&quot;</span>)),
+                <span class="prelude-val">Some</span>(<span class="ident">lh</span>) =&gt; <span class="self">self</span>.<span class="ident">location_header_to_url</span>(<span class="kw-2">&amp;</span><span class="ident">image</span>, <span class="kw-2">&amp;</span><span class="ident">lh</span>),
             }
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(
@@ -2377,7 +2377,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>,
         <span class="ident">location_header</span>: <span class="kw-2">&amp;</span><span class="ident">reqwest::header::HeaderValue</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">lh</span> <span class="op">=</span> <span class="ident">location_header</span>.<span class="ident">to_str</span>().<span class="ident">map_err</span>(<span class="ident">anyhow::Error::new</span>)<span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="ident">lh</span>.<span class="ident">starts_with</span>(<span class="string">&quot;/v2/&quot;</span>) {
             <span class="prelude-val">Ok</span>(<span class="macro">format!</span>(
@@ -2396,7 +2396,7 @@
         <span class="ident">image_data</span>: <span class="kw-2">&amp;</span><span class="ident">ImageData</span>,
         <span class="ident">config_data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
         <span class="ident">config_media_type</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">OciManifest</span> {
+    ) -&gt; <span class="ident">OciManifest</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">manifest</span> <span class="op">=</span> <span class="ident">OciManifest::default</span>();
 
         <span class="ident">manifest</span>.<span class="ident">config</span>.<span class="ident">media_type</span> <span class="op">=</span> <span class="ident">config_media_type</span>.<span class="ident">to_string</span>();
@@ -2428,7 +2428,7 @@
     }
 
     <span class="doccomment">/// Convert a Reference to a v2 manifest URL.</span>
-    <span class="kw">fn</span> <span class="ident">to_v2_manifest_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reference</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="kw">fn</span> <span class="ident">to_v2_manifest_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reference</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>) -&gt; <span class="ident">String</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">digest</span>) <span class="op">=</span> <span class="ident">reference</span>.<span class="ident">digest</span>() {
             <span class="macro">format!</span>(
                 <span class="string">&quot;{}://{}/v2/{}/manifests/{}&quot;</span>,
@@ -2453,7 +2453,7 @@
     }
 
     <span class="doccomment">/// Convert a Reference to a v2 blob (layer) URL.</span>
-    <span class="kw">fn</span> <span class="ident">to_v2_blob_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">registry</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">repository</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">digest</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="kw">fn</span> <span class="ident">to_v2_blob_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">registry</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">repository</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">digest</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">String</span> {
         <span class="macro">format!</span>(
             <span class="string">&quot;{}://{}/v2/{}/blobs/{}&quot;</span>,
             <span class="self">self</span>.<span class="ident">config</span>.<span class="ident">protocol</span>.<span class="ident">scheme_for</span>(<span class="ident">registry</span>),
@@ -2464,7 +2464,7 @@
     }
 
     <span class="doccomment">/// Convert a Reference to a v2 blob upload URL.</span>
-    <span class="kw">fn</span> <span class="ident">to_v2_blob_upload_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reference</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="kw">fn</span> <span class="ident">to_v2_blob_upload_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">reference</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>) -&gt; <span class="ident">String</span> {
         <span class="self">self</span>.<span class="ident">to_v2_blob_url</span>(
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">get_registry</span>(<span class="ident">reference</span>),
             <span class="kw-2">&amp;</span><span class="ident">reference</span>.<span class="ident">repository</span>(),
@@ -2477,7 +2477,7 @@
     <span class="doccomment">/// If the struct has Some(bearer), this will insert the bearer token in an</span>
     <span class="doccomment">/// Authorization header. It will also set the Accept header, which must</span>
     <span class="doccomment">/// be set on all OCI Registry request.</span>
-    <span class="kw">fn</span> <span class="ident">auth_headers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">HeaderMap</span> {
+    <span class="kw">fn</span> <span class="ident">auth_headers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>) -&gt; <span class="ident">HeaderMap</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">HeaderMap::new</span>();
         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Accept&quot;</span>, <span class="string">&quot;application/vnd.docker.distribution.manifest.v2+json,application/vnd.docker.distribution.manifest.list.v2+json,application/vnd.oci.image.manifest.v1+json&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>());
 
@@ -2491,11 +2491,11 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Some registries, such as docker.io, uses a different address for the actual</span>
     <span class="doccomment">/// registry. This function implements such redirection.</span>
-    <span class="kw">fn</span> <span class="ident">get_registry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="kw">fn</span> <span class="ident">get_registry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">image</span>: <span class="kw-2">&amp;</span><span class="ident">Reference</span>) -&gt; <span class="ident">String</span> {
         <span class="kw">let</span> <span class="ident">registry</span> <span class="op">=</span> <span class="ident">image</span>.<span class="ident">registry</span>();
         <span class="kw">match</span> <span class="ident">registry</span> {
-            <span class="string">&quot;docker.io&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;registry-1.docker.io&quot;</span>.<span class="ident">into</span>(),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">registry</span>.<span class="ident">into</span>(),
+            <span class="string">&quot;docker.io&quot;</span> =&gt; <span class="string">&quot;registry-1.docker.io&quot;</span>.<span class="ident">into</span>(),
+            <span class="kw">_</span> =&gt; <span class="ident">registry</span>.<span class="ident">into</span>(),
         }
     }
 }
@@ -2548,17 +2548,17 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">ClientProtocol</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
         <span class="ident">ClientProtocol::Https</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">ClientProtocol</span> {
-    <span class="kw">fn</span> <span class="ident">scheme_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">registry</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">fn</span> <span class="ident">scheme_for</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">registry</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">ClientProtocol::Https</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;https&quot;</span>,
-            <span class="ident">ClientProtocol::Http</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;http&quot;</span>,
-            <span class="ident">ClientProtocol::HttpsExcept</span>(<span class="ident">exceptions</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">ClientProtocol::Https</span> =&gt; <span class="string">&quot;https&quot;</span>,
+            <span class="ident">ClientProtocol::Http</span> =&gt; <span class="string">&quot;http&quot;</span>,
+            <span class="ident">ClientProtocol::HttpsExcept</span>(<span class="ident">exceptions</span>) =&gt; {
                 <span class="kw">if</span> <span class="ident">exceptions</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">registry</span>.<span class="ident">to_owned</span>()) {
                     <span class="string">&quot;http&quot;</span>
                 } <span class="kw">else</span> {
@@ -2579,14 +2579,14 @@
 }
 
 <span class="kw">impl</span> <span class="ident">RegistryToken</span> {
-    <span class="kw">fn</span> <span class="ident">bearer_token</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+    <span class="kw">fn</span> <span class="ident">bearer_token</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">String</span> {
         <span class="macro">format!</span>(<span class="string">&quot;Bearer {}&quot;</span>, <span class="self">self</span>.<span class="ident">token</span>())
     }
 
-    <span class="kw">fn</span> <span class="ident">token</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">fn</span> <span class="ident">token</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">RegistryToken::Token</span> { <span class="ident">token</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">token</span>,
-            <span class="ident">RegistryToken::AccessToken</span> { <span class="ident">access_token</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">access_token</span>,
+            <span class="ident">RegistryToken::Token</span> { <span class="ident">token</span> } =&gt; <span class="ident">token</span>,
+            <span class="ident">RegistryToken::AccessToken</span> { <span class="ident">access_token</span> } =&gt; <span class="ident">access_token</span>,
         }
     }
 }
@@ -2599,14 +2599,14 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Challenge</span> <span class="kw">for</span> <span class="ident">BearerChallenge</span> {
-    <span class="kw">fn</span> <span class="ident">challenge_name</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+    <span class="kw">fn</span> <span class="ident">challenge_name</span>() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
         <span class="string">&quot;Bearer&quot;</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">raw</span>: <span class="ident">RawChallenge</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">raw</span>: <span class="ident">RawChallenge</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">raw</span> {
-            <span class="ident">RawChallenge::Token68</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
-            <span class="ident">RawChallenge::Fields</span>(<span class="kw-2">mut</span> <span class="ident">map</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">BearerChallenge</span> {
+            <span class="ident">RawChallenge::Token68</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">None</span>,
+            <span class="ident">RawChallenge::Fields</span>(<span class="kw-2">mut</span> <span class="ident">map</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">BearerChallenge</span> {
                 <span class="ident">realm</span>: <span class="ident">map</span>.<span class="ident">remove</span>(<span class="string">&quot;realm&quot;</span>),
                 <span class="ident">scope</span>: <span class="ident">map</span>.<span class="ident">remove</span>(<span class="string">&quot;scope&quot;</span>),
                 <span class="ident">service</span>: <span class="ident">map</span>.<span class="ident">remove</span>(<span class="string">&quot;service&quot;</span>),
@@ -2614,7 +2614,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">into_raw</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RawChallenge</span> {
+    <span class="kw">fn</span> <span class="ident">into_raw</span>(<span class="self">self</span>) -&gt; <span class="ident">RawChallenge</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">ChallengeFields::new</span>();
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">realm</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">realm</span> {
             <span class="ident">map</span>.<span class="ident">insert_static_quoting</span>(<span class="string">&quot;realm&quot;</span>, <span class="ident">realm</span>);
@@ -2629,12 +2629,12 @@
     }
 }
 
-<span class="kw">fn</span> <span class="ident">digest_header_value</span>(<span class="ident">response</span>: <span class="kw-2">&amp;</span><span class="ident">reqwest::Response</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">digest_header_value</span>(<span class="ident">response</span>: <span class="kw-2">&amp;</span><span class="ident">reqwest::Response</span>) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">response</span>.<span class="ident">headers</span>();
     <span class="kw">let</span> <span class="ident">digest_header</span> <span class="op">=</span> <span class="ident">headers</span>.<span class="ident">get</span>(<span class="string">&quot;Docker-Content-Digest&quot;</span>);
     <span class="kw">match</span> <span class="ident">digest_header</span> {
-        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;resgistry did not return a digest header&quot;</span>)),
-        <span class="prelude-val">Some</span>(<span class="ident">hv</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">hv</span>
+        <span class="prelude-val">None</span> =&gt; <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;resgistry did not return a digest header&quot;</span>)),
+        <span class="prelude-val">Some</span>(<span class="ident">hv</span>) =&gt; <span class="ident">hv</span>
             .<span class="ident">to_str</span>()
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">to_string</span>())
             .<span class="ident">map_err</span>(<span class="ident">anyhow::Error::new</span>),
@@ -2642,7 +2642,7 @@
 }
 
 <span class="doccomment">/// Computes the SHA256 digest of a byte vector</span>
-<span class="kw">fn</span> <span class="ident">sha256_digest</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+<span class="kw">fn</span> <span class="ident">sha256_digest</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="ident">String</span> {
     <span class="macro">format!</span>(<span class="string">&quot;sha256:{:x}&quot;</span>, <span class="ident">sha2::Sha256::digest</span>(<span class="ident">bytes</span>))
 }
 
@@ -3102,12 +3102,12 @@
                     )
                     .<span class="kw">await</span>
                 {
-                    <span class="prelude-val">Ok</span>(<span class="ident">data</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="prelude-val">Ok</span>(<span class="ident">data</span>) =&gt; {
                         <span class="ident">image_data</span> <span class="op">=</span> <span class="ident">data</span>;
                         <span class="ident">last_error</span> <span class="op">=</span> <span class="prelude-val">None</span>;
                         <span class="kw">break</span>;
                     }
-                    <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; {
                         <span class="macro">println!</span>(
                             <span class="string">&quot;Got error on pull call attempt {}. Will retry in 1s: {:?}&quot;</span>,
                             <span class="ident">i</span>, <span class="ident">e</span>
@@ -3326,8 +3326,8 @@
             .<span class="kw">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to pull pushed image manifest&quot;</span>);
 
-        <span class="macro">assert!</span>(<span class="ident">image_data</span>.<span class="ident">layers</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">1</span>);
-        <span class="macro">assert!</span>(<span class="ident">pulled_image_data</span>.<span class="ident">layers</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">1</span>);
+        <span class="macro">assert!</span>(<span class="ident">image_data</span>.<span class="ident">layers</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span>);
+        <span class="macro">assert!</span>(<span class="ident">pulled_image_data</span>.<span class="ident">layers</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span>);
         <span class="macro">assert_eq!</span>(
             <span class="ident">image_data</span>.<span class="ident">layers</span>[<span class="number">0</span>].<span class="ident">data</span>.<span class="ident">len</span>(),
             <span class="ident">pulled_image_data</span>.<span class="ident">layers</span>[<span class="number">0</span>].<span class="ident">data</span>.<span class="ident">len</span>()

@@ -195,7 +195,7 @@
 {
     <span class="kw">fn</span> <span class="ident">from_pkcs8_private_key_info</span>(
         <span class="ident">private_key_info</span>: <span class="ident">pkcs8::PrivateKeyInfo</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">pkcs8::Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">pkcs8::Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">private_key_info</span>
             .<span class="ident">algorithm</span>
             .<span class="ident">assert_oids</span>(<span class="ident">ALGORITHM_OID</span>, <span class="ident">C::OID</span>)<span class="question-mark">?</span>;
@@ -242,7 +242,7 @@
     <span class="ident">UntaggedPointSize</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>: <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">ArrayLength</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
     <span class="ident">UncompressedPointSize</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>: <span class="ident">ArrayLength</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">to_pkcs8_der</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">pkcs8::Result</span><span class="op">&lt;</span><span class="ident">pkcs8::PrivateKeyDocument</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_pkcs8_der</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">pkcs8::Result</span><span class="op">&lt;</span><span class="ident">pkcs8::PrivateKeyDocument</span><span class="op">&gt;</span> {
         <span class="comment">// TODO(tarcieri): wrap `secret_key_bytes` in `Zeroizing`</span>
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">secret_key_bytes</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_bytes</span>();
         <span class="kw">let</span> <span class="ident">secret_key_field</span> <span class="op">=</span> <span class="ident">OctetString::new</span>(<span class="kw-2">&amp;</span><span class="ident">secret_key_bytes</span>)<span class="question-mark">?</span>;
@@ -278,7 +278,7 @@
 {
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">Error</span>;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::from_pkcs8_pem</span>(<span class="ident">s</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error</span>)
     }
 }

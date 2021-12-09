@@ -156,7 +156,7 @@
     <span class="doccomment">/// Uses Brent &amp; Zimmermann, Modern Computer Arithmetic, v0.5.9, Algorithm 1.13</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Callers can check if `self` is a square by squaring the result</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">max_bits</span> <span class="op">=</span> ((<span class="self">self</span>.<span class="ident">bits</span>() <span class="op">+</span> <span class="number">1</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">1</span>) <span class="kw">as</span> <span class="ident">usize</span>;
         <span class="kw">let</span> <span class="ident">cap</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::ONE</span>.<span class="ident">shl_vartime</span>(<span class="ident">max_bits</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">guess</span> <span class="op">=</span> <span class="ident">cap</span>; <span class="comment">// ≥ √(`self`)</span>
@@ -168,7 +168,7 @@
 
         <span class="comment">// If guess increased, the initial guess was low.</span>
         <span class="comment">// Repeat until reverse course.</span>
-        <span class="kw">while</span> <span class="ident">guess</span>.<span class="ident">ct_cmp</span>(<span class="kw-2">&amp;</span><span class="ident">xn</span>) <span class="op">=</span><span class="op">=</span> <span class="op">-</span><span class="number">1</span> {
+        <span class="kw">while</span> <span class="ident">guess</span>.<span class="ident">ct_cmp</span>(<span class="kw-2">&amp;</span><span class="ident">xn</span>) <span class="op">==</span> <span class="op">-</span><span class="number">1</span> {
             <span class="comment">// Sometimes an increase is too far, especially with large</span>
             <span class="comment">// powers, and then takes a long time to walk back.  The upper</span>
             <span class="comment">// bound is based on bit size, so saturate on that.</span>
@@ -183,7 +183,7 @@
         }
 
         <span class="comment">// Repeat while guess decreases.</span>
-        <span class="kw">while</span> <span class="ident">guess</span>.<span class="ident">ct_cmp</span>(<span class="kw-2">&amp;</span><span class="ident">xn</span>) <span class="op">=</span><span class="op">=</span> <span class="number">1</span> <span class="op">&amp;&amp;</span> <span class="ident">xn</span>.<span class="ident">ct_is_nonzero</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">Inner::MAX</span> {
+        <span class="kw">while</span> <span class="ident">guess</span>.<span class="ident">ct_cmp</span>(<span class="kw-2">&amp;</span><span class="ident">xn</span>) <span class="op">==</span> <span class="number">1</span> <span class="op">&amp;&amp;</span> <span class="ident">xn</span>.<span class="ident">ct_is_nonzero</span>() <span class="op">==</span> <span class="ident">Inner::MAX</span> {
             <span class="ident">guess</span> <span class="op">=</span> <span class="ident">xn</span>;
             <span class="ident">xn</span> <span class="op">=</span> {
                 <span class="kw">let</span> <span class="ident">q</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">wrapping_div</span>(<span class="kw-2">&amp;</span><span class="ident">guess</span>);
@@ -198,13 +198,13 @@
     <span class="doccomment">/// Wrapped sqrt is just normal √(`self`)</span>
     <span class="doccomment">/// There’s no way wrapping could ever happen.</span>
     <span class="doccomment">/// This function exists, so that all operations are accounted for in the wrapping operations.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">wrapping_sqrt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">wrapping_sqrt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">sqrt</span>()
     }
 
     <span class="doccomment">/// Perform checked sqrt, returning a [`CtOption`] which `is_some`</span>
     <span class="doccomment">/// only if the √(`self`)² == self</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">checked_sqrt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CtOption</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">checked_sqrt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">CtOption</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">sqrt</span>();
         <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">r</span>.<span class="ident">wrapping_mul</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>);
         <span class="ident">CtOption::new</span>(<span class="ident">r</span>, <span class="self">self</span>.<span class="ident">ct_eq</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>))

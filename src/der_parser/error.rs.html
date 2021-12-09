@@ -184,28 +184,28 @@
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">BerError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">nom::Err</span><span class="op">&lt;</span><span class="ident">BerError</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">BerError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">nom::Err</span><span class="op">&lt;</span><span class="ident">BerError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">BerError</span>) -&gt; <span class="ident">nom::Err</span><span class="op">&lt;</span><span class="ident">BerError</span><span class="op">&gt;</span> {
         <span class="ident">nom::Err::Error</span>(<span class="ident">e</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> <span class="ident">ParseError</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">BerError</span> {
-    <span class="kw">fn</span> <span class="ident">from_error_kind</span>(<span class="ident">_input</span>: <span class="ident">I</span>, <span class="ident">kind</span>: <span class="ident">ErrorKind</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_error_kind</span>(<span class="ident">_input</span>: <span class="ident">I</span>, <span class="ident">kind</span>: <span class="ident">ErrorKind</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">BerError::NomError</span>(<span class="ident">kind</span>)
     }
-    <span class="kw">fn</span> <span class="ident">append</span>(<span class="ident">_input</span>: <span class="ident">I</span>, <span class="ident">kind</span>: <span class="ident">ErrorKind</span>, <span class="ident">_other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">append</span>(<span class="ident">_input</span>: <span class="ident">I</span>, <span class="ident">kind</span>: <span class="ident">ErrorKind</span>, <span class="ident">_other</span>: <span class="self">Self</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">BerError::NomError</span>(<span class="ident">kind</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">I</span>, <span class="ident">E</span><span class="op">&gt;</span> <span class="ident">FromExternalError</span><span class="op">&lt;</span><span class="ident">I</span>, <span class="ident">E</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">BerError</span> {
-    <span class="kw">fn</span> <span class="ident">from_external_error</span>(<span class="ident">_input</span>: <span class="ident">I</span>, <span class="ident">kind</span>: <span class="ident">ErrorKind</span>, <span class="ident">_e</span>: <span class="ident">E</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BerError</span> {
+    <span class="kw">fn</span> <span class="ident">from_external_error</span>(<span class="ident">_input</span>: <span class="ident">I</span>, <span class="ident">kind</span>: <span class="ident">ErrorKind</span>, <span class="ident">_e</span>: <span class="ident">E</span>) -&gt; <span class="ident">BerError</span> {
         <span class="ident">BerError::NomError</span>(<span class="ident">kind</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">BerError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{:?}&quot;</span>, <span class="self">self</span>)
     }
 }

@@ -6,7 +6,7 @@
 <a href="https://deps.rs/crate/der-parser/5.0.1"><img src="https://deps.rs/crate/der-parser/5.0.0/status.svg" alt="dependency status" /></a>
 <a href="https://github.com/rusticata/der-parser/actions"><img src="https://github.com/rusticata/der-parser/workflows/Continuous%20integration/badge.svg" alt="Github CI" /></a>
 <a href="#rust-version-requirements"><img src="https://img.shields.io/badge/rustc-1.48.0+-lightgray.svg" alt="Minimum rustc version" /></a></p>
-<h1 id="berder-parser" class="section-header"><a href="#berder-parser">BER/DER Parser</a></h1>
+<h2 id="berder-parser" class="section-header"><a href="#berder-parser">BER/DER Parser</a></h2>
 <p>A parser for Basic Encoding Rules (BER [<a href="https://www.itu.int/rec/T-REC-X.690/en" title="ASN.1 encoding rules: Specification of
    Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding Rules
    (DER).">X.690</a>]) and Distinguished Encoding Rules(DER
@@ -24,7 +24,7 @@ still reflect on some naming schemes, but has no other consequence: the <code>Be
 <p>Serialization has also been added (see <a href="#serialization">Serialization</a> )</p>
 <p>The code is available on <a href="https://github.com/rusticata/der-parser">Github</a>
 and is part of the <a href="https://github.com/rusticata">Rusticata</a> project.</p>
-<h1 id="berder-parsers" class="section-header"><a href="#berder-parsers">BER/DER parsers</a></h1>
+<h2 id="berder-parsers" class="section-header"><a href="#berder-parsers">BER/DER parsers</a></h2>
 <p>BER stands for Basic Encoding Rules, and is defined in <a href="https://www.itu.int/rec/T-REC-X.690/en" title="ASN.1 encoding rules: Specification of
    Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding Rules
    (DER).">X.690</a>. It defines a set of rules to
@@ -40,7 +40,7 @@ on BER or DER: for example, X.509 uses DER as encoding representation.</p>
 <li><a href="ber/index.html" title="ber"><code>ber</code></a>: Basic Encoding Rules</li>
 <li><a href="der/index.html" title="der"><code>der</code></a>: Distinguished Encoding Rules</li>
 </ul>
-<h2 id="examples" class="section-header"><a href="#examples">Examples</a></h2>
+<h3 id="examples" class="section-header"><a href="#examples">Examples</a></h3>
 <p>Parse two BER integers (see <a href="#berder-integers">BER/DER Integers</a>):</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">der_parser::ber::parse_ber_integer</span>;
@@ -64,7 +64,7 @@ on BER or DER: for example, X.509 uses DER as encoding representation.</p>
                     .<span class="ident">expect</span>(<span class="string">&quot;parsing failed&quot;</span>);</code></pre></div>
 <p>Note: all parsing functions return the remaining (unparsed) bytes and the parsed object, or an
 error.</p>
-<h1 id="der-parser-design" class="section-header"><a href="#der-parser-design">DER parser design</a></h1>
+<h2 id="der-parser-design" class="section-header"><a href="#der-parser-design">DER parser design</a></h2>
 <p>Parsing functions are inspired from <code>nom</code>, and follow the same interface. The most common
 return type is <a href="error/type.BerResult.html"><code>BerResult</code></a>, that stores the remaining bytes and
 parsed <a href="ber/struct.BerObject.html"><code>BerObject</code></a>, or an error. Reading the nom documentation may
@@ -102,7 +102,7 @@ for sequences and sets variants</li>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">der_parser::ber</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">der_parser::error::BerResult</span>;
 
-<span class="kw">fn</span> <span class="ident">localparse_seq</span>(<span class="ident">i</span>:<span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BerResult</span> {
+<span class="kw">fn</span> <span class="ident">localparse_seq</span>(<span class="ident">i</span>:<span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="ident">BerResult</span> {
     <span class="ident">parse_ber_sequence_defined</span>(<span class="op">|</span><span class="ident">data</span><span class="op">|</span> {
         <span class="kw">let</span> (<span class="ident">rem</span>, <span class="ident">a</span>) <span class="op">=</span> <span class="ident">parse_ber_integer</span>(<span class="ident">data</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> (<span class="ident">rem</span>, <span class="ident">b</span>) <span class="op">=</span> <span class="ident">parse_ber_integer</span>(<span class="ident">rem</span>)<span class="question-mark">?</span>;
@@ -122,7 +122,7 @@ for sequences and sets variants</li>
 <p>All functions return a <a href="error/type.BerResult.html"><code>BerResult</code></a> object: the parsed
 <a href="ber/struct.BerObject.html"><code>BerObject</code></a>, an <code>Incomplete</code> value, or an error.</p>
 <p>Note that this type is also a <code>Result</code>, so usual functions (<code>map</code>, <code>unwrap</code> etc.) are available.</p>
-<h1 id="notes" class="section-header"><a href="#notes">Notes</a></h1><h2 id="berder-integers" class="section-header"><a href="#berder-integers">BER/DER Integers</a></h2>
+<h2 id="notes" class="section-header"><a href="#notes">Notes</a></h2><h3 id="berder-integers" class="section-header"><a href="#berder-integers">BER/DER Integers</a></h3>
 <p>DER integers can be of any size, so it is not possible to store them as simple integers (they
 are stored as raw bytes).</p>
 <p>Note that, by default, BER/DER integers are signed. Functions are provided to request reading
@@ -147,7 +147,7 @@ which will return the value, or an error if the integer is too large (or is nega
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;bigint&quot;</span>)]</span>
 <span class="macro">assert_eq!</span>(<span class="ident">object</span>.<span class="ident">as_bigint</span>(), <span class="prelude-val">Ok</span>(<span class="number">65537</span>.<span class="ident">into</span>()))</code></pre></div>
 <p>Access to the raw value is possible using the <code>as_slice</code> method.</p>
-<h2 id="parsers-combinators-macros" class="section-header"><a href="#parsers-combinators-macros">Parsers, combinators, macros</a></h2>
+<h3 id="parsers-combinators-macros" class="section-header"><a href="#parsers-combinators-macros">Parsers, combinators, macros</a></h3>
 <p>Some parsing tools (for ex for tagged objects) are available in different forms:</p>
 <ul>
 <li>parsers: (regular) functions that takes input and create an object</li>
@@ -158,21 +158,21 @@ parsers.</li>
 They can sometime reduce the amount of code to write, but are hard to debug.
 Parsers should be preferred when possible.</li>
 </ul>
-<h2 id="misc-notes" class="section-header"><a href="#misc-notes">Misc Notes</a></h2>
+<h3 id="misc-notes" class="section-header"><a href="#misc-notes">Misc Notes</a></h3>
 <ul>
 <li>The DER constraints are verified if using <code>parse_der</code>.</li>
 <li><code>BerObject</code> and <code>DerObject</code> are the same objects (type alias). The only difference is the
 verification of constraints <em>during parsing</em>.</li>
 </ul>
-<h2 id="rust-version-requirements" class="section-header"><a href="#rust-version-requirements">Rust version requirements</a></h2>
+<h3 id="rust-version-requirements" class="section-header"><a href="#rust-version-requirements">Rust version requirements</a></h3>
 <p>The 6.0 series of <code>der-parser</code> requires <strong>Rustc version 1.48 or greater</strong>, based on nom 7
 dependencies.</p>
-<h1 id="serialization" class="section-header"><a href="#serialization">Serialization</a></h1>
+<h2 id="serialization" class="section-header"><a href="#serialization">Serialization</a></h2>
 <p>Support for encoding BER/DER objects is currently being tested and can be used by activating the <code>serialize</code> feature.
 Note that current status is <strong>experimental</strong>.</p>
 <p>See the <code>ber_encode_*</code> functions in the <a href="ber/index.html"><code>ber</code></a> module, and
 <a href="ber/struct.BerObject.html#method.to_vec"><code>BerObject::to_vec</code></a></p>
-<h1 id="references" class="section-header"><a href="#references">References</a></h1>
+<h2 id="references" class="section-header"><a href="#references">References</a></h2>
 <ul>
 <li>[<a href="http://www.itu.int/rec/T-REC-X.680/en" title="Abstract Syntax Notation One (ASN.1):
    Specification of basic notation.">X.680</a>] Abstract Syntax Notation One (ASN.1): Specification of basic notation.</li>
@@ -182,18 +182,18 @@ Note that current status is <strong>experimental</strong>.</p>
 Encoding Rules (CER) and Distinguished Encoding Rules (DER).</li>
 </ul>
 </div></details><h2 id="reexports" class="section-header"><a href="#reexports">Re-exports</a></h2>
-<div class="item-table"><div class="item-left import-item"><code>pub use <a class="mod" href="../nom/index.html" title="mod nom">nom</a>;</code></div><div class="item-right docblock-short"></div><div class="item-left import-item"><code>pub use <a class="mod" href="../num_bigint/index.html" title="mod num_bigint">num_bigint</a>;</code></div><div class="item-right docblock-short"></div></div><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="mod" href="ber/index.html" title="der_parser::ber mod">ber</a></div><div class="item-right docblock-short"><p>Basic Encoding Rules (BER) objects and parser</p>
-</div><div class="item-left module-item"><a class="mod" href="der/index.html" title="der_parser::der mod">der</a></div><div class="item-right docblock-short"><p>Distinguished Encoding Rules (DER) objects and parser</p>
-</div><div class="item-left module-item"><a class="mod" href="error/index.html" title="der_parser::error mod">error</a></div><div class="item-right docblock-short"><p>Error type for BER/DER parsers</p>
-</div><div class="item-left module-item"><a class="mod" href="oid/index.html" title="der_parser::oid mod">oid</a></div><div class="item-right docblock-short"><p>Object ID (OID) representations.</p>
-</div></div><h2 id="macros" class="section-header"><a href="#macros">Macros</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="macro" href="macro.oid.html" title="der_parser::oid macro">oid</a></div><div class="item-right docblock-short"><p>Procedural macro to get encoded oids, see the <a href="oid/index.html">oid module</a>.</p>
-</div></div><h2 id="functions" class="section-header"><a href="#functions">Functions</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="fn" href="fn.parse_ber.html" title="der_parser::parse_ber fn">parse_ber</a></div><div class="item-right docblock-short"><p>Parse BER object recursively</p>
-</div><div class="item-left module-item"><a class="fn" href="fn.parse_der.html" title="der_parser::parse_der fn">parse_der</a></div><div class="item-right docblock-short"><p>Parse DER object recursively</p>
-</div></div><h2 id="types" class="section-header"><a href="#types">Type Definitions</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="type" href="type.IResult.html" title="der_parser::IResult type">IResult</a></div><div class="item-right docblock-short"><p>Holds the result of parsing functions</p>
-</div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="der_parser" data-search-index-js="../search-index.js" data-search-js="../search.js"></div>
+<div class="item-table"><div class="item-row"><div class="item-left import-item"><code>pub use <a class="mod" href="../nom/index.html" title="mod nom">nom</a>;</code></div><div class="item-right docblock-short"></div></div><div class="item-row"><div class="item-left import-item"><code>pub use <a class="mod" href="../num_bigint/index.html" title="mod num_bigint">num_bigint</a>;</code></div><div class="item-right docblock-short"></div></div></div><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="ber/index.html" title="der_parser::ber mod">ber</a></div><div class="item-right docblock-short"><p>Basic Encoding Rules (BER) objects and parser</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="der/index.html" title="der_parser::der mod">der</a></div><div class="item-right docblock-short"><p>Distinguished Encoding Rules (DER) objects and parser</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="error/index.html" title="der_parser::error mod">error</a></div><div class="item-right docblock-short"><p>Error type for BER/DER parsers</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="oid/index.html" title="der_parser::oid mod">oid</a></div><div class="item-right docblock-short"><p>Object ID (OID) representations.</p>
+</div></div></div><h2 id="macros" class="section-header"><a href="#macros">Macros</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="macro" href="macro.oid.html" title="der_parser::oid macro">oid</a></div><div class="item-right docblock-short"><p>Procedural macro to get encoded oids, see the <a href="oid/index.html">oid module</a>.</p>
+</div></div></div><h2 id="functions" class="section-header"><a href="#functions">Functions</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.parse_ber.html" title="der_parser::parse_ber fn">parse_ber</a></div><div class="item-right docblock-short"><p>Parse BER object recursively</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.parse_der.html" title="der_parser::parse_der fn">parse_der</a></div><div class="item-right docblock-short"><p>Parse DER object recursively</p>
+</div></div></div><h2 id="types" class="section-header"><a href="#types">Type Definitions</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="type" href="type.IResult.html" title="der_parser::IResult type">IResult</a></div><div class="item-right docblock-short"><p>Holds the result of parsing functions</p>
+</div></div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="der_parser" data-search-index-js="../search-index.js" data-search-js="../search.js"></div>
     <script src="../main.js"></script>
 </body></html>
