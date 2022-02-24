@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;oci-distribution-0.7.0&#x2F;src&#x2F;reference.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>reference.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../oci_distribution/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;git&#x2F;checkouts&#x2F;oci-distribution-515f7abfb7797f9d&#x2F;0f71796&#x2F;src&#x2F;reference.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>reference.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><script defer src="../../main.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../oci_distribution/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -306,6 +307,59 @@
 <span id="306">306</span>
 <span id="307">307</span>
 <span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::convert::TryFrom</span>;
 <span class="kw">use</span> <span class="ident">std::error::Error</span>;
 <span class="kw">use</span> <span class="ident">std::fmt</span>;
@@ -315,6 +369,11 @@
 
 <span class="doccomment">/// NAME_TOTAL_LENGTH_MAX is the maximum total number of characters in a repository name.</span>
 <span class="kw">const</span> <span class="ident">NAME_TOTAL_LENGTH_MAX</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">255</span>;
+
+<span class="kw">const</span> <span class="ident">DOCKER_HUB_DOMAIN_LEGACY</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;index.docker.io&quot;</span>;
+<span class="kw">const</span> <span class="ident">DOCKER_HUB_DOMAIN</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;docker.io&quot;</span>;
+<span class="kw">const</span> <span class="ident">DOCKER_HUB_OFFICIAL_REPO_NAME</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;library&quot;</span>;
+<span class="kw">const</span> <span class="ident">DEFAULT_TAG</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;latest&quot;</span>;
 
 <span class="doccomment">/// Reasons that parsing a string as a Reference can fail.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
@@ -338,7 +397,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">ParseError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">match</span> <span class="self">self</span> {
             <span class="ident">ParseError::DigestInvalidFormat</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid checksum digest format&quot;</span>),
             <span class="ident">ParseError::DigestInvalidLength</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid checksum digest length&quot;</span>),
@@ -375,7 +434,7 @@
 <span class="doccomment">/// assert_eq!(Some(&quot;latest&quot;), reference.tag());</span>
 <span class="doccomment">/// assert_eq!(None, reference.digest());</span>
 <span class="doccomment">/// ```</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Reference</span> {
     <span class="ident">registry</span>: <span class="ident">String</span>,
     <span class="ident">repository</span>: <span class="ident">String</span>,
@@ -384,6 +443,38 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Reference</span> {
+    <span class="doccomment">/// Create a Reference with a registry, repository and tag.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_tag</span>(<span class="ident">registry</span>: <span class="ident">String</span>, <span class="ident">repository</span>: <span class="ident">String</span>, <span class="ident">tag</span>: <span class="ident">String</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">Self</span> {
+            <span class="ident">registry</span>,
+            <span class="ident">repository</span>,
+            <span class="ident">tag</span>: <span class="prelude-val">Some</span>(<span class="ident">tag</span>),
+            <span class="ident">digest</span>: <span class="prelude-val">None</span>,
+        }
+    }
+
+    <span class="doccomment">/// Create a Reference with a registry, repository and digest.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_digest</span>(<span class="ident">registry</span>: <span class="ident">String</span>, <span class="ident">repository</span>: <span class="ident">String</span>, <span class="ident">digest</span>: <span class="ident">String</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">Self</span> {
+            <span class="ident">registry</span>,
+            <span class="ident">repository</span>,
+            <span class="ident">tag</span>: <span class="prelude-val">None</span>,
+            <span class="ident">digest</span>: <span class="prelude-val">Some</span>(<span class="ident">digest</span>),
+        }
+    }
+
+    <span class="doccomment">/// Resolve the registry address of a given `Reference`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Some registries, such as docker.io, uses a different address for the actual</span>
+    <span class="doccomment">/// registry. This function implements such redirection.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resolve_registry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">let</span> <span class="ident">registry</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">registry</span>();
+        <span class="kw">match</span> <span class="ident">registry</span> {
+            <span class="string">&quot;docker.io&quot;</span> =&gt; <span class="string">&quot;registry-1.docker.io&quot;</span>,
+            <span class="kw">_</span> =&gt; <span class="ident">registry</span>,
+        }
+    }
+
     <span class="doccomment">/// registry returns the name of the registry.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">registry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">registry</span>
@@ -432,14 +523,8 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">std::fmt::Debug</span> <span class="kw">for</span> <span class="ident">Reference</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">std::fmt::Result</span> {
-        <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">whole</span>())
-    }
-}
-
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Reference</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">whole</span>())
     }
 }
@@ -470,8 +555,11 @@
             }
         }
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">captures</span>[<span class="number">1</span>];
-        <span class="kw">let</span> <span class="ident">tag</span> <span class="op">=</span> <span class="ident">captures</span>.<span class="ident">get</span>(<span class="number">2</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">m</span><span class="op">|</span> <span class="ident">m</span>.<span class="ident">as_str</span>().<span class="ident">to_owned</span>());
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tag</span> <span class="op">=</span> <span class="ident">captures</span>.<span class="ident">get</span>(<span class="number">2</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">m</span><span class="op">|</span> <span class="ident">m</span>.<span class="ident">as_str</span>().<span class="ident">to_owned</span>());
         <span class="kw">let</span> <span class="ident">digest</span> <span class="op">=</span> <span class="ident">captures</span>.<span class="ident">get</span>(<span class="number">3</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">m</span><span class="op">|</span> <span class="ident">m</span>.<span class="ident">as_str</span>().<span class="ident">to_owned</span>());
+        <span class="kw">if</span> <span class="ident">tag</span>.<span class="ident">is_none</span>() <span class="op">&amp;&amp;</span> <span class="ident">digest</span>.<span class="ident">is_none</span>() {
+            <span class="ident">tag</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">DEFAULT_TAG</span>.<span class="ident">into</span>());
+        }
         <span class="kw">let</span> (<span class="ident">registry</span>, <span class="ident">repository</span>) <span class="op">=</span> <span class="ident">split_domain</span>(<span class="ident">name</span>);
         <span class="kw">let</span> <span class="ident">reference</span> <span class="op">=</span> <span class="ident">Reference</span> {
             <span class="ident">registry</span>,
@@ -530,24 +618,39 @@
     }
 }
 
+<span class="doccomment">/// Splits a repository name to domain and remotename string.</span>
+<span class="doccomment">/// If no valid domain is found, the default domain is used. Repository name</span>
+<span class="doccomment">/// needs to be already validated before.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This function is a Rust rewrite of the official Go code used by Docker:</span>
+<span class="doccomment">/// https://github.com/distribution/distribution/blob/41a0452eea12416aaf01bceb02a924871e964c67/reference/normalize.go#L87-L104</span>
 <span class="kw">fn</span> <span class="ident">split_domain</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; (<span class="ident">String</span>, <span class="ident">String</span>) {
-    <span class="macro">lazy_static!</span> {
-        <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">RE</span>: <span class="ident">regex::Regex</span> <span class="op">=</span> <span class="ident">regexp::must_compile</span>(<span class="ident">regexp::ANCHORED_NAME_REGEXP</span>);
-    };
-    <span class="kw">let</span> <span class="ident">captures</span>;
-    <span class="kw">match</span> <span class="ident">RE</span>.<span class="ident">captures</span>(<span class="ident">name</span>) {
-        <span class="prelude-val">Some</span>(<span class="ident">caps</span>) =&gt; <span class="ident">captures</span> <span class="op">=</span> <span class="ident">caps</span>,
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">domain</span>: <span class="ident">String</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">remainder</span>: <span class="ident">String</span>;
+
+    <span class="kw">match</span> <span class="ident">name</span>.<span class="ident">split_once</span>(<span class="string">&quot;/&quot;</span>) {
         <span class="prelude-val">None</span> =&gt; {
-            <span class="kw">return</span> (<span class="string">&quot;&quot;</span>.<span class="ident">to_owned</span>(), <span class="ident">name</span>.<span class="ident">to_owned</span>());
+            <span class="ident">domain</span> <span class="op">=</span> <span class="ident">DOCKER_HUB_DOMAIN</span>.<span class="ident">into</span>();
+            <span class="ident">remainder</span> <span class="op">=</span> <span class="ident">name</span>.<span class="ident">into</span>();
+        }
+        <span class="prelude-val">Some</span>((<span class="ident">left</span>, <span class="ident">right</span>)) =&gt; {
+            <span class="kw">if</span> <span class="op">!</span>(<span class="ident">left</span>.<span class="ident">contains</span>(<span class="string">&#39;.&#39;</span>) <span class="op">|</span><span class="op">|</span> <span class="ident">left</span>.<span class="ident">contains</span>(<span class="string">&#39;:&#39;</span>)) <span class="op">&amp;&amp;</span> <span class="ident">left</span> <span class="op">!</span><span class="op">=</span> <span class="string">&quot;localhost&quot;</span> {
+                <span class="ident">domain</span> <span class="op">=</span> <span class="ident">DOCKER_HUB_DOMAIN</span>.<span class="ident">into</span>();
+                <span class="ident">remainder</span> <span class="op">=</span> <span class="ident">name</span>.<span class="ident">into</span>();
+            } <span class="kw">else</span> {
+                <span class="ident">domain</span> <span class="op">=</span> <span class="ident">left</span>.<span class="ident">into</span>();
+                <span class="ident">remainder</span> <span class="op">=</span> <span class="ident">right</span>.<span class="ident">into</span>();
+            }
         }
     }
-    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">repository</span>) <span class="op">=</span> <span class="ident">captures</span>.<span class="ident">get</span>(<span class="number">2</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">m</span><span class="op">|</span> <span class="ident">m</span>.<span class="ident">as_str</span>().<span class="ident">to_owned</span>()) {
-        <span class="kw">let</span> <span class="ident">registry</span> <span class="op">=</span> <span class="ident">captures</span>
-            .<span class="ident">get</span>(<span class="number">1</span>)
-            .<span class="ident">map_or</span>(<span class="string">&quot;&quot;</span>.<span class="ident">to_owned</span>(), <span class="op">|</span><span class="ident">m</span><span class="op">|</span> <span class="ident">m</span>.<span class="ident">as_str</span>().<span class="ident">to_owned</span>());
-        <span class="kw">return</span> (<span class="ident">registry</span>, <span class="ident">repository</span>);
+    <span class="kw">if</span> <span class="ident">domain</span> <span class="op">==</span> <span class="ident">DOCKER_HUB_DOMAIN_LEGACY</span> {
+        <span class="ident">domain</span> <span class="op">=</span> <span class="ident">DOCKER_HUB_DOMAIN</span>.<span class="ident">into</span>();
     }
-    (<span class="string">&quot;&quot;</span>.<span class="ident">to_owned</span>(), <span class="ident">name</span>.<span class="ident">to_owned</span>())
+    <span class="kw">if</span> <span class="ident">domain</span> <span class="op">==</span> <span class="ident">DOCKER_HUB_DOMAIN</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">remainder</span>.<span class="ident">contains</span>(<span class="string">&#39;/&#39;</span>) {
+        <span class="ident">remainder</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;{}/{}&quot;</span>, <span class="ident">DOCKER_HUB_OFFICIAL_REPO_NAME</span>, <span class="ident">remainder</span>);
+    }
+
+    (<span class="ident">domain</span>, <span class="ident">remainder</span>)
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
@@ -558,25 +661,26 @@
         <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
         <span class="kw">use</span> <span class="ident">rstest::rstest</span>;
 
-        <span class="attribute">#[<span class="ident">rstest</span>(<span class="ident">input</span>, <span class="ident">registry</span>, <span class="ident">repository</span>, <span class="ident">tag</span>, <span class="ident">digest</span>,
-            <span class="ident">case</span>(<span class="string">&quot;test_com&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;test_com&quot;</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>),
-            <span class="ident">case</span>(<span class="string">&quot;test.com:tag&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;test.com&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;tag&quot;</span>), <span class="prelude-val">None</span>),
-            <span class="ident">case</span>(<span class="string">&quot;test.com:5000&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;test.com&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;5000&quot;</span>), <span class="prelude-val">None</span>),
-            <span class="ident">case</span>(<span class="string">&quot;test.com/repo:tag&quot;</span>, <span class="string">&quot;test.com&quot;</span>, <span class="string">&quot;repo&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;tag&quot;</span>), <span class="prelude-val">None</span>),
-            <span class="ident">case</span>(<span class="string">&quot;test:5000/repo&quot;</span>, <span class="string">&quot;test:5000&quot;</span>, <span class="string">&quot;repo&quot;</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>),
-            <span class="ident">case</span>(<span class="string">&quot;test:5000/repo:tag&quot;</span>, <span class="string">&quot;test:5000&quot;</span>, <span class="string">&quot;repo&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;tag&quot;</span>), <span class="prelude-val">None</span>),
-            <span class="ident">case</span>(<span class="string">&quot;test:5000/repo@sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;</span>, <span class="string">&quot;test:5000&quot;</span>, <span class="string">&quot;repo&quot;</span>, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;</span>)),
-            <span class="ident">case</span>(<span class="string">&quot;test:5000/repo:tag@sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;</span>, <span class="string">&quot;test:5000&quot;</span>, <span class="string">&quot;repo&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;tag&quot;</span>), <span class="prelude-val">Some</span>(<span class="string">&quot;sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;</span>)),
-            <span class="ident">case</span>(<span class="string">&quot;lowercase:Uppercase&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;lowercase&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;Uppercase&quot;</span>), <span class="prelude-val">None</span>),
-            <span class="ident">case</span>(<span class="string">&quot;sub-dom1.foo.com/bar/baz/quux&quot;</span>, <span class="string">&quot;sub-dom1.foo.com&quot;</span>, <span class="string">&quot;bar/baz/quux&quot;</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>),
-            <span class="ident">case</span>(<span class="string">&quot;sub-dom1.foo.com/bar/baz/quux:some-long-tag&quot;</span>, <span class="string">&quot;sub-dom1.foo.com&quot;</span>, <span class="string">&quot;bar/baz/quux&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;some-long-tag&quot;</span>), <span class="prelude-val">None</span>),
-            <span class="ident">case</span>(<span class="string">&quot;b.gcr.io/test.example.com/my-app:test.example.com&quot;</span>, <span class="string">&quot;b.gcr.io&quot;</span>, <span class="string">&quot;test.example.com/my-app&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;test.example.com&quot;</span>), <span class="prelude-val">None</span>),
+        <span class="attribute">#[<span class="ident">rstest</span>(<span class="ident">input</span>, <span class="ident">registry</span>, <span class="ident">repository</span>, <span class="ident">tag</span>, <span class="ident">digest</span>, <span class="ident">whole</span>,
+            <span class="ident">case</span>(<span class="string">&quot;busybox&quot;</span>, <span class="string">&quot;docker.io&quot;</span>, <span class="string">&quot;library/busybox&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;latest&quot;</span>), <span class="prelude-val">None</span>, <span class="string">&quot;docker.io/library/busybox:latest&quot;</span>),
+            <span class="ident">case</span>(<span class="string">&quot;test.com:tag&quot;</span>, <span class="string">&quot;docker.io&quot;</span>, <span class="string">&quot;library/test.com&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;tag&quot;</span>), <span class="prelude-val">None</span>, <span class="string">&quot;docker.io/library/test.com:tag&quot;</span>),
+            <span class="ident">case</span>(<span class="string">&quot;test.com:5000&quot;</span>, <span class="string">&quot;docker.io&quot;</span>, <span class="string">&quot;library/test.com&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;5000&quot;</span>), <span class="prelude-val">None</span>, <span class="string">&quot;docker.io/library/test.com:5000&quot;</span>),
+            <span class="ident">case</span>(<span class="string">&quot;test.com/repo:tag&quot;</span>, <span class="string">&quot;test.com&quot;</span>, <span class="string">&quot;repo&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;tag&quot;</span>), <span class="prelude-val">None</span>, <span class="string">&quot;test.com/repo:tag&quot;</span>),
+            <span class="ident">case</span>(<span class="string">&quot;test:5000/repo&quot;</span>, <span class="string">&quot;test:5000&quot;</span>, <span class="string">&quot;repo&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;latest&quot;</span>), <span class="prelude-val">None</span>, <span class="string">&quot;test:5000/repo:latest&quot;</span>),
+            <span class="ident">case</span>(<span class="string">&quot;test:5000/repo:tag&quot;</span>, <span class="string">&quot;test:5000&quot;</span>, <span class="string">&quot;repo&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;tag&quot;</span>), <span class="prelude-val">None</span>, <span class="string">&quot;test:5000/repo:tag&quot;</span>),
+            <span class="ident">case</span>(<span class="string">&quot;test:5000/repo@sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;</span>, <span class="string">&quot;test:5000&quot;</span>, <span class="string">&quot;repo&quot;</span>, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;</span>), <span class="string">&quot;test:5000/repo@sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;</span>),
+            <span class="ident">case</span>(<span class="string">&quot;test:5000/repo:tag@sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;</span>, <span class="string">&quot;test:5000&quot;</span>, <span class="string">&quot;repo&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;tag&quot;</span>), <span class="prelude-val">Some</span>(<span class="string">&quot;sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;</span>), <span class="string">&quot;test:5000/repo:tag@sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;</span>),
+            <span class="ident">case</span>(<span class="string">&quot;lowercase:Uppercase&quot;</span>, <span class="string">&quot;docker.io&quot;</span>, <span class="string">&quot;library/lowercase&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;Uppercase&quot;</span>), <span class="prelude-val">None</span>, <span class="string">&quot;docker.io/library/lowercase:Uppercase&quot;</span>),
+            <span class="ident">case</span>(<span class="string">&quot;sub-dom1.foo.com/bar/baz/quux&quot;</span>, <span class="string">&quot;sub-dom1.foo.com&quot;</span>, <span class="string">&quot;bar/baz/quux&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;latest&quot;</span>), <span class="prelude-val">None</span>, <span class="string">&quot;sub-dom1.foo.com/bar/baz/quux:latest&quot;</span>),
+            <span class="ident">case</span>(<span class="string">&quot;sub-dom1.foo.com/bar/baz/quux:some-long-tag&quot;</span>, <span class="string">&quot;sub-dom1.foo.com&quot;</span>, <span class="string">&quot;bar/baz/quux&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;some-long-tag&quot;</span>), <span class="prelude-val">None</span>, <span class="string">&quot;sub-dom1.foo.com/bar/baz/quux:some-long-tag&quot;</span>),
+            <span class="ident">case</span>(<span class="string">&quot;b.gcr.io/test.example.com/my-app:test.example.com&quot;</span>, <span class="string">&quot;b.gcr.io&quot;</span>, <span class="string">&quot;test.example.com/my-app&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;test.example.com&quot;</span>), <span class="prelude-val">None</span>, <span class="string">&quot;b.gcr.io/test.example.com/my-app:test.example.com&quot;</span>),
             <span class="comment">// ☃.com in punycode</span>
-            <span class="ident">case</span>(<span class="string">&quot;xn--n3h.com/myimage:xn--n3h.com&quot;</span>, <span class="string">&quot;xn--n3h.com&quot;</span>, <span class="string">&quot;myimage&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;xn--n3h.com&quot;</span>), <span class="prelude-val">None</span>),
+            <span class="ident">case</span>(<span class="string">&quot;xn--n3h.com/myimage:xn--n3h.com&quot;</span>, <span class="string">&quot;xn--n3h.com&quot;</span>, <span class="string">&quot;myimage&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;xn--n3h.com&quot;</span>), <span class="prelude-val">None</span>, <span class="string">&quot;xn--n3h.com/myimage:xn--n3h.com&quot;</span>),
             <span class="comment">// 🐳.com in punycode</span>
-            <span class="ident">case</span>(<span class="string">&quot;xn--7o8h.com/myimage:xn--7o8h.com@sha512:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;</span>, <span class="string">&quot;xn--7o8h.com&quot;</span>, <span class="string">&quot;myimage&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;xn--7o8h.com&quot;</span>), <span class="prelude-val">Some</span>(<span class="string">&quot;sha512:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;</span>)),
-            <span class="ident">case</span>(<span class="string">&quot;foo_bar.com:8080&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;foo_bar.com&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;8080&quot;</span>), <span class="prelude-val">None</span>),
-            <span class="ident">case</span>(<span class="string">&quot;foo/foo_bar.com:8080&quot;</span>, <span class="string">&quot;foo&quot;</span>, <span class="string">&quot;foo_bar.com&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;8080&quot;</span>), <span class="prelude-val">None</span>),
+            <span class="ident">case</span>(<span class="string">&quot;xn--7o8h.com/myimage:xn--7o8h.com@sha512:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;</span>, <span class="string">&quot;xn--7o8h.com&quot;</span>, <span class="string">&quot;myimage&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;xn--7o8h.com&quot;</span>), <span class="prelude-val">Some</span>(<span class="string">&quot;sha512:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;</span>), <span class="string">&quot;xn--7o8h.com/myimage:xn--7o8h.com@sha512:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;</span>),
+            <span class="ident">case</span>(<span class="string">&quot;foo_bar.com:8080&quot;</span>, <span class="string">&quot;docker.io&quot;</span>, <span class="string">&quot;library/foo_bar.com&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;8080&quot;</span>), <span class="prelude-val">None</span>, <span class="string">&quot;docker.io/library/foo_bar.com:8080&quot;</span> ),
+            <span class="ident">case</span>(<span class="string">&quot;foo/foo_bar.com:8080&quot;</span>, <span class="string">&quot;docker.io&quot;</span>, <span class="string">&quot;foo/foo_bar.com&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;8080&quot;</span>), <span class="prelude-val">None</span>, <span class="string">&quot;docker.io/foo/foo_bar.com:8080&quot;</span>),
+            <span class="ident">case</span>(<span class="string">&quot;opensuse/leap:15.3&quot;</span>, <span class="string">&quot;docker.io&quot;</span>, <span class="string">&quot;opensuse/leap&quot;</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;15.3&quot;</span>), <span class="prelude-val">None</span>, <span class="string">&quot;docker.io/opensuse/leap:15.3&quot;</span>),
         )]</span>
         <span class="kw">fn</span> <span class="ident">parse_good_reference</span>(
             <span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
@@ -584,13 +688,16 @@
             <span class="ident">repository</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
             <span class="ident">tag</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
             <span class="ident">digest</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
+            <span class="ident">whole</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         ) {
+            <span class="macro">println!</span>(<span class="string">&quot;input: {}&quot;</span>, <span class="ident">input</span>);
             <span class="kw">let</span> <span class="ident">reference</span> <span class="op">=</span> <span class="ident">Reference::try_from</span>(<span class="ident">input</span>).<span class="ident">expect</span>(<span class="string">&quot;could not parse reference&quot;</span>);
+            <span class="macro">println!</span>(<span class="string">&quot;{} -&gt; {:?}&quot;</span>, <span class="ident">input</span>, <span class="ident">reference</span>);
             <span class="macro">assert_eq!</span>(<span class="ident">registry</span>, <span class="ident">reference</span>.<span class="ident">registry</span>());
             <span class="macro">assert_eq!</span>(<span class="ident">repository</span>, <span class="ident">reference</span>.<span class="ident">repository</span>());
             <span class="macro">assert_eq!</span>(<span class="ident">tag</span>, <span class="ident">reference</span>.<span class="ident">tag</span>());
             <span class="macro">assert_eq!</span>(<span class="ident">digest</span>, <span class="ident">reference</span>.<span class="ident">digest</span>());
-            <span class="macro">assert_eq!</span>(<span class="ident">input</span>, <span class="ident">reference</span>.<span class="ident">whole</span>());
+            <span class="macro">assert_eq!</span>(<span class="ident">whole</span>, <span class="ident">reference</span>.<span class="ident">whole</span>());
         }
 
         <span class="attribute">#[<span class="ident">rstest</span>(<span class="ident">input</span>, <span class="ident">err</span>,
@@ -616,5 +723,4 @@
 }
 </code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="oci_distribution" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
 </body></html>

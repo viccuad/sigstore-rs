@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;hyperx-0.13.2&#x2F;src&#x2F;header&#x2F;common&#x2F;cache_control.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>cache_control.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../../storage.js"></script><script src="../../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../../hyperx/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;hyperx-1.4.0&#x2F;src&#x2F;header&#x2F;common&#x2F;cache_control.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>cache_control.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../../storage.js"></script><script src="../../../../crates.js"></script><script defer src="../../../../main.js"></script><script defer src="../../../../source-script.js"></script><script defer src="../../../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../../hyperx/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -212,9 +213,20 @@
 <span id="212">212</span>
 <span id="213">213</span>
 <span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::fmt</span>;
 <span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
-<span class="kw">use</span> <span class="ident">header</span>::{<span class="ident">Header</span>, <span class="ident">Raw</span>};
+<span class="kw">use</span> <span class="ident">header</span>::{<span class="ident">Header</span>, <span class="ident">RawLike</span>};
 <span class="kw">use</span> <span class="ident">header::parsing</span>::{<span class="ident">from_comma_delimited</span>, <span class="ident">fmt_comma_delimited</span>};
 
 <span class="doccomment">/// `Cache-Control` header, defined in [RFC7234](https://tools.ietf.org/html/rfc7234#section-5.2)</span>
@@ -239,20 +251,22 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// use hyperx::header::{Headers, CacheControl, CacheDirective};</span>
+<span class="doccomment">/// # extern crate http;</span>
+<span class="doccomment">/// use hyperx::header::{CacheControl, CacheDirective, TypedHeaders};</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// let mut headers = Headers::new();</span>
-<span class="doccomment">/// headers.set(</span>
-<span class="doccomment">///     CacheControl(vec![CacheDirective::MaxAge(86400u32)])</span>
+<span class="doccomment">/// let mut headers = http::HeaderMap::new();</span>
+<span class="doccomment">/// headers.encode(</span>
+<span class="doccomment">///     &amp;CacheControl(vec![CacheDirective::MaxAge(86400u32)])</span>
 <span class="doccomment">/// );</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// use hyperx::header::{Headers, CacheControl, CacheDirective};</span>
+<span class="doccomment">/// # extern crate http;</span>
+<span class="doccomment">/// use hyperx::header::{CacheControl, CacheDirective, TypedHeaders};</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// let mut headers = Headers::new();</span>
-<span class="doccomment">/// headers.set(</span>
-<span class="doccomment">///     CacheControl(vec![</span>
+<span class="doccomment">/// let mut headers = http::HeaderMap::new();</span>
+<span class="doccomment">/// headers.encode(</span>
+<span class="doccomment">///     &amp;CacheControl(vec![</span>
 <span class="doccomment">///         CacheDirective::NoCache,</span>
 <span class="doccomment">///         CacheDirective::Private,</span>
 <span class="doccomment">///         CacheDirective::MaxAge(360u32),</span>
@@ -273,8 +287,10 @@
         <span class="ident">NAME</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">parse_header</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span><span class="ident">Raw</span>) -&gt; <span class="ident">::Result</span><span class="op">&lt;</span><span class="ident">CacheControl</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">directives</span> <span class="op">=</span> <span class="macro">try!</span>(<span class="ident">from_comma_delimited</span>(<span class="ident">raw</span>));
+    <span class="kw">fn</span> <span class="ident">parse_header</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span>) -&gt; <span class="ident">::Result</span><span class="op">&lt;</span><span class="ident">CacheControl</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">RawLike</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>
+    {
+        <span class="kw">let</span> <span class="ident">directives</span> <span class="op">=</span> <span class="ident">from_comma_delimited</span>(<span class="ident">raw</span>)<span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="op">!</span><span class="ident">directives</span>.<span class="ident">is_empty</span>() {
             <span class="prelude-val">Ok</span>(<span class="ident">CacheControl</span>(<span class="ident">directives</span>))
         } <span class="kw">else</span> {
@@ -282,13 +298,13 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">fmt_header</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::header::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt_header</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">::header::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">fmt_line</span>(<span class="self">self</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">CacheControl</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="ident">fmt_comma_delimited</span>(<span class="ident">f</span>, <span class="kw-2">&amp;</span><span class="self">self</span>[..])
     }
 }
@@ -330,7 +346,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">CacheDirective</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">use</span> <span class="ident"><span class="self">self</span>::CacheDirective</span>::<span class="kw-2">*</span>;
         <span class="ident">fmt::Display::fmt</span>(<span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">NoCache</span> =&gt; <span class="string">&quot;no-cache&quot;</span>,
@@ -386,32 +402,36 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
-    <span class="kw">use</span> <span class="ident">header::Header</span>;
+    <span class="kw">use</span> <span class="ident">header</span>::{<span class="ident">Header</span>, <span class="ident">Raw</span>};
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_multiple_headers</span>() {
-        <span class="kw">let</span> <span class="ident">cache</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="macro">vec!</span>[<span class="string">b&quot;no-cache&quot;</span>.<span class="ident">to_vec</span>(), <span class="string">b&quot;private&quot;</span>.<span class="ident">to_vec</span>()].<span class="ident">into</span>());
+        <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">Raw</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">b&quot;no-cache&quot;</span>.<span class="ident">to_vec</span>(), <span class="string">b&quot;private&quot;</span>.<span class="ident">to_vec</span>()].<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">cache</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>);
         <span class="macro">assert_eq!</span>(<span class="ident">cache</span>.<span class="ident">ok</span>(), <span class="prelude-val">Some</span>(<span class="ident">CacheControl</span>(<span class="macro">vec!</span>[<span class="ident">CacheDirective::NoCache</span>,
                                                  <span class="ident">CacheDirective::Private</span>])))
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_argument</span>() {
-        <span class="kw">let</span> <span class="ident">cache</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="macro">vec!</span>[<span class="string">b&quot;max-age=100, private&quot;</span>.<span class="ident">to_vec</span>()].<span class="ident">into</span>());
+        <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">Raw</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">b&quot;max-age=100, private&quot;</span>.<span class="ident">to_vec</span>()].<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">cache</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>);
         <span class="macro">assert_eq!</span>(<span class="ident">cache</span>.<span class="ident">ok</span>(), <span class="prelude-val">Some</span>(<span class="ident">CacheControl</span>(<span class="macro">vec!</span>[<span class="ident">CacheDirective::MaxAge</span>(<span class="number">100</span>),
                                                  <span class="ident">CacheDirective::Private</span>])))
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_quote_form</span>() {
-        <span class="kw">let</span> <span class="ident">cache</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="macro">vec!</span>[<span class="string">b&quot;max-age=\&quot;200\&quot;&quot;</span>.<span class="ident">to_vec</span>()].<span class="ident">into</span>());
+        <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">Raw</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">b&quot;max-age=\&quot;200\&quot;&quot;</span>.<span class="ident">to_vec</span>()].<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">cache</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>);
         <span class="macro">assert_eq!</span>(<span class="ident">cache</span>.<span class="ident">ok</span>(), <span class="prelude-val">Some</span>(<span class="ident">CacheControl</span>(<span class="macro">vec!</span>[<span class="ident">CacheDirective::MaxAge</span>(<span class="number">200</span>)])))
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_extension</span>() {
-        <span class="kw">let</span> <span class="ident">cache</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="macro">vec!</span>[<span class="string">b&quot;foo, bar=baz&quot;</span>.<span class="ident">to_vec</span>()].<span class="ident">into</span>());
+        <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">Raw</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">b&quot;foo, bar=baz&quot;</span>.<span class="ident">to_vec</span>()].<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">cache</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>);
         <span class="macro">assert_eq!</span>(<span class="ident">cache</span>.<span class="ident">ok</span>(), <span class="prelude-val">Some</span>(<span class="ident">CacheControl</span>(<span class="macro">vec!</span>[
             <span class="ident">CacheDirective::Extension</span>(<span class="string">&quot;foo&quot;</span>.<span class="ident">to_owned</span>(), <span class="prelude-val">None</span>),
             <span class="ident">CacheDirective::Extension</span>(<span class="string">&quot;bar&quot;</span>.<span class="ident">to_owned</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;baz&quot;</span>.<span class="ident">to_owned</span>()))])))
@@ -419,14 +439,16 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_bad_syntax</span>() {
-        <span class="kw">let</span> <span class="ident">cache</span>: <span class="ident">::Result</span><span class="op">&lt;</span><span class="ident">CacheControl</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="macro">vec!</span>[<span class="string">b&quot;foo=&quot;</span>.<span class="ident">to_vec</span>()].<span class="ident">into</span>());
+        <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">Raw</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="string">b&quot;foo=&quot;</span>.<span class="ident">to_vec</span>()].<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">cache</span>: <span class="ident">::Result</span><span class="op">&lt;</span><span class="ident">CacheControl</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>);
         <span class="macro">assert_eq!</span>(<span class="ident">cache</span>.<span class="ident">ok</span>(), <span class="prelude-val">None</span>)
     }
 }
 
 <span class="macro">bench_header!</span>(<span class="ident">normal</span>,
     <span class="ident">CacheControl</span>, { <span class="macro">vec!</span>[<span class="string">b&quot;no-cache, private&quot;</span>.<span class="ident">to_vec</span>(), <span class="string">b&quot;max-age=100&quot;</span>.<span class="ident">to_vec</span>()] });
+
+<span class="macro">standard_header!</span>(<span class="ident">CacheControl</span>, <span class="ident">CACHE_CONTROL</span>);
 </code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="hyperx" data-search-index-js="../../../../search-index.js" data-search-js="../../../../search.js"></div>
-    <script src="../../../../main.js"></script><script src="../../../../source-script.js"></script><script src="../../../../source-files.js"></script>
 </body></html>

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["LocalKeySource","Points to a local key using a filesystem path."]],"trait":[["KeySource","This trait should be implemented for each source of signing keys. Examples of sources include: files, AWS SSM, etc."]]});

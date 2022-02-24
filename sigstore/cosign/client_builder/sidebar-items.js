@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["ClientBuilder","A builder that generates Client objects."]]});

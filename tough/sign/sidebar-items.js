@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["SignKeyPair","Keypair used for signing metadata"]],"fn":[["parse_keypair","Parses a supplied keypair and if it is recognized, returns an object that implements the Sign trait Accepted Keys: ED25519 pkcs8, Ecdsa pkcs8, RSA"]],"trait":[["Sign","This trait must be implemented for each type of key with which you will sign things."]]});

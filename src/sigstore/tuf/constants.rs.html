@@ -1,0 +1,336 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;tuf&#x2F;constants.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>constants.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><script defer src="../../../main.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../sigstore/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<span id="2">  2</span>
+<span id="3">  3</span>
+<span id="4">  4</span>
+<span id="5">  5</span>
+<span id="6">  6</span>
+<span id="7">  7</span>
+<span id="8">  8</span>
+<span id="9">  9</span>
+<span id="10"> 10</span>
+<span id="11"> 11</span>
+<span id="12"> 12</span>
+<span id="13"> 13</span>
+<span id="14"> 14</span>
+<span id="15"> 15</span>
+<span id="16"> 16</span>
+<span id="17"> 17</span>
+<span id="18"> 18</span>
+<span id="19"> 19</span>
+<span id="20"> 20</span>
+<span id="21"> 21</span>
+<span id="22"> 22</span>
+<span id="23"> 23</span>
+<span id="24"> 24</span>
+<span id="25"> 25</span>
+<span id="26"> 26</span>
+<span id="27"> 27</span>
+<span id="28"> 28</span>
+<span id="29"> 29</span>
+<span id="30"> 30</span>
+<span id="31"> 31</span>
+<span id="32"> 32</span>
+<span id="33"> 33</span>
+<span id="34"> 34</span>
+<span id="35"> 35</span>
+<span id="36"> 36</span>
+<span id="37"> 37</span>
+<span id="38"> 38</span>
+<span id="39"> 39</span>
+<span id="40"> 40</span>
+<span id="41"> 41</span>
+<span id="42"> 42</span>
+<span id="43"> 43</span>
+<span id="44"> 44</span>
+<span id="45"> 45</span>
+<span id="46"> 46</span>
+<span id="47"> 47</span>
+<span id="48"> 48</span>
+<span id="49"> 49</span>
+<span id="50"> 50</span>
+<span id="51"> 51</span>
+<span id="52"> 52</span>
+<span id="53"> 53</span>
+<span id="54"> 54</span>
+<span id="55"> 55</span>
+<span id="56"> 56</span>
+<span id="57"> 57</span>
+<span id="58"> 58</span>
+<span id="59"> 59</span>
+<span id="60"> 60</span>
+<span id="61"> 61</span>
+<span id="62"> 62</span>
+<span id="63"> 63</span>
+<span id="64"> 64</span>
+<span id="65"> 65</span>
+<span id="66"> 66</span>
+<span id="67"> 67</span>
+<span id="68"> 68</span>
+<span id="69"> 69</span>
+<span id="70"> 70</span>
+<span id="71"> 71</span>
+<span id="72"> 72</span>
+<span id="73"> 73</span>
+<span id="74"> 74</span>
+<span id="75"> 75</span>
+<span id="76"> 76</span>
+<span id="77"> 77</span>
+<span id="78"> 78</span>
+<span id="79"> 79</span>
+<span id="80"> 80</span>
+<span id="81"> 81</span>
+<span id="82"> 82</span>
+<span id="83"> 83</span>
+<span id="84"> 84</span>
+<span id="85"> 85</span>
+<span id="86"> 86</span>
+<span id="87"> 87</span>
+<span id="88"> 88</span>
+<span id="89"> 89</span>
+<span id="90"> 90</span>
+<span id="91"> 91</span>
+<span id="92"> 92</span>
+<span id="93"> 93</span>
+<span id="94"> 94</span>
+<span id="95"> 95</span>
+<span id="96"> 96</span>
+<span id="97"> 97</span>
+<span id="98"> 98</span>
+<span id="99"> 99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+</pre><pre class="rust"><code><span class="comment">//</span>
+<span class="comment">// Copyright 2021 The Sigstore Authors.</span>
+<span class="comment">//</span>
+<span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="comment">// you may not use this file except in compliance with the License.</span>
+<span class="comment">// You may obtain a copy of the License at</span>
+<span class="comment">//</span>
+<span class="comment">//     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="comment">//</span>
+<span class="comment">// Unless required by applicable law or agreed to in writing, software</span>
+<span class="comment">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="comment">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="comment">// See the License for the specific language governing permissions and</span>
+<span class="comment">// limitations under the License.</span>
+
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">SIGSTORE_METADATA_BASE</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;http://sigstore-tuf-root.storage.googleapis.com/&quot;</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">SIGSTORE_TARGET_BASE</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span>
+    <span class="string">&quot;http://sigstore-tuf-root.storage.googleapis.com/targets&quot;</span>;
+
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">SIGSTORE_FULCIO_CERT_TARGET</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;fulcio.crt.pem&quot;</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">SIGSTORE_REKOR_PUB_KEY_TARGET</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;rekor.pub&quot;</span>;
+
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="ident">SIGSTORE_ROOT</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">r#&quot;{
+	&quot;signatures&quot;: [
+		{
+			&quot;keyid&quot;: &quot;2f64fb5eac0cf94dd39bb45308b98920055e9a0d8e012a7220787834c60aef97&quot;,
+			&quot;sig&quot;: &quot;3046022100d3ea59490b253beae0926c6fa63f54336dea1ed700555be9f27ff55cd347639c0221009157d1ba012cead81948a4ab777d355451d57f5c4a2d333fc68d2e3f358093c2&quot;
+		},
+		{
+			&quot;keyid&quot;: &quot;bdde902f5ec668179ff5ca0dabf7657109287d690bf97e230c21d65f99155c62&quot;,
+			&quot;sig&quot;: &quot;304502206eaef40564403ce572c6d062e0c9b0aab5e0223576133e081e1b495e8deb9efd02210080fd6f3464d759601b4afec596bbd5952f3a224cd06ed1cdfc3c399118752ba2&quot;
+		},
+		{
+			&quot;keyid&quot;: &quot;eaf22372f417dd618a46f6c627dbc276e9fd30a004fc94f9be946e73f8bd090b&quot;,
+			&quot;sig&quot;: &quot;304502207baace02f56d8e6069f10b6ff098a26e7f53a7f9324ad62cffa0557bdeb9036c022100fb3032baaa090d0040c3f2fd872571c84479309b773208601d65948df87a9720&quot;
+		},
+		{
+			&quot;keyid&quot;: &quot;f40f32044071a9365505da3d1e3be6561f6f22d0e60cf51df783999f6c3429cb&quot;,
+			&quot;sig&quot;: &quot;304402205180c01905505dd88acd7a2dad979dd75c979b3722513a7bdedac88c6ae8dbeb022056d1ddf7a192f0b1c2c90ff487de2fb3ec9f0c03f66ea937c78d3b6a493504ca&quot;
+		},
+		{
+			&quot;keyid&quot;: &quot;f505595165a177a41750a8e864ed1719b1edfccd5a426fd2c0ffda33ce7ff209&quot;,
+			&quot;sig&quot;: &quot;3046022100c8806d4647c514d80fd8f707d3369444c4fd1d0812a2d25f828e564c99790e3f022100bb51f12e862ef17a7d3da2ac103bebc5c7e792237006c4cafacd76267b249c2f&quot;
+		}
+	],
+	&quot;signed&quot;: {
+		&quot;_type&quot;: &quot;root&quot;,
+		&quot;consistent_snapshot&quot;: false,
+		&quot;expires&quot;: &quot;2022-05-11T19:09:02.663975009Z&quot;,
+		&quot;keys&quot;: {
+			&quot;2f64fb5eac0cf94dd39bb45308b98920055e9a0d8e012a7220787834c60aef97&quot;: {
+				&quot;keyid_hash_algorithms&quot;: [
+					&quot;sha256&quot;,
+					&quot;sha512&quot;
+				],
+				&quot;keytype&quot;: &quot;ecdsa-sha2-nistp256&quot;,
+				&quot;keyval&quot;: {
+					&quot;public&quot;: &quot;04cbc5cab2684160323c25cd06c3307178a6b1d1c9b949328453ae473c5ba7527e35b13f298b41633382241f3fd8526c262d43b45adee5c618fa0642c82b8a9803&quot;
+				},
+				&quot;scheme&quot;: &quot;ecdsa-sha2-nistp256&quot;
+			},
+			&quot;b6710623a30c010738e64c5209d367df1c0a18cf90e6ab5292fb01680f83453d&quot;: {
+				&quot;keyid_hash_algorithms&quot;: [
+					&quot;sha256&quot;,
+					&quot;sha512&quot;
+				],
+				&quot;keytype&quot;: &quot;ecdsa-sha2-nistp256&quot;,
+				&quot;keyval&quot;: {
+					&quot;public&quot;: &quot;04fa1a3e42f2300cd3c5487a61509348feb1e936920fef2f83b7cd5dbe7ba045f538725ab8f18a666e6233edb7e0db8766c8dc336633449c5e1bbe0c182b02df0b&quot;
+				},
+				&quot;scheme&quot;: &quot;ecdsa-sha2-nistp256&quot;
+			},
+			&quot;bdde902f5ec668179ff5ca0dabf7657109287d690bf97e230c21d65f99155c62&quot;: {
+				&quot;keyid_hash_algorithms&quot;: [
+					&quot;sha256&quot;,
+					&quot;sha512&quot;
+				],
+				&quot;keytype&quot;: &quot;ecdsa-sha2-nistp256&quot;,
+				&quot;keyval&quot;: {
+					&quot;public&quot;: &quot;04a71aacd835dc170ba6db3fa33a1a33dee751d4f8b0217b805b9bd3242921ee93672fdcfd840576c5bb0dc0ed815edf394c1ee48c2b5e02485e59bfc512f3adc7&quot;
+				},
+				&quot;scheme&quot;: &quot;ecdsa-sha2-nistp256&quot;
+			},
+			&quot;eaf22372f417dd618a46f6c627dbc276e9fd30a004fc94f9be946e73f8bd090b&quot;: {
+				&quot;keyid_hash_algorithms&quot;: [
+					&quot;sha256&quot;,
+					&quot;sha512&quot;
+				],
+				&quot;keytype&quot;: &quot;ecdsa-sha2-nistp256&quot;,
+				&quot;keyval&quot;: {
+					&quot;public&quot;: &quot;04117b33dd265715bf23315e368faa499728db8d1f0a377070a1c7b1aba2cc21be6ab1628e42f2cdd7a35479f2dce07b303a8ba646c55569a8d2a504ba7e86e447&quot;
+				},
+				&quot;scheme&quot;: &quot;ecdsa-sha2-nistp256&quot;
+			},
+			&quot;f40f32044071a9365505da3d1e3be6561f6f22d0e60cf51df783999f6c3429cb&quot;: {
+				&quot;keyid_hash_algorithms&quot;: [
+					&quot;sha256&quot;,
+					&quot;sha512&quot;
+				],
+				&quot;keytype&quot;: &quot;ecdsa-sha2-nistp256&quot;,
+				&quot;keyval&quot;: {
+					&quot;public&quot;: &quot;04cc1cd53a61c23e88cc54b488dfae168a257c34fac3e88811c55962b24cffbfecb724447999c54670e365883716302e49da57c79a33cd3e16f81fbc66f0bcdf48&quot;
+				},
+				&quot;scheme&quot;: &quot;ecdsa-sha2-nistp256&quot;
+			},
+			&quot;f505595165a177a41750a8e864ed1719b1edfccd5a426fd2c0ffda33ce7ff209&quot;: {
+				&quot;keyid_hash_algorithms&quot;: [
+					&quot;sha256&quot;,
+					&quot;sha512&quot;
+				],
+				&quot;keytype&quot;: &quot;ecdsa-sha2-nistp256&quot;,
+				&quot;keyval&quot;: {
+					&quot;public&quot;: &quot;048a78a44ac01099890d787e5e62afc29c8ccb69a70ec6549a6b04033b0a8acbfb42ab1ab9c713d225cdb52b858886cf46c8e90a7f3b9e6371882f370c259e1c5b&quot;
+				},
+				&quot;scheme&quot;: &quot;ecdsa-sha2-nistp256&quot;
+			},
+			&quot;fc61191ba8a516fe386c7d6c97d918e1d241e1589729add09b122725b8c32451&quot;: {
+				&quot;keyid_hash_algorithms&quot;: [
+					&quot;sha256&quot;,
+					&quot;sha512&quot;
+				],
+				&quot;keytype&quot;: &quot;ecdsa-sha2-nistp256&quot;,
+				&quot;keyval&quot;: {
+					&quot;public&quot;: &quot;044c7793ab74b9ddd713054e587b8d9c75c5f6025633d0fef7ca855ed5b8d5a474b23598fe33eb4a63630d526f74d4bdaec8adcb51993ed65652d651d7c49203eb&quot;
+				},
+				&quot;scheme&quot;: &quot;ecdsa-sha2-nistp256&quot;
+			}
+		},
+		&quot;roles&quot;: {
+			&quot;root&quot;: {
+				&quot;keyids&quot;: [
+					&quot;2f64fb5eac0cf94dd39bb45308b98920055e9a0d8e012a7220787834c60aef97&quot;,
+					&quot;bdde902f5ec668179ff5ca0dabf7657109287d690bf97e230c21d65f99155c62&quot;,
+					&quot;eaf22372f417dd618a46f6c627dbc276e9fd30a004fc94f9be946e73f8bd090b&quot;,
+					&quot;f40f32044071a9365505da3d1e3be6561f6f22d0e60cf51df783999f6c3429cb&quot;,
+					&quot;f505595165a177a41750a8e864ed1719b1edfccd5a426fd2c0ffda33ce7ff209&quot;
+				],
+				&quot;threshold&quot;: 3
+			},
+			&quot;snapshot&quot;: {
+				&quot;keyids&quot;: [
+					&quot;fc61191ba8a516fe386c7d6c97d918e1d241e1589729add09b122725b8c32451&quot;
+				],
+				&quot;threshold&quot;: 1
+			},
+			&quot;targets&quot;: {
+				&quot;keyids&quot;: [
+					&quot;2f64fb5eac0cf94dd39bb45308b98920055e9a0d8e012a7220787834c60aef97&quot;,
+					&quot;bdde902f5ec668179ff5ca0dabf7657109287d690bf97e230c21d65f99155c62&quot;,
+					&quot;eaf22372f417dd618a46f6c627dbc276e9fd30a004fc94f9be946e73f8bd090b&quot;,
+					&quot;f40f32044071a9365505da3d1e3be6561f6f22d0e60cf51df783999f6c3429cb&quot;,
+					&quot;f505595165a177a41750a8e864ed1719b1edfccd5a426fd2c0ffda33ce7ff209&quot;
+				],
+				&quot;threshold&quot;: 3
+			},
+			&quot;timestamp&quot;: {
+				&quot;keyids&quot;: [
+					&quot;b6710623a30c010738e64c5209d367df1c0a18cf90e6ab5292fb01680f83453d&quot;
+				],
+				&quot;threshold&quot;: 1
+			}
+		},
+		&quot;spec_version&quot;: &quot;1.0&quot;,
+		&quot;version&quot;: 2
+	}
+}&quot;#</span>;
+</code></pre></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="sigstore" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
+</body></html>

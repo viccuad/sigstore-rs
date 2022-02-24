@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["CosignVerificationKey","A key that can be used to verify signatures."]]});

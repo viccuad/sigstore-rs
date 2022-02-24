@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;hyperx-0.13.2&#x2F;src&#x2F;header&#x2F;common&#x2F;strict_transport_security.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>strict_transport_security.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../../storage.js"></script><script src="../../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../../hyperx/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;hyperx-1.4.0&#x2F;src&#x2F;header&#x2F;common&#x2F;strict_transport_security.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>strict_transport_security.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../../storage.js"></script><script src="../../../../crates.js"></script><script defer src="../../../../main.js"></script><script defer src="../../../../source-script.js"></script><script defer src="../../../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../../hyperx/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -200,12 +201,25 @@
 <span id="200">200</span>
 <span id="201">201</span>
 <span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::fmt</span>;
 <span class="kw">use</span> <span class="ident">std::str</span>::{<span class="self">self</span>, <span class="ident">FromStr</span>};
 
 <span class="kw">use</span> <span class="ident">unicase</span>;
 
-<span class="kw">use</span> <span class="ident">header</span>::{<span class="ident">Header</span>, <span class="ident">Raw</span>, <span class="ident">parsing</span>};
+<span class="kw">use</span> <span class="ident">header</span>::{<span class="ident">Header</span>, <span class="ident">RawLike</span>, <span class="ident">parsing</span>};
 
 <span class="doccomment">/// `StrictTransportSecurity` header, defined in [RFC6797](https://tools.ietf.org/html/rfc6797)</span>
 <span class="doccomment">///</span>
@@ -236,14 +250,15 @@
 <span class="doccomment">/// # Example</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
+<span class="doccomment">/// # extern crate http;</span>
 <span class="doccomment">/// # extern crate hyperx;</span>
 <span class="doccomment">/// # fn main() {</span>
-<span class="doccomment">/// use hyperx::header::{Headers, StrictTransportSecurity};</span>
+<span class="doccomment">/// use hyperx::header::{StrictTransportSecurity, TypedHeaders};</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// let mut headers = Headers::new();</span>
+<span class="doccomment">/// let mut headers = http::HeaderMap::new();</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// headers.set(</span>
-<span class="doccomment">///    StrictTransportSecurity::including_subdomains(31536000u64)</span>
+<span class="doccomment">/// headers.encode(</span>
+<span class="doccomment">///    &amp;StrictTransportSecurity::including_subdomains(31536000u64)</span>
 <span class="doccomment">/// );</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>
@@ -329,17 +344,19 @@
         <span class="ident">NAME</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">parse_header</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span><span class="ident">Raw</span>) -&gt; <span class="ident">::Result</span><span class="op">&lt;</span><span class="ident">StrictTransportSecurity</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">parse_header</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span>) -&gt; <span class="ident">::Result</span><span class="op">&lt;</span><span class="ident">StrictTransportSecurity</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">RawLike</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>
+    {
         <span class="ident">parsing::from_one_raw_str</span>(<span class="ident">raw</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">fmt_header</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::header::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt_header</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">::header::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">fmt_line</span>(<span class="self">self</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">StrictTransportSecurity</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">include_subdomains</span> {
             <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;max-age={}; includeSubdomains&quot;</span>, <span class="self">self</span>.<span class="ident">max_age</span>)
         } <span class="kw">else</span> {
@@ -351,58 +368,67 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::StrictTransportSecurity</span>;
-    <span class="kw">use</span> <span class="ident">header::Header</span>;
+    <span class="kw">use</span> <span class="ident">header</span>::{<span class="ident">Header</span>, <span class="ident">Raw</span>};
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_max_age</span>() {
-        <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="string">&quot;max-age=31536000&quot;</span>.<span class="ident">into</span>());
+        <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">Raw</span> <span class="op">=</span> <span class="string">&quot;max-age=31536000&quot;</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>);
         <span class="macro">assert_eq!</span>(<span class="ident">h</span>.<span class="ident">ok</span>(), <span class="prelude-val">Some</span>(<span class="ident">StrictTransportSecurity</span> { <span class="ident">include_subdomains</span>: <span class="bool-val">false</span>, <span class="ident">max_age</span>: <span class="number">31536000u64</span> }));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_max_age_no_value</span>() {
-        <span class="kw">let</span> <span class="ident">h</span>: <span class="ident">::Result</span><span class="op">&lt;</span><span class="ident">StrictTransportSecurity</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="string">&quot;max-age&quot;</span>.<span class="ident">into</span>());
+        <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">Raw</span> <span class="op">=</span> <span class="string">&quot;max-age&quot;</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">h</span>: <span class="ident">::Result</span><span class="op">&lt;</span><span class="ident">StrictTransportSecurity</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>);
         <span class="macro">assert!</span>(<span class="ident">h</span>.<span class="ident">is_err</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_quoted_max_age</span>() {
-        <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="string">&quot;max-age=\&quot;31536000\&quot;&quot;</span>.<span class="ident">into</span>());
+        <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">Raw</span> <span class="op">=</span> <span class="string">&quot;max-age=\&quot;31536000\&quot;&quot;</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>);
         <span class="macro">assert_eq!</span>(<span class="ident">h</span>.<span class="ident">ok</span>(), <span class="prelude-val">Some</span>(<span class="ident">StrictTransportSecurity</span> { <span class="ident">include_subdomains</span>: <span class="bool-val">false</span>, <span class="ident">max_age</span>: <span class="number">31536000u64</span> }));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_spaces_max_age</span>() {
-        <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="string">&quot;max-age = 31536000&quot;</span>.<span class="ident">into</span>());
+        <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">Raw</span> <span class="op">=</span> <span class="string">&quot;max-age = 31536000&quot;</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>);
         <span class="macro">assert_eq!</span>(<span class="ident">h</span>.<span class="ident">ok</span>(), <span class="prelude-val">Some</span>(<span class="ident">StrictTransportSecurity</span> { <span class="ident">include_subdomains</span>: <span class="bool-val">false</span>, <span class="ident">max_age</span>: <span class="number">31536000u64</span> }));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_include_subdomains</span>() {
-        <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="string">&quot;max-age=15768000 ; includeSubDomains&quot;</span>.<span class="ident">into</span>());
+        <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">Raw</span> <span class="op">=</span> <span class="string">&quot;max-age=15768000 ; includeSubDomains&quot;</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>);
         <span class="macro">assert_eq!</span>(<span class="ident">h</span>.<span class="ident">ok</span>(), <span class="prelude-val">Some</span>(<span class="ident">StrictTransportSecurity</span> { <span class="ident">include_subdomains</span>: <span class="bool-val">true</span>, <span class="ident">max_age</span>: <span class="number">15768000u64</span> }));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_no_max_age</span>() {
-        <span class="kw">let</span> <span class="ident">h</span>: <span class="ident">::Result</span><span class="op">&lt;</span><span class="ident">StrictTransportSecurity</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="string">&quot;includeSubDomains&quot;</span>.<span class="ident">into</span>());
+        <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">Raw</span> <span class="op">=</span> <span class="string">&quot;includeSubDomains&quot;</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">h</span>: <span class="ident">::Result</span><span class="op">&lt;</span><span class="ident">StrictTransportSecurity</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>);
         <span class="macro">assert!</span>(<span class="ident">h</span>.<span class="ident">is_err</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_max_age_nan</span>() {
-        <span class="kw">let</span> <span class="ident">h</span>: <span class="ident">::Result</span><span class="op">&lt;</span><span class="ident">StrictTransportSecurity</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="string">&quot;max-age = derp&quot;</span>.<span class="ident">into</span>());
+        <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">Raw</span> <span class="op">=</span> <span class="string">&quot;max-age = derp&quot;</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">h</span>: <span class="ident">::Result</span><span class="op">&lt;</span><span class="ident">StrictTransportSecurity</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Header::parse_header</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>);
         <span class="macro">assert!</span>(<span class="ident">h</span>.<span class="ident">is_err</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_parse_duplicate_directives</span>() {
-        <span class="macro">assert!</span>(<span class="ident">StrictTransportSecurity::parse_header</span>(<span class="kw-2">&amp;</span><span class="string">&quot;max-age=100; max-age=5; max-age=0&quot;</span>.<span class="ident">into</span>()).<span class="ident">is_err</span>());
+        <span class="kw">let</span> <span class="ident">r</span>: <span class="ident">Raw</span> <span class="op">=</span> <span class="string">&quot;max-age=100; max-age=5; max-age=0&quot;</span>.<span class="ident">into</span>();
+        <span class="macro">assert!</span>(<span class="ident">StrictTransportSecurity::parse_header</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>).<span class="ident">is_err</span>());
     }
 }
 
 <span class="macro">bench_header!</span>(<span class="ident">bench</span>, <span class="ident">StrictTransportSecurity</span>, { <span class="macro">vec!</span>[<span class="string">b&quot;max-age=15768000 ; includeSubDomains&quot;</span>.<span class="ident">to_vec</span>()] });
+
+<span class="macro">standard_header!</span>(<span class="ident">StrictTransportSecurity</span>, <span class="ident">STRICT_TRANSPORT_SECURITY</span>);
 </code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../../" data-current-crate="hyperx" data-search-index-js="../../../../search-index.js" data-search-js="../../../../search.js"></div>
-    <script src="../../../../main.js"></script><script src="../../../../source-script.js"></script><script src="../../../../source-files.js"></script>
 </body></html>

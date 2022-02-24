@@ -1,9 +1,141 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `sigstore` crate."><meta name="keywords" content="rust, rustlang, rust-lang, sigstore"><title>sigstore - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings" ></script><script src="../storage.js"></script><script src="../crates.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../sigstore/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><h2 class="location">Crate sigstore</h2><div class="block version"><div class="narrow-helper"></div><p>Version 0.1.0</p></div><div class="sidebar-elems"><a id="all-types" href="all.html"><p>See all sigstore's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li></ul></div><div id="sidebar-vars" data-name="sigstore" data-ty="mod" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../wheel.svg"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Crate <a class="mod" href="#">sigstore</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/sigstore/lib.rs.html#16-21" title="goto source code">[src]</a></span></h1><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
-<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="cosign/index.html" title="sigstore::cosign mod">cosign</a></div><div class="item-right docblock-short"><p>Strucs providing cosign capabilities</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This crate aims to provide Sigstore capabilities to Rust developers."><meta name="keywords" content="rust, rustlang, rust-lang, sigstore"><title>sigstore - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings" ></script><script src="../storage.js"></script><script src="../crates.js"></script><script defer src="../main.js"></script>
+    <noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../sigstore/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><h2 class="location">Crate sigstore</h2><div class="block version"><div class="narrow-helper"></div><p>Version 0.2.0</p></div><div class="sidebar-elems"><a id="all-types" href="all.html"><p>See all sigstore's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li></ul></div><div id="sidebar-vars" data-name="sigstore" data-ty="mod" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../wheel.svg"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Crate <a class="mod" href="#">sigstore</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/sigstore/lib.rs.html#16-172" title="goto source code">[src]</a></span></h1><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This crate aims to provide <a href="https://www.sigstore.dev/">Sigstore</a> capabilities to Rust developers.</p>
+<p>Currently, the main focus of the crate is to provide the verification
+capabilities offered by the official <code>cosign</code> tool.</p>
+<p><strong>Warning:</strong> this library is still experimental. Its API can change at any time.</p>
+<h2 id="security" class="section-header"><a href="#security">Security</a></h2>
+<p>Should you discover any security issues, please refer to
+Sigstore’s <a href="https://github.com/sigstore/community/blob/main/SECURITY.md">security process</a>.</p>
+<h2 id="verification" class="section-header"><a href="#verification">Verification</a></h2>
+<p>Sigstore verification is done using the <a href="cosign/client/struct.Client.html"><code>cosign::Client</code></a>
+struct.</p>
+<h3 id="triangulation-of-sigstore-signature" class="section-header"><a href="#triangulation-of-sigstore-signature">Triangulation of Sigstore signature</a></h3>
+<p>Given a container image/oci artifact, calculate the location of
+its cosign signature inside of a registry:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::sigstore::cosign::CosignCapabilities</span>;
+<span class="kw">use</span> <span class="ident">std::fs</span>;
+
+<span class="attribute">#[<span class="ident">tokio::main</span>]</span>
+<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
+  <span class="kw">let</span> <span class="ident">auth</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">sigstore::registry::Auth::Anonymous</span>;
+
+  <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">sigstore::cosign::ClientBuilder::default</span>()
+    .<span class="ident">build</span>()
+    .<span class="ident">expect</span>(<span class="string">&quot;Unexpected failure while building Client&quot;</span>);
+  <span class="kw">let</span> <span class="ident">image</span> <span class="op">=</span> <span class="string">&quot;registry-testing.svc.lan/kubewarden/disallow-service-nodeport:v0.1.0&quot;</span>;
+  <span class="kw">let</span> (<span class="ident">cosign_signature_image</span>, <span class="ident">source_image_digest</span>) <span class="op">=</span> <span class="ident">client</span>.<span class="ident">triangulate</span>(
+    <span class="ident">image</span>,
+    <span class="ident">auth</span>
+  ).<span class="kw">await</span>.<span class="ident">expect</span>(<span class="string">&quot;Unexpected failure while using triangulate&quot;</span>);
+}</code></pre></div>
+<h3 id="signature-verification" class="section-header"><a href="#signature-verification">Signature verification</a></h3>
+<p>Verify the signature of a container image/oci artifact:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::sigstore::cosign</span>::{
+    <span class="ident">CosignCapabilities</span>,
+    <span class="ident">filter_signature_layers</span>,
+};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::sigstore::cosign::verification_constraint</span>::{
+    <span class="ident">AnnotationVerifier</span>,
+    <span class="ident">PublicKeyVerifier</span>,
+    <span class="ident">VerificationConstraintVec</span>,
+};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::sigstore::crypto::SignatureDigestAlgorithm</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::sigstore::errors::SigstoreError</span>;
+
+<span class="kw">use</span> <span class="ident">std::boxed::Box</span>;
+<span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
+<span class="kw">use</span> <span class="ident">std::fs</span>;
+
+<span class="attribute">#[<span class="ident">tokio::main</span>]</span>
+<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
+  <span class="kw">let</span> <span class="ident">auth</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">sigstore::registry::Auth::Anonymous</span>;
+
+  <span class="comment">// Provide both rekor and fulcio data -&gt; this enables keyless verification</span>
+  <span class="comment">// Read rekor&#39;s key from the location generated by `cosign initialize`</span>
+  <span class="kw">let</span> <span class="ident">rekor_pub_key</span> <span class="op">=</span> <span class="ident">fs::read_to_string</span>(<span class="string">&quot;~/.sigstore/root/targets/rekor.pub&quot;</span>)
+    .<span class="ident">expect</span>(<span class="string">&quot;Cannot read rekor public key&quot;</span>);
+  <span class="comment">// Read fulcio&#39;s certificate from the location generated by `cosign initialize`</span>
+  <span class="kw">let</span> <span class="ident">fulcio_cert</span> <span class="op">=</span> <span class="ident">fs::read_to_string</span>(<span class="string">&quot;~/.sigstore/root/targets/fulcio.crt.pem&quot;</span>)
+    .<span class="ident">expect</span>(<span class="string">&quot;Cannot read fulcio certificate&quot;</span>);
+
+  <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">sigstore::cosign::ClientBuilder::default</span>()
+    .<span class="ident">with_rekor_pub_key</span>(<span class="kw-2">&amp;</span><span class="ident">rekor_pub_key</span>)
+    .<span class="ident">with_fulcio_cert</span>(<span class="ident">fulcio_cert</span>.<span class="ident">as_bytes</span>())
+    .<span class="ident">build</span>()
+    .<span class="ident">expect</span>(<span class="string">&quot;Unexpected failure while building Client&quot;</span>);
+
+  <span class="comment">// Obtained via `triangulate`</span>
+  <span class="kw">let</span> <span class="ident">cosign_image</span> <span class="op">=</span> <span class="string">&quot;registry-testing.svc.lan/kubewarden/disallow-service-nodeport:sha256-5f481572d088dc4023afb35fced9530ced3d9b03bf7299c6f492163cb9f0452e.sig&quot;</span>;
+  <span class="comment">// Obtained via `triangulate`</span>
+  <span class="kw">let</span> <span class="ident">source_image_digest</span> <span class="op">=</span> <span class="string">&quot;sha256-5f481572d088dc4023afb35fced9530ced3d9b03bf7299c6f492163cb9f0452e&quot;</span>;
+
+  <span class="comment">// Obtain the list the signatures layers associated that can be trusted</span>
+  <span class="kw">let</span> <span class="ident">signature_layers</span> <span class="op">=</span> <span class="ident">client</span>.<span class="ident">trusted_signature_layers</span>(
+    <span class="ident">auth</span>,
+    <span class="ident">cosign_image</span>,
+    <span class="ident">source_image_digest</span>,
+  ).<span class="kw">await</span>.<span class="ident">expect</span>(<span class="string">&quot;Could not obtain signature layers&quot;</span>);
+
+  <span class="comment">// Define verification constraints</span>
+  <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">annotations</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::new</span>();
+  <span class="ident">annotations</span>.<span class="ident">insert</span>(<span class="string">&quot;env&quot;</span>.<span class="ident">to_string</span>(), <span class="string">&quot;prod&quot;</span>.<span class="ident">to_string</span>());
+  <span class="kw">let</span> <span class="ident">annotation_verifier</span> <span class="op">=</span> <span class="ident">AnnotationVerifier</span>{
+    <span class="ident">annotations</span>,
+  };
+
+  <span class="kw">let</span> <span class="ident">verification_key</span> <span class="op">=</span> <span class="ident">fs::read</span>(<span class="string">&quot;~/cosign.pub&quot;</span>)
+    .<span class="ident">expect</span>(<span class="string">&quot;Cannot read contents of cosign public key&quot;</span>);
+  <span class="kw">let</span> <span class="ident">pub_key_verifier</span> <span class="op">=</span> <span class="ident">PublicKeyVerifier::new</span>(
+    <span class="kw-2">&amp;</span><span class="ident">verification_key</span>,
+    <span class="ident">SignatureDigestAlgorithm::default</span>(),
+  ).<span class="ident">expect</span>(<span class="string">&quot;Could not create verifier&quot;</span>);
+
+  <span class="kw">let</span> <span class="ident">verification_constraints</span>: <span class="ident">VerificationConstraintVec</span> <span class="op">=</span> <span class="macro">vec!</span>[
+    <span class="ident">Box::new</span>(<span class="ident">annotation_verifier</span>),
+    <span class="ident">Box::new</span>(<span class="ident">pub_key_verifier</span>),
+  ];
+
+  <span class="comment">// Filter all the trusted layers, find the ones satisfying the constraints</span>
+  <span class="comment">// we just defined</span>
+  <span class="kw">let</span> <span class="ident">signatures_matching_requirements</span> <span class="op">=</span> <span class="ident">filter_signature_layers</span>(
+    <span class="kw-2">&amp;</span><span class="ident">signature_layers</span>,
+    <span class="ident">verification_constraints</span>);
+
+  <span class="kw">match</span> <span class="ident">signatures_matching_requirements</span> {
+    <span class="prelude-val">Err</span>(<span class="ident">SigstoreError::SigstoreNoVerifiedLayer</span>) =&gt; {
+      <span class="macro">panic!</span>(<span class="string">&quot;no signature is matching the requirements&quot;</span>)
+    },
+    <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; {
+      <span class="macro">panic!</span>(<span class="string">&quot;Something went wrong while verifying the image: {}&quot;</span>, <span class="ident">e</span>)
+    },
+    <span class="prelude-val">Ok</span>(<span class="ident">signatures</span>) =&gt; {
+      <span class="macro">println!</span>(<span class="string">&quot;signatures matching the requirements:&quot;</span>);
+      <span class="ident">serde_json::to_writer_pretty</span>(
+          <span class="ident">std::io::stdout</span>(),
+          <span class="kw-2">&amp;</span><span class="ident">signatures</span>,
+      ).<span class="ident">unwrap</span>();
+    }
+  }
+}</code></pre></div>
+<h3 id="fulcio-and-rekor-integration" class="section-header"><a href="#fulcio-and-rekor-integration">Fulcio and Rekor integration</a></h3>
+<p><a href="cosign/client/struct.Client.html"><code>cosign::Client</code></a> integration with Fulcio and Rekor
+requires the following data to work: Fulcio’s certificate and Rekor’s public key.</p>
+<p>These files are safely distributed by the Sigstore project via a TUF repository.
+The <a href="tuf/index.html"><code>sigstore::tuf</code></a> module provides the helper structures to deal
+with it.</p>
+<h2 id="examples" class="section-header"><a href="#examples">Examples</a></h2>
+<p>Additional examples can be found inside of the <a href="https://github.com/sigstore/sigstore-rs/tree/main/examples/"><code>examples</code></a>
+directory.</p>
+</div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="cosign/index.html" title="sigstore::cosign mod">cosign</a></div><div class="item-right docblock-short"><p>Strucs providing cosign verification capabilities</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="crypto/index.html" title="sigstore::crypto mod">crypto</a></div><div class="item-right docblock-short"><p>Structures and constants required to perform cryptographic operations.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="errors/index.html" title="sigstore::errors mod">errors</a></div><div class="item-right docblock-short"><p>The errors that can be raised by sigstore-rs</p>
 </div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="registry/index.html" title="sigstore::registry mod">registry</a></div><div class="item-right docblock-short"><p>Set of structs and enums used to define how to interact with OCI registries</p>
 </div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="simple_signing/index.html" title="sigstore::simple_signing mod">simple_signing</a></div><div class="item-right docblock-short"><p>This module provides a series of Rust Struct that implementation
 the Container signature format described
 <a href="https://github.com/containers/image/blob/a5061e5a5f00333ea3a92e7103effd11c6e2f51d/docs/containers-signature.5.md#json-data-format">here</a>.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="tuf/index.html" title="sigstore::tuf mod">tuf</a></div><div class="item-right docblock-short"><p>Helper Structs to interact with the Sigstore TUF repository.</p>
 </div></div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="sigstore" data-search-index-js="../search-index.js" data-search-js="../search.js"></div>
-    <script src="../main.js"></script>
 </body></html>

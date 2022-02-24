@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["TargetsEditor","If you are not working with a repository that utilizes delegated targets, use the `RepositoryEditor`."]]});

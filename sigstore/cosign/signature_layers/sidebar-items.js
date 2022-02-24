@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["CertificateSubject","Types of identities associated with the signer."]],"struct":[["CertificateSignature","Describe the details of a a certificate produced when signing artifacts using the keyless mode."],["SignatureLayer","Object that contains all the data about a `SimpleSigning` object."]]});

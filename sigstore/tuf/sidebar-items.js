@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["SigstoreRepository","Securely fetches Rekor public key and Fulcio certificate from Sigstore’s TUF repository"]]});
