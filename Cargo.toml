@@ -11,8 +11,8 @@ readme = "README.md"
 
 [features]
 default = ["native-tls"]
-native-tls = ["oci-distribution/native-tls", "openidconnect/native-tls"]
-rustls-tls = ["oci-distribution/rustls-tls", "openidconnect/rustls-tls"]
+native-tls = ["oci-distribution/native-tls", "openidconnect/native-tls", "reqwest/native-tls"]
+rustls-tls = ["oci-distribution/rustls-tls", "openidconnect/rustls-tls", "reqwest/rustls-tls"]
 
 [dependencies]
 async-trait = "0.1.52"
