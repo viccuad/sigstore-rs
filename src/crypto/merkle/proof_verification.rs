@@ -852,6 +852,7 @@ mod test_verify {
         let proof2 = [SHA256_EMPTY_TREE_HASH.into()];
         let empty_tree_hash = &SHA256_EMPTY_TREE_HASH.into();
         let test_cases = [
+            // Same sizes but the root hashes differ.
             (0, 0, root1, root2, proof1, true),
             (1, 1, root1, root2, proof1, true),
             // Sizes that are always consistent.
@@ -863,7 +864,7 @@ mod test_verify {
             (2, 1, root1, root2, proof1, true),
             // Empty proof.
             (1, 2, root1, root2, proof1, true),
-            // Roots don't match.
+            // Roots don't match with equal size, append-only violated.
             (0, 0, empty_tree_hash, root2, proof1, true),
             (1, 1, empty_tree_hash, root2, proof1, true),
             // Roots match but the proof is not empty.
