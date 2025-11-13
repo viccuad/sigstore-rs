@@ -99,6 +99,7 @@ impl Checkpoint {
     }
 
     /// Checks if the checkpoint and inclusion proof are valid together.
+    // TODO stepped into, REVIEWED
     pub(crate) fn is_valid_for_proof(
         &self,
         proof_root_hash: &Output<Rfc6269Default>,
@@ -108,7 +109,7 @@ impl Checkpoint {
         Rfc6269Default::verify_consistency(
             self.note.size,
             proof_tree_size,
-            &[],
+            &[], // FIXME how can this be empty
             &self.note.hash.into(),
             proof_root_hash,
         )

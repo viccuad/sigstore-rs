@@ -90,6 +90,7 @@ impl LogInfo {
     /// }
     ///
     /// ```
+    // TODO stepped into, REVIEWED
     pub fn verify_consistency(
         &self,
         old_size: u64,
@@ -112,6 +113,7 @@ impl LogInfo {
     }
 }
 
+// TODO REVIEWED
 #[cfg(test)]
 mod tests {
     use crate::{

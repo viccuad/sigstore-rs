@@ -10,6 +10,7 @@ enum Rfc6269HashPrefix {
 }
 
 /// Trait that represents the [Merkle tree operations as defined in RFC6962](https://www.rfc-editor.org/rfc/rfc6962.html#section-2.1).
+/// TODO REVIEWED
 pub(crate) trait Rfc6269HasherTrait<O> {
     /// Hashing an empty root is equivalent to hashing an empty string.
     fn empty_root() -> O;
@@ -45,6 +46,7 @@ where
 pub(crate) type Rfc6269Default = Sha256;
 
 /// These tests were taken from the [transparency-dev Merkle implementation](https://github.com/transparency-dev/merkle/blob/036047b5d2f7faf3b1ee643d391e60fe5b1defcf/rfc6962/rfc6962_test.go).
+/// TODO REVIEWED COMPARED WITH GO transparency-dev/merkle/rfc6962_test.go
 #[cfg(test)]
 mod test_rfc6962 {
     use crate::crypto::merkle::rfc6962::Rfc6269HasherTrait;

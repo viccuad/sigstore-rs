@@ -78,6 +78,7 @@ where
     // `verify_consistency` checks that the passed-in consistency proof is valid
     // between the passed in tree sizes, with respect to the corresponding root
     // hashes. Requires `0 <= old_size <= new_size`..
+    // TODO stepped into, REVIEWED
     fn verify_consistency(
         old_size: u64,
         new_size: u64,
@@ -158,6 +159,7 @@ where
     /// border. Assumes `proof_hashes` are ordered from lower levels to upper, and
     /// `seed` is the initial subtree/leaf hash on the path located at the specified
     /// `index` on its level.
+    /// TODO REVIEWED
     fn chain_inner(seed: &O, proof_hashes: &[O], index: u64) -> O {
         proof_hashes
             .iter()
@@ -175,6 +177,7 @@ where
     /// `chain_inner_right` computes a subtree hash like `chain_inner`, but only takes
     /// hashes to the left from the path into consideration, which effectively means
     /// the result is a hash of the corresponding earlier version of this subtree.
+    /// TODO REVIEWED
     fn chain_inner_right(seed: &O, proof_hashes: &[O], index: u64) -> O {
         proof_hashes
             .iter()
@@ -190,6 +193,7 @@ where
 
     /// `chain_border_right` chains proof hashes along tree borders. This differs from
     /// inner chaining because `proof` contains only left-side subtree hashes.
+    /// TODO REVIEWED
     fn chain_border_right(seed: &O, proof_hashes: &[O]) -> O {
         proof_hashes
             .iter()
@@ -812,6 +816,7 @@ mod test_verify {
     }
 
     #[test]
+    // TODO REVIEWED
     fn test_verify_consistency() {
         let root1 = &[0; 32].into();
         let root2 = &[1; 32].into();
