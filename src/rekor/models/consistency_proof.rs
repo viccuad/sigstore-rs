@@ -12,7 +12,34 @@ use crate::crypto::merkle::hex_to_hash_output;
 use crate::crypto::merkle::{MerkleProofVerifier, Rfc6269Default};
 use crate::errors::SigstoreError;
 use crate::errors::SigstoreError::ConsistencyProofError;
+use base64::{Engine as _, engine::general_purpose};
+use digest::{consts::U32, generic_array::GenericArray};
 use serde::{Deserialize, Serialize};
+
+/// Wrapper for base64-encoded bytes with serde support
+#[derive(Clone, Debug, PartialEq, Eq, Default)]
+pub struct Base64Bytes(pub Vec<u8>);
+
+impl Serialize for Base64Bytes {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serializer.serialize_str(&general_purpose::STANDARD.encode(&self.0))
+    }
+}
+impl<'de> Deserialize<'de> for Base64Bytes {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s = String::deserialize(deserializer)?;
+        let bytes = general_purpose::STANDARD
+            .decode(&s)
+            .map_err(serde::de::Error::custom)?;
+        Ok(Base64Bytes(bytes))
+    }
+}
 
 #[derive(Clone, Debug, PartialEq, Eq, Default, Serialize, Deserialize)]
 pub struct ConsistencyProof {
@@ -20,11 +47,11 @@ pub struct ConsistencyProof {
     #[serde(rename = "rootHash")]
     pub root_hash: String,
     #[serde(rename = "hashes")]
-    pub hashes: Vec<String>,
+    pub hashes: Vec<Base64Bytes>,
 }
 
 impl ConsistencyProof {
-    pub fn new(root_hash: String, hashes: Vec<String>) -> ConsistencyProof {
+    pub fn new(root_hash: String, hashes: Vec<Base64Bytes>) -> ConsistencyProof {
         ConsistencyProof { root_hash, hashes }
     }
 
@@ -38,13 +65,20 @@ impl ConsistencyProof {
         new_size: u64,
         new_root: Option<&str>,
     ) -> Result<(), SigstoreError> {
-        // decode hashes from hex and convert them to the required data structure
-        // immediately return an error when conversion fails
-        let proof_hashes = self
+        // Convert base64 bytes to GenericArray<u8, U32> for Merkle verification
+        let proof_hashes: Result<Vec<GenericArray<u8, U32>>, SigstoreError> = self
             .hashes
             .iter()
-            .map(hex_to_hash_output)
-            .collect::<Result<Vec<_>, _>>()?;
+            .map(|b| {
+                let arr: [u8; 32] = b.0.as_slice().try_into().map_err(|_| {
+                    ConsistencyProofError(
+                        crate::crypto::merkle::MerkleProofError::InvalidHashLength,
+                    )
+                })?;
+                Ok::<GenericArray<u8, U32>, SigstoreError>(GenericArray::from(arr))
+            })
+            .collect();
+        let proof_hashes = proof_hashes?;
 
         let old_root = hex_to_hash_output(old_root)?;
         let new_root = hex_to_hash_output(new_root.unwrap_or(self.root_hash.as_str()))?;

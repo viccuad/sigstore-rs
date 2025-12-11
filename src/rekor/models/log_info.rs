@@ -116,10 +116,12 @@ impl LogInfo {
 mod tests {
     use crate::{
         crypto::{CosignVerificationKey, SigningScheme},
-        rekor::models::ConsistencyProof,
+        rekor::models::{ConsistencyProof, consistency_proof::Base64Bytes},
     };
 
     use super::LogInfo;
+    use base64::{Engine as _, engine::general_purpose};
+
     const LOG_INFO_OLD: &str = r#"
         {
             "inactiveShards": [
@@ -211,8 +213,20 @@ mod tests {
             serde_json::from_str(LOG_INFO_OLD).expect("failed to deserialize log info test data");
         let log_info_new: LogInfo =
             serde_json::from_str(LOG_INFO_NEW).expect("failed to deserialize log info test data");
+        // Convert hex hashes to base64 in LOG_PROOF before deserializing
+        let mut proof_json: serde_json::Value =
+            serde_json::from_str(LOG_PROOF).expect("failed to parse log proof JSON");
+        if let Some(hashes) = proof_json.get_mut("hashes").and_then(|h| h.as_array_mut()) {
+            for hash in hashes {
+                if let Some(hex_str) = hash.as_str() {
+                    let bytes = hex::decode(hex_str).expect("invalid hex in proof");
+                    let b64 = base64::engine::general_purpose::STANDARD.encode(&bytes);
+                    *hash = serde_json::Value::String(b64);
+                }
+            }
+        }
         let consistency_proof: ConsistencyProof =
-            serde_json::from_str(LOG_PROOF).expect("failed to deserialize log proof data");
+            serde_json::from_value(proof_json).expect("failed to deserialize log proof data");
 
         log_info_new
             .verify_consistency(
@@ -221,7 +235,9 @@ mod tests {
                 &consistency_proof,
                 &rekor_key,
             )
-            .expect("failed to accept valid inclusion proof");
+            .expect(
+                "failed to accept valid inclusion proof: ConsistencyProofError(InvalidHashLength)",
+            );
     }
 
     #[test]
@@ -246,9 +262,11 @@ mod tests {
         test_cases.push((consistency_proof_empty, "empty proof"));
 
         let mut consistency_proof_additional_hash = consistency_proof.clone();
-        consistency_proof_additional_hash
-            .hashes
-            .push("e0300bb7400e692bccbf20b17fe7ec177aba23e7bfd36dcb7484935ccd214336".to_string());
+        consistency_proof_additional_hash.hashes.push(Base64Bytes(
+            general_purpose::STANDARD
+                .decode("e0300bb7400e692bccbf20b17fe7ec177aba23e7bfd36dcb7484935ccd214336")
+                .unwrap(),
+        ));
         test_cases.push((consistency_proof_additional_hash, "too many hashes"));
 
         let mut consistency_proof_removed_hash = consistency_proof.clone();
@@ -260,7 +278,7 @@ mod tests {
         consistency_proof_invalid_hash.hashes = consistency_proof_invalid_hash
             .hashes
             .into_iter()
-            .map(|h| h.chars().rev().collect())
+            .map(|h| Base64Bytes(h.0.iter().rev().cloned().collect()))
             .collect();
 
         test_cases.push((consistency_proof_invalid_hash, "invalid hashes"));

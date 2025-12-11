@@ -21,6 +21,7 @@ pub enum MerkleProofError {
     NewTreeSmaller { new: u64, old: u64 },
     WrongProofSize { got: u64, want: u64 },
     WrongEmptyTreeHash,
+    InvalidHashLength,
 }
 
 pub(crate) trait MerkleProofVerifier<O>: Rfc6269HasherTrait<O>
